@@ -44,29 +44,5 @@ public class CVOnline {
 //        System.out.println(users.getLowonganPekerjaanId());
 //        System.out.println(ui.register("12", "makoto", "achmadeko@gmail.com", "ekoeko123", "admin"));
         System.out.println(ui.search("achmadeko@gmail.com"));
-        
-//        try {
-//
-//            Properties properties = new Properties();
-//            properties.put("mail.smtp.host", "smtp.gmail.com");
-//            properties.put("mail.smtp.auth", "true");
-//            properties.put("mail.smtp.ssl.enable", "true");
-//            properties.put("mail.smtp.port", "465");//default port dari smptp
-//
-//            Session session = Session.getInstance(properties);
-//            session.setDebug(true);
-//
-//            MimeMessage pesan = new MimeMessage(session);
-//            pesan.setFrom("achmadeko003@gmail.com"); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
-//            pesan.setRecipient(Message.RecipientType.TO, new InternetAddress("achmadeko003@gmail.com"));//isi dengan tujuan email
-//            pesan.setSubject("Java Mail coba");
-//            pesan.setText("Email dikirim menggunakan Java Mail.");
-//
-//            String username = "achmadeko003@gmail.com"; //ganti dengan gmail kalian sendiri
-//            String password = "Makoto_Yuki003"; //ganti dengan password kalian sendiri
-//            Transport.send(pesan, username, password);
-//        } catch (MessagingException ex) {
-//            ex.printStackTrace();
-//        }
     }
 }
