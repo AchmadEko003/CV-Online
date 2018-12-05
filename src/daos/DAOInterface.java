@@ -17,5 +17,5 @@ public interface DAOInterface {
     public List<Object> doDDL(Object table, String keyword);//sga
     public Object getById(Object table, Object id);
     public boolean insImg(int paramIndex,InputStream stream,long length);
-//    public boolean login(Object user, String password);
+    public boolean login(Object user, String password);
 }

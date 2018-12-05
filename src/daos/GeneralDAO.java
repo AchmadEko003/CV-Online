@@ -54,10 +54,10 @@ public class GeneralDAO implements DAOInterface {
         return this.fdao.getById(table, id);
     }
 
-//    @Override
-//    public boolean login(Object user, String password) {
-//        return this.fdao.validationLogin(user, password);
-//    }
+    @Override
+    public boolean login(Object user, String password) {
+        return this.fdao.validationLogin(user, password);
+    }
 
     @Override
     public boolean insImg(int paramIndex, InputStream stream, long length) {

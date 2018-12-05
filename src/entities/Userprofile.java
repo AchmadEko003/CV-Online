@@ -83,6 +83,23 @@ public class Userprofile implements Serializable {
     public Userprofile() {
     }
 
+    public Userprofile(Integer cvId, Serializable cvUpload, Serializable uploadPhoto, Serializable uploadKtp, String namaUniversitas, String jurusan, Short umur, String domisili, Date tanggalLahir, Long noTelepon, String pengalaman, Short ipk, String skill, Users userId) {
+        this.cvId = cvId;
+        this.cvUpload = cvUpload;
+        this.uploadPhoto = uploadPhoto;
+        this.uploadKtp = uploadKtp;
+        this.namaUniversitas = namaUniversitas;
+        this.jurusan = jurusan;
+        this.umur = umur;
+        this.domisili = domisili;
+        this.tanggalLahir = tanggalLahir;
+        this.noTelepon = noTelepon;
+        this.pengalaman = pengalaman;
+        this.ipk = ipk;
+        this.skill = skill;
+        this.userId = userId;
+    }
+
     public Userprofile(Integer cvId) {
         this.cvId = cvId;
     }
@@ -223,5 +240,5 @@ public class Userprofile implements Serializable {
     public String toString() {
         return "entities.Userprofile[ cvId=" + cvId + " ]";
     }
-    
+
 }

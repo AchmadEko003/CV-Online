@@ -5,6 +5,7 @@
  */
 package daos;
 
+import entities.Users;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -156,32 +157,34 @@ public class FunctionDAO {
         return hasil;
     }
 
-//    public EmployeeAccount login(Object user) {
-//        EmployeeAccount object = null;
-//        String query = "from EmployeeAccount where username= '" + user + "'" ;
-//        try {
-//            session = factory.openSession();
-//            transaction = session.beginTransaction();
-//            object = (EmployeeAccount) session.createQuery(query).uniqueResult();
-//            transaction.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//        } finally {
-//            session.close();
-//        }
-//        return object;
-//    }
+    public Users login(Object user) {
+        Users object = null;
+        String query = "from Users where nama= '" + user + "'" ;
+        System.out.println(query);
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            object = (Users) session.createQuery(query).uniqueResult();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return object;
+    }
 //    
-//    public boolean validationLogin(Object user, String password){
-//        EmployeeAccount e = this.login(user);
-//        if(e != null){
-//            if(BCrypt.checkpw(password, e.getPassword())){
-//                return true;
-//            }
-//        }
-//        return false;
-//    } 
+    public boolean validationLogin(Object user, String password){
+        Users e = this.login(user);
+        System.out.println(e);
+        if(e != null){
+            if(BCrypt.checkpw(password, e.getUserPassword())){
+                return true;
+            }
+        }
+        return false;
+    } 
 }

@@ -49,6 +49,13 @@ public class Perusahaan implements Serializable {
     public Perusahaan() {
     }
 
+    
+    public Perusahaan(Integer perusahaanId, String namaPerusahaan, String domisili) {
+        this.perusahaanId = perusahaanId;
+        this.namaPerusahaan = namaPerusahaan;
+        this.domisili = domisili;
+    }
+
     public Perusahaan(Integer perusahaanId) {
         this.perusahaanId = perusahaanId;
     }

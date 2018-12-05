@@ -5,7 +5,7 @@
  */
 package views;
 
-import controllers.UsersController;
+import controllers.UserControllers;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import java.awt.Container;
@@ -25,13 +25,14 @@ public class LoginViews extends javax.swing.JFrame {
     private JButton buttons;
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private DAOInterface daoi = new GeneralDAO(sessionFactory);
-    private UserInterface ai = new UsersController(sessionFactory);
+    private UserInterface ai = new UserControllers(sessionFactory);
+
     /**
      * Creates new form LoginViews
      */
     public LoginViews() {
         initComponents();
-        
+
     }
 
     /**
@@ -47,11 +48,11 @@ public class LoginViews extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         usernameTxt = new javax.swing.JTextField();
         btnLogReg = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         passwordTxt = new javax.swing.JPasswordField();
         namaTxt = new javax.swing.JTextField();
         emailTxt = new javax.swing.JTextField();
         idTxt = new javax.swing.JTextField();
+        roleTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,56 +67,46 @@ public class LoginViews extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 197, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         namaTxt.setText("nama");
 
         emailTxt.setText("Email");
 
         idTxt.setText("id");
 
+        roleTxt.setText("Role");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addComponent(jLabel1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                            .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(15, 15, 15)
-                                            .addComponent(passwordTxt)))
+                                .addGap(15, 15, 15)
+                                .addComponent(btnLogReg, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(roleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                        .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addComponent(btnLogReg, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(namaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                                        .addComponent(passwordTxt))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(namaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,10 +125,11 @@ public class LoginViews extends javax.swing.JFrame {
                     .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLogReg)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(roleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(btnLogReg)
+                .addGap(43, 43, 43))
         );
 
         pack();
@@ -149,16 +141,26 @@ public class LoginViews extends javax.swing.JFrame {
         String name = namaTxt.getText();
         String username = usernameTxt.getText();
         String email = emailTxt.getText();
-        String password = String.valueOf(passwordTxt.getText());
-        
-        //String result = ai.register(Integer.valueOf(id), name, username, email, BCrypt.hashpw(password, BCrypt.gensalt()));
-        //JOptionPane.showMessageDialog(null, result);
-        if(btnLogReg.getText() == "Login"){
-            btnLogReg.setText("Register");
-        } else{
-            btnLogReg.setText("Login");
+        String password = passwordTxt.getText();
+        String roles = roleTxt.getText();
+
+//        String result = ai.register(id, name, username, email, BCrypt.hashpw(password, BCrypt.gensalt()), roles);
+//        if(ai.register(id, name, email, BCrypt.hashpw(password, BCrypt.gensalt()), roles)){
+//            JOptionPane.showMessageDialog(null, "Berhasil register");
+//                btnLogReg.setText("Login");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Data tidak boleh kosong");
+//            }
+        if (ai.login(name, password)) {
+            JOptionPane.showMessageDialog(null, "Berhasil login");
+        } else {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Gagal, ingin membuat akun?", "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                namaTxt.setText("Register");
+            }
         }
-        
+        //JOptionPane.showMessageDialog(null, result);        
     }//GEN-LAST:event_btnLogRegActionPerformed
 
     /**
@@ -202,9 +204,9 @@ public class LoginViews extends javax.swing.JFrame {
     private javax.swing.JTextField idTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField namaTxt;
     private javax.swing.JPasswordField passwordTxt;
+    private javax.swing.JTextField roleTxt;
     private javax.swing.JTextField usernameTxt;
     // End of variables declaration//GEN-END:variables
 }
