@@ -6,15 +6,15 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
-import controllers.LowonganKerjaInterface;
+import interfaces.LowonganKerjaInterface;
 import controllers.UserControllers;
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import controllers.UserProfileControllers;
-import controllers.UserProfileInterface;
+import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
-import entities.Userprofile;
+import entities.UserProfile;
 import entities.Users;
 import java.util.List;
 import javax.swing.JButton;
@@ -37,6 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
     private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
 
     LoginRegisterFrame lrf = new LoginRegisterFrame();
+    LoginViews lv = new LoginViews();
     LowonganKerjaViews lkv = new LowonganKerjaViews();
     UserProfilesView upv = new UserProfilesView();
     UserViews uv = new UserViews();
@@ -56,29 +57,29 @@ public class MainFrame extends javax.swing.JFrame {
 
         try {
             for (Object low : userp) {
-                Userprofile emp = (Userprofile) low;
-                String isi1 = String.valueOf(emp.getUserId().getNama());
-                String isi2 = emp.getUserId().getEmail();
-                String isi3 = emp.getNamaUniversitas();
-                String isi4 = emp.getJurusan();
-                String isi5 = String.valueOf(emp.getUmur());
-                String isi6 = emp.getDomisili();
+                UserProfile emp = (UserProfile) low;
+//                String isi1 = String.valueOf(emp.getUserId().getNama());
+//                String isi2 = emp.getUserId().getEmail();
+//                String isi3 = emp.getNamaUniversitas();
+//                String isi4 = emp.getJurusan();
+//                String isi5 = String.valueOf(emp.getUmur());
+//                String isi6 = emp.getDomisili();
 //                String isi7 = emp.getTanggalLahir();
-                String isi8 = String.valueOf(emp.getNoTelepon());
-                String isi9 = emp.getPengalaman();
-                String isi10 = String.valueOf(emp.getIpk());
-                String isi11 = emp.getSkill();
+//                String isi8 = String.valueOf(emp.getNoTelepon());
+//                String isi9 = emp.getPengalaman();
+//                String isi10 = String.valueOf(emp.getIpk());
+//                String isi11 = emp.getSkill();
 
-                namaUser.setText(isi1);
-                emailUser.setText(isi2);
-                universitasUser.setText(isi3);
-                jurusanUser.setText(isi4);
-                umurUser.setText(isi5);
-                domisiliUser.setText(isi6);
-                noTelp.setText(isi8);
-                pengalamanUser.setText(isi9);
-                ipkUser.setText(isi10);
-                skillUser.setText(isi11);
+//                namaUser.setText(isi1);
+//                emailUser.setText(isi2);
+//                universitasUser.setText(isi3);
+//                jurusanUser.setText(isi4);
+//                umurUser.setText(isi5);
+//                domisiliUser.setText(isi6);
+//                noTelp.setText(isi8);
+//                pengalamanUser.setText(isi9);
+//                ipkUser.setText(isi10);
+//                skillUser.setText(isi11);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
@@ -389,14 +390,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        LowonganKerjaViews lkv = new LowonganKerjaViews();
         lkv.show();
         dsktpMain.add(lkv);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        UserProfilesView upv = new UserProfilesView();
         upv.show();
         dsktpMain.add(upv);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -406,13 +405,13 @@ public class MainFrame extends javax.swing.JFrame {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(null, "Yakin ingin logout?", "Warning", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
+            lv.show();
             this.dispose();
         }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        UserViews uv = new UserViews();
         uv.show();
         dsktpMain.add(uv);
     }//GEN-LAST:event_jMenuItem4ActionPerformed

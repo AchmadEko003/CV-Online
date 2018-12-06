@@ -6,9 +6,9 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
-import controllers.LowonganKerjaInterface;
+import interfaces.LowonganKerjaInterface;
 import controllers.UserControllers;
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
@@ -243,14 +243,14 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         try {
             for (Object low : lowongan) {
                 LowonganPekerjaan emp = (LowonganPekerjaan) low;
-                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-                String isi2 = emp.getJudulLowongan();
-                String isi3 = emp.getDeskripsiPekerjaan();
-                String isi4 = emp.getRequirements();
-                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
+//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
+//                String isi2 = emp.getJudulLowongan();
+//                String isi3 = emp.getDeskripsiPekerjaan();
+//                String isi4 = emp.getRequirements();
+//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
                 
-                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-                model.addRow(kolom);
+//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+//                model.addRow(kolom);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
@@ -266,12 +266,12 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         String perusahaan = perusahaanTxt.getText();
 //        String userId = idUser.getText();
         
-        if(lki.insert(id, judul, deskripsi, requirements, perusahaan)){
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Gagal menambahkan");
-        }
+//        if(lki.insert(id, judul, deskripsi, requirements, perusahaan)){
+//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+//        }
+//        else{
+//            JOptionPane.showMessageDialog(null, "Gagal menambahkan");
+//        }
     }//GEN-LAST:event_tambahBtnActionPerformed
 
     private void searchTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyReleased

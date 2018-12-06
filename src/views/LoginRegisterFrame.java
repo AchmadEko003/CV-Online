@@ -6,7 +6,7 @@
 package views;
 
 import controllers.UserControllers;
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import javax.swing.JButton;

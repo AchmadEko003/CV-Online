@@ -5,12 +5,16 @@
  */
 package controllers;
 
+import interfaces.LowonganKerjaInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
-import entities.Perusahaan;
 import entities.Users;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.SessionFactory;
 
 /**
@@ -38,10 +42,12 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface {
     }
 
     @Override
-    public boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan) {
+    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String userId) {
         boolean hasil = false;
         try {
-            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(lowonganId), judulLowongan, deskripsiPekerjaan, requirements, new Perusahaan(Integer.valueOf(idPerusahaan)));
+            DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+            Date dates = format.parse(tanggal);
+            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(id), judul, deskripsi, requirements, dates, new Users(Integer.valueOf(userId)));
             System.out.println(lp);
             if (daoid.doDML(lp, false)) {
                 hasil = true;

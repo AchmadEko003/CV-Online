@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import org.hibernate.SessionFactory;
 import tools.BCrypt;
 import tools.HibernateUtil;
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import tools.Mail;
 
 /**

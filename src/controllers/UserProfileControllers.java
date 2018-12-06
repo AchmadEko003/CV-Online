@@ -5,9 +5,10 @@
  */
 package controllers;
 
+import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
-import entities.Userprofile;
+import entities.UserProfile;
 import entities.Users;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -37,15 +38,13 @@ public class UserProfileControllers implements UserProfileInterface {
         this.daoid = new GeneralDAO(factory);
     }
 
-    public boolean inputdata(String cvId, String cvUpload, String uploadPhoto, String uploadKtp, String namaUniversitas, String jurusan, String umur, String domisili, String tanggalLahir, String noTelepon, String pengalaman, String ipk, String skill) {
+    public boolean inputdata(String id, String umur, String alamat, String tanggalLahir, String noTelepon, String foto, String cv, String ktp, String usersId) {
         boolean hasil = false;
         try {
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
             Date dates = format.parse(tanggalLahir);
-            double ip = Double.valueOf(ipk);
-            Userprofile use = new Userprofile(Integer.valueOf(cvId), cvUpload, uploadPhoto, uploadKtp, namaUniversitas, jurusan, Short.valueOf(umur), domisili, dates, Long.valueOf(noTelepon), pengalaman, BigDecimal.valueOf(ip), skill, new Users(Integer.valueOf(cvId)));
-
-            if (daoid.doDML(use, false)) {
+            UserProfile up = new UserProfile(Integer.valueOf(id), Short.valueOf(umur), alamat, dates, Long.valueOf(noTelepon), foto, cv, ktp, new Users(Integer.valueOf(id)));
+            if (daoid.doDML(up, false)) {
                 hasil = true;
             }
         } catch (Exception e) {

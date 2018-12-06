@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package interfaces;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Nitani
  */
-public interface LowonganKerjaInterface {
+public interface PencapaianInterface {
     public List<Object> search(String keyword);
-    public boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan);
+    public boolean insert(String id, String nama, String lembaga, String userProfileId);
 }

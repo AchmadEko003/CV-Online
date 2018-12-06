@@ -5,9 +5,11 @@
  */
 package controllers;
 
+import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
-import entities.Userprofile;
+import entities.Role;
+import entities.UserProfile;
 import entities.Users;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -32,11 +34,10 @@ public class UserControllers implements UserInterface {
     }
 
     @Override
-    public boolean register(String userId, String name, String email, String password, String role) {
+    public boolean register(String id, String nama, String email, String password, String roleId) {
         boolean hasil = false;
         try {
-            int idUser = Integer.valueOf(userId);
-            Users use = new Users(idUser, name, email, password, role);
+            Users use = new Users(Integer.valueOf(id), nama, email, password, new Role(Integer.valueOf(roleId)));
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }

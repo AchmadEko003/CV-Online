@@ -6,7 +6,7 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
-import controllers.LowonganKerjaInterface;
+import interfaces.LowonganKerjaInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
@@ -214,15 +214,15 @@ public class UserViews extends javax.swing.JInternalFrame {
 
         try {
             for (Object low : lowongan) {
-                LowonganPekerjaan emp = (LowonganPekerjaan) low;
-                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-                String isi2 = emp.getJudulLowongan();
-                String isi3 = emp.getDeskripsiPekerjaan();
-                String isi4 = emp.getRequirements();
-                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
-
-                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-                model.addRow(kolom);
+//                LowonganPekerjaan emp = (LowonganPekerjaan) low;
+//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
+//                String isi2 = emp.getJudulLowongan();
+//                String isi3 = emp.getDeskripsiPekerjaan();
+//                String isi4 = emp.getRequirements();
+//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
+//
+//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+//                model.addRow(kolom);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());

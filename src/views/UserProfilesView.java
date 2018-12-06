@@ -6,9 +6,9 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
-import controllers.LowonganKerjaInterface;
+import interfaces.LowonganKerjaInterface;
 import controllers.UserProfileControllers;
-import controllers.UserProfileInterface;
+import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import java.text.DateFormat;
@@ -354,12 +354,12 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         String ipk = ipkTxt.getText();
         String skill = skillTxt.getText();
 
-        if (upi.inputdata(profile, cv, photo, ktp, univ, jurusan, umur, domisili, dates, telp, exp, ipk, skill)) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Gagal");
-        }
+//        if (upi.inputdata(profile, cv, photo, ktp, univ, jurusan, umur, domisili, dates, telp, exp, ipk, skill)) {
+//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+//            this.dispose();
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Gagal");
+//        }
     }//GEN-LAST:event_tambahBtnActionPerformed
 
     private void universitasTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_universitasTxtActionPerformed

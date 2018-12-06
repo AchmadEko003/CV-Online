@@ -6,53 +6,58 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Nitani
  */
 @Entity
-@Table(name = "APPLY")
+@Table(name = "ROLE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Apply.findAll", query = "SELECT a FROM Apply a")
-    , @NamedQuery(name = "Apply.findById", query = "SELECT a FROM Apply a WHERE a.id = :id")})
-public class Apply implements Serializable {
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
+    , @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id")
+    , @NamedQuery(name = "Role.findByStatus", query = "SELECT r FROM Role r WHERE r.status = :status")})
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @JoinColumn(name = "LOWONGAN_ID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private LowonganPekerjaan lowonganId;
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Users userId;
+    @Column(name = "STATUS")
+    private String status;
+    @OneToMany(mappedBy = "roleId", fetch = FetchType.LAZY)
+    private List<Users> usersList;
 
-    public Apply() {
+    public Role() {
     }
 
-    public Apply(Integer id) {
+    public Role(Integer id) {
         this.id = id;
     }
 
-    public Apply(Integer id, LowonganPekerjaan lowonganId, Users userId) {
+    public Role(Integer id, String status) {
         this.id = id;
-        this.lowonganId = lowonganId;
-        this.userId = userId;
+        this.status = status;
+    }
+
+    public Role(Integer id, String status, List<Users> usersList) {
+        this.id = id;
+        this.status = status;
+        this.usersList = usersList;
     }
 
     public Integer getId() {
@@ -63,20 +68,21 @@ public class Apply implements Serializable {
         this.id = id;
     }
 
-    public LowonganPekerjaan getLowonganId() {
-        return lowonganId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setLowonganId(LowonganPekerjaan lowonganId) {
-        this.lowonganId = lowonganId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Users getUserId() {
-        return userId;
+    @XmlTransient
+    public List<Users> getUsersList() {
+        return usersList;
     }
 
-    public void setUserId(Users userId) {
-        this.userId = userId;
+    public void setUsersList(List<Users> usersList) {
+        this.usersList = usersList;
     }
 
     @Override
@@ -89,10 +95,10 @@ public class Apply implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Apply)) {
+        if (!(object instanceof Role)) {
             return false;
         }
-        Apply other = (Apply) object;
+        Role other = (Role) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -101,7 +107,7 @@ public class Apply implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Apply[ id=" + id + " ]";
+        return "entities.Role[ id=" + id + " ]";
     }
     
 }

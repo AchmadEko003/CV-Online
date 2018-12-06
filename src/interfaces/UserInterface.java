@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package interfaces;
 
+import entities.Role;
+import entities.UserProfile;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public interface UserInterface {
     public List<Object> search(String keyword);
-    public boolean register(String userId, String name, String email, String password, String role);
+    public boolean register(String id, String nama, String email, String password, String roleId);
     public boolean login(Object nama, String password);
     public Integer getUser(Object user);
 }
