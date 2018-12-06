@@ -19,8 +19,7 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface{
     }
 
     @Override
-    public boolean register(String userId, String name, String email, String password, String role) {
+    public Boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

@@ -37,12 +37,12 @@ public class CVOnline {
         DAOInterface daoi = new GeneralDAO(sessionFactory);
         UserInterface ui = new UserControllers(sessionFactory);
 
-        Users users = new Users(12, "eko", "achmadeko003@gmail.com", "ekoeko123", "admin");
+//        Users users = new Users(12, "eko", "achmadeko003@gmail.com", "ekoeko123", "admin");
 //        Perusahaan p = new Perusahaan(1, "MII", "Jakarta");
 //        LowonganPekerjaan lp = new LowonganPekerjaan(21, "Back-end", "Dibutuhkan back-end developer segera", "A", new Perusahaan(1), new Users(32));
 
 //        System.out.println(users.getLowonganPekerjaanId());
-//        System.out.println(ui.register("12", "makoto", "achmadeko@gmail.com", "ekoeko123", "admin"));
+        System.out.println(ui.register("32", "makoto", "achmadeko009@gmail.com", "Makoto_Yuki009", "admin"));
         System.out.println(ui.search("achmadeko@gmail.com"));
     }
 }

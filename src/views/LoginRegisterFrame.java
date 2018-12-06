@@ -5,11 +5,26 @@
  */
 package views;
 
+import controllers.UserControllers;
+import controllers.UserInterface;
+import daos.DAOInterface;
+import daos.GeneralDAO;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+import tools.Mail;
+
 /**
  *
  * @author Nitani
  */
 public class LoginRegisterFrame extends javax.swing.JInternalFrame {
+
+    private JButton buttons;
+    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private DAOInterface daoi = new GeneralDAO(sessionFactory);
+    private UserInterface ai = new UserControllers(sessionFactory);
 
     /**
      * Creates new form LoginRegisterFrame
@@ -27,15 +42,21 @@ public class LoginRegisterFrame extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        usernameTxt = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        username = new javax.swing.JLabel();
         btnLogReg = new javax.swing.JButton();
+        roleTxt = new javax.swing.JTextField();
+        passwordTxt = new javax.swing.JPasswordField();
+        namaTxt = new javax.swing.JTextField();
+        emailTxt = new javax.swing.JTextField();
+        idTxt = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        id = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
+        role = new javax.swing.JLabel();
 
-        jLabel1.setText("Password");
+        setTitle("Register");
 
-        jLabel2.setText("Username");
+        username.setText("Username");
 
         btnLogReg.setText("Login");
         btnLogReg.addActionListener(new java.awt.event.ActionListener() {
@@ -44,39 +65,75 @@ public class LoginRegisterFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Password");
+
+        id.setText("ID");
+
+        email.setText("E-Mail");
+
+        role.setText("Role");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(73, 73, 73)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(namaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogReg, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnLogReg, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                            .addComponent(jTextField2))))
-                .addContainerGap(109, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(role)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(roleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(15, 15, 15)
+                                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(id))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(namaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(username))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(email))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(role)
+                    .addComponent(roleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogReg)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         pack();
@@ -84,19 +141,48 @@ public class LoginRegisterFrame extends javax.swing.JInternalFrame {
 
     private void btnLogRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogRegActionPerformed
         // TODO add your handling code here:
-        if(btnLogReg.getText() == "Login"){
-            btnLogReg.setText("Register");
-        } else{
-            btnLogReg.setText("Login");
+        String id = idTxt.getText();
+        String name = namaTxt.getText();
+        String email = emailTxt.getText();
+        String password = passwordTxt.getText();
+        String roles = roleTxt.getText();
+        MainFrame mf = new MainFrame(name);
+        Mail m = new Mail();
+
+        //        String result = ai.register(id, name, username, email, BCrypt.hashpw(password, BCrypt.gensalt()), roles);
+        //        if(ai.register(id, name, email, BCrypt.hashpw(password, BCrypt.gensalt()), roles)){
+        //            JOptionPane.showMessageDialog(null, "Berhasil register");
+        //                btnLogReg.setText("Login");
+        //            } else {
+        //                JOptionPane.showMessageDialog(null, "Data tidak boleh kosong");
+        //            }
+        
+        if (ai.login(name, password)) {
+            JOptionPane.showMessageDialog(null, "Berhasil login");
+            m.Send(email, password);
+            this.dispose();
+        } else {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Gagal, ingin membuat akun?", "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                namaTxt.setText("Register");
+            }
         }
+        //JOptionPane.showMessageDialog(null, result);
     }//GEN-LAST:event_btnLogRegActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogReg;
+    private javax.swing.JLabel email;
+    private javax.swing.JTextField emailTxt;
+    private javax.swing.JLabel id;
+    private javax.swing.JTextField idTxt;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField usernameTxt;
+    private javax.swing.JTextField namaTxt;
+    private javax.swing.JPasswordField passwordTxt;
+    private javax.swing.JLabel role;
+    private javax.swing.JTextField roleTxt;
+    private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

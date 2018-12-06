@@ -17,18 +17,10 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Nitani
  */
-public class Email {
+public class Mail {
 
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
-     */
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    public boolean Send(String email, String passwords) {
+        boolean hasil = false;
         try {
 
             Properties properties = new Properties();
@@ -41,18 +33,17 @@ public class Email {
             session.setDebug(true);
 
             MimeMessage pesan = new MimeMessage(session);
-            pesan.setFrom("achmadeko009@gmail.com"); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
+            pesan.setFrom(email); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
             pesan.setRecipient(Message.RecipientType.TO, new InternetAddress("achmadeko003@gmail.com"));//isi dengan tujuan email
-            pesan.setSubject("Java Mail coba");
+            pesan.setSubject("Pemberitahuan berhasil login");
             pesan.setText("Email dikirim menggunakan Java Mail.");
 
-            String username = "achmadeko009@gmail.com"; //ganti dengan gmail kalian sendiri
-            String password = "Makoto_Yuki009"; //ganti dengan password kalian sendiri
+            String username = email; //ganti dengan gmail kalian sendiri
+            String password = passwords; //ganti dengan password kalian sendiri
             Transport.send(pesan, username, password);
         } catch (MessagingException ex) {
             ex.printStackTrace();
         }
+        return hasil;
     }
-
 }
-
