@@ -36,7 +36,6 @@ public class UserControllers implements UserInterface {
         try {
             int idUser = Integer.valueOf(userId);
             Users use = new Users(idUser, name, email, password, role);
-            System.out.println(use);
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }

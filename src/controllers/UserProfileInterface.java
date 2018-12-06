@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface UserProfileInterface {
     public List<Object> search(String keyword);
-    public boolean register(Integer cvId, Serializable cvUpload, Serializable uploadPhoto, Serializable uploadKtp, String namaUniversitas, String jurusan, Short umur, String domisili, Date tanggalLahir, Long noTelepon, String pengalaman, Short ipk, String skill, Users userId);
+    public boolean inputdata(String cvId, String cvUpload, String uploadPhoto, String uploadKtp, String namaUniversitas, String jurusan, String umur, String domisili, String tanggalLahir, String noTelepon, String pengalaman, String ipk, String skill, String userId);
 }

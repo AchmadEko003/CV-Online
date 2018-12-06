@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Userprofile.findAll", query = "SELECT u FROM Userprofile u")
-    , @NamedQuery(name = "Userprofile.findByCvId", query = "SELECT u FROM Userprofile u WHERE u.cvId = :cvId")
+    , @NamedQuery(name = "Userprofile.findByUserProfileId", query = "SELECT u FROM Userprofile u WHERE u.userProfileId = :userProfileId")
     , @NamedQuery(name = "Userprofile.findByNamaUniversitas", query = "SELECT u FROM Userprofile u WHERE u.namaUniversitas = :namaUniversitas")
     , @NamedQuery(name = "Userprofile.findByJurusan", query = "SELECT u FROM Userprofile u WHERE u.jurusan = :jurusan")
     , @NamedQuery(name = "Userprofile.findByUmur", query = "SELECT u FROM Userprofile u WHERE u.umur = :umur")
@@ -46,8 +47,8 @@ public class Userprofile implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "CV_ID")
-    private Integer cvId;
+    @Column(name = "USER_PROFILE_ID")
+    private Integer userProfileId;
     @Lob
     @Column(name = "CV_UPLOAD")
     private Serializable cvUpload;
@@ -72,8 +73,9 @@ public class Userprofile implements Serializable {
     private Long noTelepon;
     @Column(name = "PENGALAMAN")
     private String pengalaman;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "IPK")
-    private Short ipk;
+    private BigDecimal ipk;
     @Column(name = "SKILL")
     private String skill;
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
@@ -83,8 +85,12 @@ public class Userprofile implements Serializable {
     public Userprofile() {
     }
 
-    public Userprofile(Integer cvId, Serializable cvUpload, Serializable uploadPhoto, Serializable uploadKtp, String namaUniversitas, String jurusan, Short umur, String domisili, Date tanggalLahir, Long noTelepon, String pengalaman, Short ipk, String skill, Users userId) {
-        this.cvId = cvId;
+    public Userprofile(Integer userProfileId) {
+        this.userProfileId = userProfileId;
+    }
+
+    public Userprofile(Integer userProfileId, Serializable cvUpload, Serializable uploadPhoto, Serializable uploadKtp, String namaUniversitas, String jurusan, Short umur, String domisili, Date tanggalLahir, Long noTelepon, String pengalaman, BigDecimal ipk, String skill, Users userId) {
+        this.userProfileId = userProfileId;
         this.cvUpload = cvUpload;
         this.uploadPhoto = uploadPhoto;
         this.uploadKtp = uploadKtp;
@@ -100,16 +106,12 @@ public class Userprofile implements Serializable {
         this.userId = userId;
     }
 
-    public Userprofile(Integer cvId) {
-        this.cvId = cvId;
+    public Integer getUserProfileId() {
+        return userProfileId;
     }
 
-    public Integer getCvId() {
-        return cvId;
-    }
-
-    public void setCvId(Integer cvId) {
-        this.cvId = cvId;
+    public void setUserProfileId(Integer userProfileId) {
+        this.userProfileId = userProfileId;
     }
 
     public Serializable getCvUpload() {
@@ -192,11 +194,11 @@ public class Userprofile implements Serializable {
         this.pengalaman = pengalaman;
     }
 
-    public Short getIpk() {
+    public BigDecimal getIpk() {
         return ipk;
     }
 
-    public void setIpk(Short ipk) {
+    public void setIpk(BigDecimal ipk) {
         this.ipk = ipk;
     }
 
@@ -219,7 +221,7 @@ public class Userprofile implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cvId != null ? cvId.hashCode() : 0);
+        hash += (userProfileId != null ? userProfileId.hashCode() : 0);
         return hash;
     }
 
@@ -230,7 +232,7 @@ public class Userprofile implements Serializable {
             return false;
         }
         Userprofile other = (Userprofile) object;
-        if ((this.cvId == null && other.cvId != null) || (this.cvId != null && !this.cvId.equals(other.cvId))) {
+        if ((this.userProfileId == null && other.userProfileId != null) || (this.userProfileId != null && !this.userProfileId.equals(other.userProfileId))) {
             return false;
         }
         return true;
@@ -238,7 +240,7 @@ public class Userprofile implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Userprofile[ cvId=" + cvId + " ]";
+        return "entities.Userprofile[ userProfileId=" + userProfileId + " ]";
     }
-
+    
 }

@@ -26,14 +26,16 @@ public class MainFrame extends javax.swing.JFrame {
     private UserInterface ai = new UserControllers(sessionFactory);
 
     LoginRegisterFrame lrf = new LoginRegisterFrame();
+    LowonganKerjaViews lkv = new LowonganKerjaViews();
+    UserProfilesView upv = new UserProfilesView();
     /**
      * Creates new form MainFrame
      */
     public MainFrame(String nama) {
         initComponents();
         jLabel1.setText(nama);
-        lrf.show();
-        dsktpMain.add(lrf);
+        upv.show();
+        dsktpMain.add(upv);
     }
 
     /**
@@ -51,7 +53,29 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         dsktpMain = new javax.swing.JDesktopPane();
         userPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        emailUser = new javax.swing.JLabel();
+        universitasUser = new javax.swing.JLabel();
+        jurusanUser = new javax.swing.JLabel();
+        umurUser = new javax.swing.JLabel();
+        domisiliUser = new javax.swing.JLabel();
+        tanggalLahir = new javax.swing.JLabel();
+        noTelp = new javax.swing.JLabel();
+        pengalamanUser = new javax.swing.JLabel();
+        ipkUser = new javax.swing.JLabel();
+        skillUser = new javax.swing.JLabel();
+        namaUser = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -76,29 +100,156 @@ public class MainFrame extends javax.swing.JFrame {
         dsktpMain.setLayout(dsktpMainLayout);
         dsktpMainLayout.setHorizontalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 983, Short.MAX_VALUE)
+            .addGap(0, 962, Short.MAX_VALUE)
         );
         dsktpMainLayout.setVerticalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 786, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Nama");
+
+        jLabel2.setText("Email");
+
+        jLabel3.setText("Universitas");
+
+        jLabel4.setText("Jurusan");
+
+        jLabel5.setText("Umur");
+
+        jLabel6.setText("Domisili");
+
+        jLabel7.setText("Tanggal Lahir");
+
+        jLabel8.setText("No Telepon");
+
+        jLabel9.setText("Pengalaman");
+
+        jLabel10.setText("IPK");
+
+        jLabel11.setText("Skill");
+
+        emailUser.setText("Email");
+
+        universitasUser.setText("Universitas");
+
+        jurusanUser.setText("Jurusan");
+
+        umurUser.setText("Umur");
+
+        domisiliUser.setText("Domisili");
+
+        tanggalLahir.setText("Tanggal Lahir");
+
+        noTelp.setText("No Telepon");
+
+        pengalamanUser.setText("Pengalaman");
+
+        ipkUser.setText("IPK");
+
+        skillUser.setText("Skill");
+
+        namaUser.setText("Nama");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(skillUser)
+                    .addComponent(ipkUser)
+                    .addComponent(pengalamanUser)
+                    .addComponent(noTelp)
+                    .addComponent(tanggalLahir)
+                    .addComponent(domisiliUser)
+                    .addComponent(umurUser)
+                    .addComponent(emailUser)
+                    .addComponent(namaUser)
+                    .addComponent(universitasUser)
+                    .addComponent(jurusanUser))
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(namaUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(emailUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(universitasUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jurusanUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(umurUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(domisiliUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tanggalLahir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(noTelp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pengalamanUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ipkUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(skillUser))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jLabel1)
+                .addGap(173, 173, 173)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -158,18 +309,40 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new MainFrame().setVisible(true);
+                //new MainFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel domisiliUser;
     private javax.swing.JDesktopPane dsktpMain;
+    private javax.swing.JLabel emailUser;
+    private javax.swing.JLabel ipkUser;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jurusanUser;
+    private javax.swing.JLabel namaUser;
+    private javax.swing.JLabel noTelp;
+    private javax.swing.JLabel pengalamanUser;
+    private javax.swing.JLabel skillUser;
+    private javax.swing.JLabel tanggalLahir;
+    private javax.swing.JLabel umurUser;
+    private javax.swing.JLabel universitasUser;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 }

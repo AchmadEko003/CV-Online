@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface LowonganKerjaInterface {
     public List<Object> search(String keyword);
-    public Boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan);
+    public boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan, String idUser);
 }
