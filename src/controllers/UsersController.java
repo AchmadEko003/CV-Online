@@ -47,4 +47,19 @@ public class UsersController implements UserInterface {
         return hasil;
     }
 
+    @Override
+    public boolean insertOrUpdateOrDelete(Object object, boolean isDelete) {
+        return gdao.doDML(object, isDelete);
+    }
+
+    @Override
+    public List<Object> getAllData(Object entity, String keyword) {
+        return gdao.doDDL(entity, keyword);
+    }
+
+    @Override
+    public Object getById(Object entity, Object id) {
+        return gdao.getById(entity, id);
+    }
+
 }

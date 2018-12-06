@@ -14,4 +14,10 @@ import java.util.List;
 public interface UserInterface {
     public List<Object> search(String keyword);
     public boolean register(String userId, String nama, String email, String userPassword, String role);
+    public boolean insertOrUpdateOrDelete(Object object,
+            boolean isDelete);
+
+    public List<Object> getAllData(Object entity, String keyword);
+
+    public Object getById(Object entity, Object id);
 }
