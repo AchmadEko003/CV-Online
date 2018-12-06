@@ -146,7 +146,7 @@ public class LoginRegisterFrame extends javax.swing.JInternalFrame {
         String email = emailTxt.getText();
         String password = passwordTxt.getText();
         String roles = roleTxt.getText();
-        MainFrame mf = new MainFrame(name);
+        MainFrame mf = new MainFrame();
         Mail m = new Mail();
 
         //        String result = ai.register(id, name, username, email, BCrypt.hashpw(password, BCrypt.gensalt()), roles);

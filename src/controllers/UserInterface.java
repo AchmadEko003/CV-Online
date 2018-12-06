@@ -15,4 +15,5 @@ public interface UserInterface {
     public List<Object> search(String keyword);
     public boolean register(String userId, String name, String email, String password, String role);
     public boolean login(Object nama, String password);
+    public Integer getUser(Object user);
 }

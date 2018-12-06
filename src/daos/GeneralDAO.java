@@ -63,4 +63,9 @@ public class GeneralDAO implements DAOInterface {
     public boolean insImg(int paramIndex, InputStream stream, long length) {
         return this.fdao.insImg(paramIndex, stream, length);
     }
+
+    @Override
+    public Integer getUser(Object user) {
+        return this.fdao.getUser(user);
+    }
 }

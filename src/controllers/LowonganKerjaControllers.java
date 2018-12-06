@@ -38,10 +38,10 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface {
     }
 
     @Override
-    public boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan, String idUser) {
+    public boolean insert(String lowonganId, String judulLowongan, String deskripsiPekerjaan, String requirements, String idPerusahaan) {
         boolean hasil = false;
         try {
-            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(lowonganId), judulLowongan, deskripsiPekerjaan, requirements, new Perusahaan(Integer.valueOf(idPerusahaan)), new Users(Integer.valueOf(idUser)));
+            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(lowonganId), judulLowongan, deskripsiPekerjaan, requirements, new Perusahaan(Integer.valueOf(idPerusahaan)));
             System.out.println(lp);
             if (daoid.doDML(lp, false)) {
                 hasil = true;

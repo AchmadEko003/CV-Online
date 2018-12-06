@@ -58,7 +58,7 @@ public class LowonganPekerjaan implements Serializable {
         this.lowonganPekerjaanId = lowonganPekerjaanId;
     }
 
-    public LowonganPekerjaan(Integer lowonganPekerjaanId, String judulLowongan, String deskripsiPekerjaan, String requirements, Perusahaan perusahaanId, Users userId) {
+    public LowonganPekerjaan(Integer lowonganPekerjaanId, String judulLowongan, String deskripsiPekerjaan, String requirements, Perusahaan perusahaanId) {
         this.lowonganPekerjaanId = lowonganPekerjaanId;
         this.judulLowongan = judulLowongan;
         this.deskripsiPekerjaan = deskripsiPekerjaan;

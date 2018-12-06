@@ -51,8 +51,6 @@ public class Users implements Serializable {
     private String role;
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Userprofile> userprofileList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<LowonganPekerjaan> lowonganPekerjaanList;
 
     public Users() {
     }
@@ -61,17 +59,30 @@ public class Users implements Serializable {
         this.userId = userId;
     }
 
+    public Users(Integer userId, String nama, String email, String userPassword, String role) {
+        this.userId = userId;
+        this.nama = nama;
+        this.email = email;
+        this.userPassword = userPassword;
+        this.role = role;
+    }
+
+    public Users(Integer userId, String nama, String email, String userPassword, String role, List<Userprofile> userprofileList) {
+        this.userId = userId;
+        this.nama = nama;
+        this.email = email;
+        this.userPassword = userPassword;
+        this.role = role;
+        this.userprofileList = userprofileList;
+    }
+
     public Users(Integer userId, String userPassword) {
         this.userId = userId;
         this.userPassword = userPassword;
     }
 
-    public Users(Integer idUser, String nama, String email, String userPassword, String role) {
-        this.userId = idUser;
-        this.nama = nama;
-        this.email = email;
-        this.userPassword = userPassword;
-        this.role = role;
+    public Users(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Integer getUserId() {
@@ -123,15 +134,6 @@ public class Users implements Serializable {
         this.userprofileList = userprofileList;
     }
 
-    @XmlTransient
-    public List<LowonganPekerjaan> getLowonganPekerjaanList() {
-        return lowonganPekerjaanList;
-    }
-
-    public void setLowonganPekerjaanList(List<LowonganPekerjaan> lowonganPekerjaanList) {
-        this.lowonganPekerjaanList = lowonganPekerjaanList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -156,5 +158,5 @@ public class Users implements Serializable {
     public String toString() {
         return "entities.Users[ userId=" + userId + " ]";
     }
-    
+
 }

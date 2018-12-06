@@ -7,6 +7,7 @@ package controllers;
 
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.Userprofile;
 import entities.Users;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -53,5 +54,10 @@ public class UserControllers implements UserInterface {
     @Override
     public boolean login(Object nama, String password){
         return this.daoid.login(nama, password);
+    }
+
+    @Override
+    public Integer getUser(Object user) {
+        return this.daoid.getUser(user);
     }
 }
