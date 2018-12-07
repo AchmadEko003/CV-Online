@@ -15,7 +15,9 @@ import java.util.List;
  */
 public interface UserInterface {
     public List<Object> search(String keyword);
-    public boolean register(String id, String nama, String email, String password, String roleId);
+    public boolean register(String id, String nama, String email, String password);
     public boolean login(Object nama, String password);
     public Integer getUser(Object user);
+    public Object getById(Object id);
+    public boolean getIdProfile(Object id);
 }

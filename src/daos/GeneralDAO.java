@@ -68,4 +68,9 @@ public class GeneralDAO implements DAOInterface {
     public Integer getUser(Object user) {
         return this.fdao.getUser(user);
     }
+
+    @Override
+    public boolean getIdProfile(Object id) {
+        return this.fdao.getProfilesId(id);
+    }
 }

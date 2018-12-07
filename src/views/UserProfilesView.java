@@ -6,11 +6,14 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
+import controllers.UserControllers;
 import interfaces.LowonganKerjaInterface;
 import controllers.UserProfileControllers;
 import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.UserProfile;
+import interfaces.UserInterface;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
+import tools.getDataLogin;
+import tools.getLoginData;
 
 /**
  *
@@ -30,12 +35,30 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private DAOInterface daoi = new GeneralDAO(sessionFactory);
     private UserProfileInterface upi = new UserProfileControllers(sessionFactory);
+    private getLoginData data = new getLoginData(sessionFactory);
+    private getDataLogin dataLogin = new getDataLogin();
+    private UserInterface ai = new UserControllers(sessionFactory);
 
     /**
      * Creates new form UserProfilesView
      */
     public UserProfilesView() {
         initComponents();
+        userId.setText(String.valueOf(dataLogin.getUsersId()));
+        if (ai.getIdProfile(dataLogin.getUsersId())) {
+            tambahBtn.setText("Update");
+        } else {
+            tambahBtn.setText("Tambah");
+        }
+    }
+
+    public void clear() {
+        uploadCV.setText("");
+        uploadKTP.setText("");
+        uploadPhoto.setText("");
+        umurTxt.setText("");
+        alamatTxt.setText("");
+        telpTxt.setText("");
     }
 
     /**
@@ -48,86 +71,58 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        id = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
-        role = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
-        userIdTxt = new javax.swing.JTextField();
         uploadCV = new javax.swing.JTextField();
         uploadKTP = new javax.swing.JTextField();
-        profileIdTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         uploadPhoto = new javax.swing.JTextField();
-        universitasTxt = new javax.swing.JTextField();
-        role1 = new javax.swing.JLabel();
-        role2 = new javax.swing.JLabel();
         role3 = new javax.swing.JLabel();
         role4 = new javax.swing.JLabel();
         role5 = new javax.swing.JLabel();
         role6 = new javax.swing.JLabel();
-        role7 = new javax.swing.JLabel();
-        role8 = new javax.swing.JLabel();
-        role9 = new javax.swing.JLabel();
-        jurusanTxt = new javax.swing.JTextField();
         umurTxt = new javax.swing.JTextField();
-        domisiliTxt = new javax.swing.JTextField();
+        alamatTxt = new javax.swing.JTextField();
         telpTxt = new javax.swing.JTextField();
-        pengalaman = new javax.swing.JTextField();
-        ipkTxt = new javax.swing.JTextField();
-        skillTxt = new javax.swing.JTextField();
         dateofbirth = new org.jdesktop.swingx.JXDatePicker();
         tambahBtn = new javax.swing.JButton();
+        userId = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Profil Pengguna");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Profil"));
 
-        id.setText("ID");
-
         email.setText("Upload KTP");
-
-        role.setText("User");
 
         username.setText("Upload CV");
 
-        userIdTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userIdTxtActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Upload Photo");
-
-        universitasTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                universitasTxtActionPerformed(evt);
-            }
-        });
-
-        role1.setText("Universitas");
-
-        role2.setText("Jurusan");
 
         role3.setText("Umur");
 
-        role4.setText("Domisili");
+        role4.setText("Alamat");
 
         role5.setText("Tanggal Lahir");
 
         role6.setText("No Telp");
-
-        role7.setText("Pengalaman");
-
-        role8.setText("Skill");
-
-        role9.setText("IPK");
-
-        jurusanTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jurusanTxtActionPerformed(evt);
-            }
-        });
 
         umurTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,9 +130,9 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             }
         });
 
-        domisiliTxt.addActionListener(new java.awt.event.ActionListener() {
+        alamatTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                domisiliTxtActionPerformed(evt);
+                alamatTxtActionPerformed(evt);
             }
         });
 
@@ -147,21 +142,9 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             }
         });
 
-        pengalaman.addActionListener(new java.awt.event.ActionListener() {
+        dateofbirth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pengalamanActionPerformed(evt);
-            }
-        });
-
-        ipkTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ipkTxtActionPerformed(evt);
-            }
-        });
-
-        skillTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                skillTxtActionPerformed(evt);
+                dateofbirthActionPerformed(evt);
             }
         });
 
@@ -172,6 +155,8 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             }
         });
 
+        userId.setText("id");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -179,80 +164,51 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(role1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(universitasTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jurusanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(role4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(domisiliTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(alamatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(role6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(telpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role7)
+                        .addComponent(role5)
+                        .addGap(49, 49, 49)
+                        .addComponent(dateofbirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(userId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pengalaman, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ipkTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(skillTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(username)
-                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(role3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(profileIdTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(uploadCV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(111, 111, 111))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(username)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(uploadCV, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(role)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(userIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(uploadKTP, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(uploadKTP, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(uploadPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role5)
-                        .addGap(49, 49, 49)
-                        .addComponent(dateofbirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(profileIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(id))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uploadCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username))
@@ -265,48 +221,26 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
                     .addComponent(uploadKTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(email))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(role)
-                    .addComponent(userIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(universitasTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(role1))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(role2)
-                    .addComponent(jurusanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(role3)
                     .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(role4)
-                    .addComponent(domisiliTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(alamatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(role5)
                     .addComponent(dateofbirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(role6)
                     .addComponent(telpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(role7)
-                    .addComponent(pengalaman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(role9)
-                    .addComponent(ipkTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(role8)
-                    .addComponent(skillTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(tambahBtn)
-                .addContainerGap())
+                    .addComponent(tambahBtn)
+                    .addComponent(userId))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -329,102 +263,87 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userIdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIdTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userIdTxtActionPerformed
-
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
         DateFormat formats = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        String profile = profileIdTxt.getText();
         String cv = uploadCV.getText();
         String ktp = uploadKTP.getText();
         String photo = uploadPhoto.getText();
-        String user = userIdTxt.getText();
-        String univ = universitasTxt.getText();
-        String jurusan = jurusanTxt.getText();
         String umur = umurTxt.getText();
-        String domisili = domisiliTxt.getText();
-
+        String domisili = alamatTxt.getText();
         Date birth = dateofbirth.getDate();
         String dates = formats.format(birth);
-
         String telp = telpTxt.getText();
-        String exp = pengalaman.getText();
-        String ipk = ipkTxt.getText();
-        String skill = skillTxt.getText();
 
-//        if (upi.inputdata(profile, cv, photo, ktp, univ, jurusan, umur, domisili, dates, telp, exp, ipk, skill)) {
-//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Gagal");
-//        }
+        if (tambahBtn.getText() == "Update") {
+            if (upi.inputdata(String.valueOf(data.getTotal(new UserProfile()).size()), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
+                JOptionPane.showMessageDialog(null, "Update Berhasil");
+                tambahBtn.setText("Tambah");
+                clear();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal");
+            }
+        } else {
+            if (upi.inputdata(String.valueOf(data.getTotal(new UserProfile()).size() + 1), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                tambahBtn.setText("Update");
+                clear();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal");
+            }
+        }
     }//GEN-LAST:event_tambahBtnActionPerformed
-
-    private void universitasTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_universitasTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_universitasTxtActionPerformed
-
-    private void jurusanTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jurusanTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jurusanTxtActionPerformed
-
-    private void umurTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_umurTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_umurTxtActionPerformed
-
-    private void domisiliTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domisiliTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_domisiliTxtActionPerformed
 
     private void telpTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telpTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_telpTxtActionPerformed
 
-    private void pengalamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pengalamanActionPerformed
+    private void alamatTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alamatTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pengalamanActionPerformed
+    }//GEN-LAST:event_alamatTxtActionPerformed
 
-    private void ipkTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipkTxtActionPerformed
+    private void umurTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_umurTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ipkTxtActionPerformed
+    }//GEN-LAST:event_umurTxtActionPerformed
 
-    private void skillTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skillTxtActionPerformed
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
-    }//GEN-LAST:event_skillTxtActionPerformed
+        if (ai.getIdProfile(dataLogin.getUsersId())) {
+            tambahBtn.setText("Update");
+        } else {
+            tambahBtn.setText("Tambah");
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void dateofbirthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateofbirthActionPerformed
+        // TODO add your handling code here:
+        DateFormat formatr = new SimpleDateFormat("yyyy", Locale.ENGLISH);
+        Date birth = dateofbirth.getDate();
+        String a = formatr.format(birth);
+        Integer b = 2018 - Integer.valueOf(a);
+        umurTxt.setText(String.valueOf(b));
+    }//GEN-LAST:event_dateofbirthActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField alamatTxt;
     private org.jdesktop.swingx.JXDatePicker dateofbirth;
-    private javax.swing.JTextField domisiliTxt;
     private javax.swing.JLabel email;
-    private javax.swing.JLabel id;
-    private javax.swing.JTextField ipkTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jurusanTxt;
-    private javax.swing.JTextField pengalaman;
-    private javax.swing.JTextField profileIdTxt;
-    private javax.swing.JLabel role;
-    private javax.swing.JLabel role1;
-    private javax.swing.JLabel role2;
     private javax.swing.JLabel role3;
     private javax.swing.JLabel role4;
     private javax.swing.JLabel role5;
     private javax.swing.JLabel role6;
-    private javax.swing.JLabel role7;
-    private javax.swing.JLabel role8;
-    private javax.swing.JLabel role9;
-    private javax.swing.JTextField skillTxt;
     private javax.swing.JButton tambahBtn;
     private javax.swing.JTextField telpTxt;
     private javax.swing.JTextField umurTxt;
-    private javax.swing.JTextField universitasTxt;
     private javax.swing.JTextField uploadCV;
     private javax.swing.JTextField uploadKTP;
     private javax.swing.JTextField uploadPhoto;
-    private javax.swing.JTextField userIdTxt;
+    private javax.swing.JLabel userId;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }
