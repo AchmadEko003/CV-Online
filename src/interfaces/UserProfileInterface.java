@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package interfaces;
 
 import entities.Users;
 import java.io.Serializable;
@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface UserProfileInterface {
     public List<Object> search(String keyword);
-    public boolean inputdata(String cvId, String cvUpload, String uploadPhoto, String uploadKtp, String namaUniversitas, String jurusan, String umur, String domisili, String tanggalLahir, String noTelepon, String pengalaman, String ipk, String skill, String userId);
+    public boolean inputdata(String id, String umur, String alamat, String tanggalLahir, String noTelepon, String foto, String cv, String ktp, String usersId);
 }

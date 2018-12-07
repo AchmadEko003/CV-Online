@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,68 +30,77 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LowonganPekerjaan.findAll", query = "SELECT l FROM LowonganPekerjaan l")
-    , @NamedQuery(name = "LowonganPekerjaan.findByLowonganPekerjaanId", query = "SELECT l FROM LowonganPekerjaan l WHERE l.lowonganPekerjaanId = :lowonganPekerjaanId")
-    , @NamedQuery(name = "LowonganPekerjaan.findByJudulLowongan", query = "SELECT l FROM LowonganPekerjaan l WHERE l.judulLowongan = :judulLowongan")
-    , @NamedQuery(name = "LowonganPekerjaan.findByDeskripsiPekerjaan", query = "SELECT l FROM LowonganPekerjaan l WHERE l.deskripsiPekerjaan = :deskripsiPekerjaan")
-    , @NamedQuery(name = "LowonganPekerjaan.findByRequirements", query = "SELECT l FROM LowonganPekerjaan l WHERE l.requirements = :requirements")})
+    , @NamedQuery(name = "LowonganPekerjaan.findById", query = "SELECT l FROM LowonganPekerjaan l WHERE l.id = :id")
+    , @NamedQuery(name = "LowonganPekerjaan.findByJudul", query = "SELECT l FROM LowonganPekerjaan l WHERE l.judul = :judul")
+    , @NamedQuery(name = "LowonganPekerjaan.findByDeskripsi", query = "SELECT l FROM LowonganPekerjaan l WHERE l.deskripsi = :deskripsi")
+    , @NamedQuery(name = "LowonganPekerjaan.findByRequirements", query = "SELECT l FROM LowonganPekerjaan l WHERE l.requirements = :requirements")
+    , @NamedQuery(name = "LowonganPekerjaan.findByTanggal", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggal = :tanggal")})
 public class LowonganPekerjaan implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "LOWONGAN_PEKERJAAN_ID")
-    private Integer lowonganPekerjaanId;
-    @Column(name = "JUDUL_LOWONGAN")
-    private String judulLowongan;
-    @Column(name = "DESKRIPSI_PEKERJAAN")
-    private String deskripsiPekerjaan;
+    @Column(name = "ID")
+    private Integer id;
+    @Column(name = "JUDUL")
+    private String judul;
+    @Column(name = "DESKRIPSI")
+    private String deskripsi;
     @Column(name = "REQUIREMENTS")
     private String requirements;
-    @JoinColumn(name = "PERUSAHAAN_ID", referencedColumnName = "PERUSAHAAN_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Perusahaan perusahaanId;
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    @Column(name = "TANGGAL")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tanggal;
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Users userId;
 
     public LowonganPekerjaan() {
     }
 
-    public LowonganPekerjaan(Integer lowonganPekerjaanId) {
-        this.lowonganPekerjaanId = lowonganPekerjaanId;
+    public LowonganPekerjaan(Integer id) {
+        this.id = id;
     }
 
-    public LowonganPekerjaan(Integer lowonganPekerjaanId, String judulLowongan, String deskripsiPekerjaan, String requirements, Perusahaan perusahaanId, Users userId) {
-        this.lowonganPekerjaanId = lowonganPekerjaanId;
-        this.judulLowongan = judulLowongan;
-        this.deskripsiPekerjaan = deskripsiPekerjaan;
+    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal) {
+        this.id = id;
+        this.judul = judul;
+        this.deskripsi = deskripsi;
         this.requirements = requirements;
-        this.perusahaanId = perusahaanId;
+        this.tanggal = tanggal;
+    }
+
+    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal, Users userId) {
+        this.id = id;
+        this.judul = judul;
+        this.deskripsi = deskripsi;
+        this.requirements = requirements;
+        this.tanggal = tanggal;
         this.userId = userId;
     }
 
-    public Integer getLowonganPekerjaanId() {
-        return lowonganPekerjaanId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setLowonganPekerjaanId(Integer lowonganPekerjaanId) {
-        this.lowonganPekerjaanId = lowonganPekerjaanId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getJudulLowongan() {
-        return judulLowongan;
+    public String getJudul() {
+        return judul;
     }
 
-    public void setJudulLowongan(String judulLowongan) {
-        this.judulLowongan = judulLowongan;
+    public void setJudul(String judul) {
+        this.judul = judul;
     }
 
-    public String getDeskripsiPekerjaan() {
-        return deskripsiPekerjaan;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setDeskripsiPekerjaan(String deskripsiPekerjaan) {
-        this.deskripsiPekerjaan = deskripsiPekerjaan;
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 
     public String getRequirements() {
@@ -99,12 +111,12 @@ public class LowonganPekerjaan implements Serializable {
         this.requirements = requirements;
     }
 
-    public Perusahaan getPerusahaanId() {
-        return perusahaanId;
+    public Date getTanggal() {
+        return tanggal;
     }
 
-    public void setPerusahaanId(Perusahaan perusahaanId) {
-        this.perusahaanId = perusahaanId;
+    public void setTanggal(Date tanggal) {
+        this.tanggal = tanggal;
     }
 
     public Users getUserId() {
@@ -118,7 +130,7 @@ public class LowonganPekerjaan implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (lowonganPekerjaanId != null ? lowonganPekerjaanId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -129,7 +141,7 @@ public class LowonganPekerjaan implements Serializable {
             return false;
         }
         LowonganPekerjaan other = (LowonganPekerjaan) object;
-        if ((this.lowonganPekerjaanId == null && other.lowonganPekerjaanId != null) || (this.lowonganPekerjaanId != null && !this.lowonganPekerjaanId.equals(other.lowonganPekerjaanId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -137,7 +149,7 @@ public class LowonganPekerjaan implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.LowonganPekerjaan[ lowonganPekerjaanId=" + lowonganPekerjaanId + " ]";
+        return "entities.LowonganPekerjaan[ id=" + id + " ]";
     }
     
 }

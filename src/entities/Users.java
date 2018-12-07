@@ -8,10 +8,13 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,58 +31,75 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
-    , @NamedQuery(name = "Users.findByUserId", query = "SELECT u FROM Users u WHERE u.userId = :userId")
+    , @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id")
     , @NamedQuery(name = "Users.findByNama", query = "SELECT u FROM Users u WHERE u.nama = :nama")
     , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
-    , @NamedQuery(name = "Users.findByUserPassword", query = "SELECT u FROM Users u WHERE u.userPassword = :userPassword")
-    , @NamedQuery(name = "Users.findByRole", query = "SELECT u FROM Users u WHERE u.role = :role")})
+    , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<LowonganPekerjaan> lowonganPekerjaanList;
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<Apply> applyList;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Column(name = "ID")
+    private Integer id;
     @Column(name = "NAMA")
     private String nama;
     @Column(name = "EMAIL")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "USER_PASSWORD")
-    private String userPassword;
-    @Column(name = "ROLE")
-    private String role;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<Userprofile> userprofileList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<LowonganPekerjaan> lowonganPekerjaanList;
+    @Column(name = "PASSWORD")
+    private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersId", fetch = FetchType.LAZY)
+    private List<UserProfile> userProfileList;
+    @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role roleId;
 
     public Users() {
     }
 
-    public Users(Integer userId) {
-        this.userId = userId;
+    public Users(Integer id) {
+        this.id = id;
     }
 
-    public Users(Integer userId, String userPassword) {
-        this.userId = userId;
-        this.userPassword = userPassword;
-    }
-
-    public Users(Integer idUser, String nama, String email, String userPassword, String role) {
-        this.userId = idUser;
+    public Users(Integer id, String nama, String email, String password, Role roleId) {
+        this.id = id;
         this.nama = nama;
         this.email = email;
-        this.userPassword = userPassword;
-        this.role = role;
+        this.password = password;
+        this.roleId = roleId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Users(Integer id, String nama, String email, String password, List<UserProfile> userProfileList, Role roleId) {
+        this.id = id;
+        this.nama = nama;
+        this.email = email;
+        this.password = password;
+        this.userProfileList = userProfileList;
+        this.roleId = roleId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public Users(List<Apply> applyList, Integer id, String nama, String email, String password, List<UserProfile> userProfileList, Role roleId) {
+        this.applyList = applyList;
+        this.id = id;
+        this.nama = nama;
+        this.email = email;
+        this.password = password;
+        this.userProfileList = userProfileList;
+        this.roleId = roleId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNama() {
@@ -98,44 +118,35 @@ public class Users implements Serializable {
         this.email = email;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @XmlTransient
-    public List<Userprofile> getUserprofileList() {
-        return userprofileList;
+    public List<UserProfile> getUserProfileList() {
+        return userProfileList;
     }
 
-    public void setUserprofileList(List<Userprofile> userprofileList) {
-        this.userprofileList = userprofileList;
+    public void setUserProfileList(List<UserProfile> userProfileList) {
+        this.userProfileList = userProfileList;
     }
 
-    @XmlTransient
-    public List<LowonganPekerjaan> getLowonganPekerjaanList() {
-        return lowonganPekerjaanList;
+    public Role getRoleId() {
+        return roleId;
     }
 
-    public void setLowonganPekerjaanList(List<LowonganPekerjaan> lowonganPekerjaanList) {
-        this.lowonganPekerjaanList = lowonganPekerjaanList;
+    public void setRoleId(Role roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -146,7 +157,7 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -154,7 +165,25 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Users[ userId=" + userId + " ]";
+        return "entities.Users[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Apply> getApplyList() {
+        return applyList;
+    }
+
+    public void setApplyList(List<Apply> applyList) {
+        this.applyList = applyList;
+    }
+
+    @XmlTransient
+    public List<LowonganPekerjaan> getLowonganPekerjaanList() {
+        return lowonganPekerjaanList;
+    }
+
+    public void setLowonganPekerjaanList(List<LowonganPekerjaan> lowonganPekerjaanList) {
+        this.lowonganPekerjaanList = lowonganPekerjaanList;
     }
     
 }

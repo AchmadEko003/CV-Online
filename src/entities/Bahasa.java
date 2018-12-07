@@ -23,36 +23,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Nitani
  */
 @Entity
-@Table(name = "APPLY")
+@Table(name = "BAHASA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Apply.findAll", query = "SELECT a FROM Apply a")
-    , @NamedQuery(name = "Apply.findById", query = "SELECT a FROM Apply a WHERE a.id = :id")})
-public class Apply implements Serializable {
+    @NamedQuery(name = "Bahasa.findAll", query = "SELECT b FROM Bahasa b")
+    , @NamedQuery(name = "Bahasa.findById", query = "SELECT b FROM Bahasa b WHERE b.id = :id")
+    , @NamedQuery(name = "Bahasa.findByNama", query = "SELECT b FROM Bahasa b WHERE b.nama = :nama")})
+public class Bahasa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @JoinColumn(name = "LOWONGAN_ID", referencedColumnName = "ID")
+    @Column(name = "NAMA")
+    private String nama;
+    @JoinColumn(name = "USER_PROFILE_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private LowonganPekerjaan lowonganId;
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Users userId;
+    private UserProfile userProfileId;
 
-    public Apply() {
+    public Bahasa() {
     }
 
-    public Apply(Integer id) {
+    public Bahasa(Integer id) {
         this.id = id;
     }
 
-    public Apply(Integer id, LowonganPekerjaan lowonganId, Users userId) {
+    public Bahasa(Integer id, String nama) {
         this.id = id;
-        this.lowonganId = lowonganId;
-        this.userId = userId;
+        this.nama = nama;
+    }
+
+    public Bahasa(Integer id, String nama, UserProfile userProfileId) {
+        this.id = id;
+        this.nama = nama;
+        this.userProfileId = userProfileId;
     }
 
     public Integer getId() {
@@ -63,20 +68,20 @@ public class Apply implements Serializable {
         this.id = id;
     }
 
-    public LowonganPekerjaan getLowonganId() {
-        return lowonganId;
+    public String getNama() {
+        return nama;
     }
 
-    public void setLowonganId(LowonganPekerjaan lowonganId) {
-        this.lowonganId = lowonganId;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public Users getUserId() {
-        return userId;
+    public UserProfile getUserProfileId() {
+        return userProfileId;
     }
 
-    public void setUserId(Users userId) {
-        this.userId = userId;
+    public void setUserProfileId(UserProfile userProfileId) {
+        this.userProfileId = userProfileId;
     }
 
     @Override
@@ -89,10 +94,10 @@ public class Apply implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Apply)) {
+        if (!(object instanceof Bahasa)) {
             return false;
         }
-        Apply other = (Apply) object;
+        Bahasa other = (Bahasa) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -101,7 +106,7 @@ public class Apply implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Apply[ id=" + id + " ]";
+        return "entities.Bahasa[ id=" + id + " ]";
     }
     
 }

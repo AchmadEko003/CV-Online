@@ -5,12 +5,21 @@
  */
 package views;
 
+import controllers.LowonganKerjaControllers;
+import interfaces.LowonganKerjaInterface;
 import controllers.UserControllers;
-import controllers.UserInterface;
+import interfaces.UserInterface;
+import controllers.UserProfileControllers;
+import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.LowonganPekerjaan;
+import entities.UserProfile;
+import entities.Users;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -24,18 +33,57 @@ public class MainFrame extends javax.swing.JFrame {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private DAOInterface daoi = new GeneralDAO(sessionFactory);
     private UserInterface ai = new UserControllers(sessionFactory);
+    private UserProfileInterface upi = new UserProfileControllers(sessionFactory);
+    private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
 
     LoginRegisterFrame lrf = new LoginRegisterFrame();
+    LoginViews lv = new LoginViews();
     LowonganKerjaViews lkv = new LowonganKerjaViews();
     UserProfilesView upv = new UserProfilesView();
+    UserViews uv = new UserViews();
+
     /**
      * Creates new form MainFrame
      */
-    public MainFrame(String nama) {
+    public MainFrame() {
         initComponents();
-        jLabel1.setText(nama);
-        upv.show();
-        dsktpMain.add(upv);
+//        jLabel1.setText(nama);
+        uv.show();
+        dsktpMain.add(uv);
+        bindingTable(lki.search(""));
+    }
+
+    public void bindingTable(List<Object> userp) {
+
+        try {
+            for (Object low : userp) {
+                UserProfile emp = (UserProfile) low;
+//                String isi1 = String.valueOf(emp.getUserId().getNama());
+//                String isi2 = emp.getUserId().getEmail();
+//                String isi3 = emp.getNamaUniversitas();
+//                String isi4 = emp.getJurusan();
+//                String isi5 = String.valueOf(emp.getUmur());
+//                String isi6 = emp.getDomisili();
+//                String isi7 = emp.getTanggalLahir();
+//                String isi8 = String.valueOf(emp.getNoTelepon());
+//                String isi9 = emp.getPengalaman();
+//                String isi10 = String.valueOf(emp.getIpk());
+//                String isi11 = emp.getSkill();
+
+//                namaUser.setText(isi1);
+//                emailUser.setText(isi2);
+//                universitasUser.setText(isi3);
+//                jurusanUser.setText(isi4);
+//                umurUser.setText(isi5);
+//                domisiliUser.setText(isi6);
+//                noTelp.setText(isi8);
+//                pengalamanUser.setText(isi9);
+//                ipkUser.setText(isi10);
+//                skillUser.setText(isi11);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
+        }
     }
 
     /**
@@ -51,10 +99,13 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         dsktpMain = new javax.swing.JDesktopPane();
         userPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -75,7 +126,15 @@ public class MainFrame extends javax.swing.JFrame {
         pengalamanUser = new javax.swing.JLabel();
         ipkUser = new javax.swing.JLabel();
         skillUser = new javax.swing.JLabel();
+        namaUser1 = new javax.swing.JLabel();
         namaUser = new javax.swing.JLabel();
+        logoutBtn = new javax.swing.JButton();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -94,6 +153,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jMenu3.setText("File");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
+
+        jMenuItem3.setText("jMenuItem3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout dsktpMainLayout = new javax.swing.GroupLayout(dsktpMain);
@@ -104,10 +171,8 @@ public class MainFrame extends javax.swing.JFrame {
         );
         dsktpMainLayout.setVerticalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
-
-        jLabel1.setText("Nama");
 
         jLabel2.setText("Email");
 
@@ -149,8 +214,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         skillUser.setText("Skill");
 
-        namaUser.setText("Nama");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -166,10 +229,9 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(skillUser)
                     .addComponent(ipkUser)
@@ -179,19 +241,16 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(domisiliUser)
                     .addComponent(umurUser)
                     .addComponent(emailUser)
-                    .addComponent(namaUser)
                     .addComponent(universitasUser)
                     .addComponent(jurusanUser))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(namaUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(emailUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(universitasUser)
@@ -211,9 +270,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(ipkUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(skillUser))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
@@ -233,25 +290,85 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        namaUser1.setText("Selamat datang");
+
+        namaUser.setText("Nama");
+
+        logoutBtn.setText("Logout");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(namaUser1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(namaUser))
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(logoutBtn)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(173, 173, 173)
+                .addGap(72, 72, 72)
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(namaUser1)
+                    .addComponent(namaUser))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logoutBtn)
+                .addContainerGap())
         );
+
+        jMenu5.setText("File");
+
+        jMenuItem2.setText("Edit Profil");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem2);
+
+        jMenuItem1.setText("Admin");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem1);
+
+        jMenuItem4.setText("Cari Lowongan");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem4);
+
+        jMenuBar3.add(jMenu5);
+
+        jMenu6.setText("Edit");
+        jMenuBar3.add(jMenu6);
+
+        setJMenuBar(jMenuBar3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,6 +387,34 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        lkv.show();
+        dsktpMain.add(lkv);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        upv.show();
+        dsktpMain.add(upv);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        // TODO add your handling code here:
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Yakin ingin logout?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            lv.show();
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        uv.show();
+        dsktpMain.add(uv);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,7 +454,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new MainFrame().setVisible(true);
+                new MainFrame().setVisible(true);
             }
         });
     }
@@ -319,7 +464,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane dsktpMain;
     private javax.swing.JLabel emailUser;
     private javax.swing.JLabel ipkUser;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -332,11 +476,23 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel jurusanUser;
+    private javax.swing.JButton logoutBtn;
     private javax.swing.JLabel namaUser;
+    private javax.swing.JLabel namaUser1;
     private javax.swing.JLabel noTelp;
     private javax.swing.JLabel pengalamanUser;
     private javax.swing.JLabel skillUser;

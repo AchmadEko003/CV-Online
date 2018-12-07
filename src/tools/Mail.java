@@ -35,8 +35,8 @@ public class Mail {
             MimeMessage pesan = new MimeMessage(session);
             pesan.setFrom(email); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
             pesan.setRecipient(Message.RecipientType.TO, new InternetAddress("achmadeko003@gmail.com"));//isi dengan tujuan email
-            pesan.setSubject("Pemberitahuan berhasil login");
-            pesan.setText("Email dikirim menggunakan Java Mail.");
+            pesan.setSubject("Pemberitahuan berhasil register");
+            pesan.setText("Anda telah berhasil melakukan registrasi CV Online.");
 
             String username = email; //ganti dengan gmail kalian sendiri
             String password = passwords; //ganti dengan password kalian sendiri

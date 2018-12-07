@@ -177,11 +177,18 @@ public class FunctionDAO {
         return object;
     }
 //    
+    
+    public Integer getUser(Object user){
+        Integer a;
+        Users e = this.login(user);
+        a = e.getId();
+        return a;
+    }
+    
     public boolean validationLogin(Object user, String password){
         Users e = this.login(user);
-        System.out.println(e);
         if(e != null){
-            if(BCrypt.checkpw(password, e.getUserPassword())){
+            if(BCrypt.checkpw(password, e.getPassword())){
                 return true;
             }
         }

@@ -5,12 +5,11 @@
  */
 package cvonline;
 
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import controllers.UserControllers;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
-import entities.Perusahaan;
 import entities.Users;
 import java.util.Properties;
 import javax.mail.Message;
@@ -42,7 +41,7 @@ public class CVOnline {
 //        LowonganPekerjaan lp = new LowonganPekerjaan(21, "Back-end", "Dibutuhkan back-end developer segera", "A", new Perusahaan(1), new Users(32));
 
 //        System.out.println(users.getLowonganPekerjaanId());
-        System.out.println(ui.register("32", "makoto", "achmadeko009@gmail.com", "Makoto_Yuki009", "admin"));
-        System.out.println(ui.search("achmadeko@gmail.com"));
+//        System.out.println(ui.register("32", "makoto", "achmadeko009@gmail.com", "Makoto_Yuki009", "admin"));
+//        System.out.println(ui.search("achmadeko@gmail.com"));
     }
 }

@@ -6,9 +6,9 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
-import controllers.LowonganKerjaInterface;
+import interfaces.LowonganKerjaInterface;
 import controllers.UserControllers;
-import controllers.UserInterface;
+import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
@@ -61,7 +61,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         tambahBtn = new javax.swing.JButton();
         deskripsiTxt = new javax.swing.JTextField();
-        idUser = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
         searchTxt = new javax.swing.JTextField();
@@ -76,6 +75,8 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        setTitle("Admin");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Lowongan"));
 
@@ -99,12 +100,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         tambahBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tambahBtnActionPerformed(evt);
-            }
-        });
-
-        idUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idUserActionPerformed(evt);
             }
         });
 
@@ -142,9 +137,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tambahBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,11 +163,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(role)
                     .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tambahBtn)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         getIdTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -228,13 +219,13 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -252,14 +243,14 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         try {
             for (Object low : lowongan) {
                 LowonganPekerjaan emp = (LowonganPekerjaan) low;
-                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-                String isi2 = emp.getJudulLowongan();
-                String isi3 = emp.getDeskripsiPekerjaan();
-                String isi4 = emp.getRequirements();
-                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
+//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
+//                String isi2 = emp.getJudulLowongan();
+//                String isi3 = emp.getDeskripsiPekerjaan();
+//                String isi4 = emp.getRequirements();
+//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
                 
-                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-                model.addRow(kolom);
+//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+//                model.addRow(kolom);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
@@ -273,19 +264,15 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         String deskripsi = deskripsiTxt.getText();
         String requirements = requirementsTxt.getText();
         String perusahaan = perusahaanTxt.getText();
-        String userId = idUser.getText();
+//        String userId = idUser.getText();
         
-        if(lki.insert(id, judul, deskripsi, requirements, perusahaan, userId)){
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        }
+//        if(lki.insert(id, judul, deskripsi, requirements, perusahaan)){
+//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+//        }
+//        else{
+//            JOptionPane.showMessageDialog(null, "Gagal menambahkan");
+//        }
     }//GEN-LAST:event_tambahBtnActionPerformed
-
-    private void idUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idUserActionPerformed
 
     private void searchTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyReleased
         // TODO add your handling code here:
@@ -298,7 +285,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     private javax.swing.JLabel email;
     private javax.swing.JTable getIdTable;
     private javax.swing.JLabel id;
-    private javax.swing.JTextField idUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
