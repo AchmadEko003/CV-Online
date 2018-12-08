@@ -81,6 +81,11 @@ public class LoginViews extends javax.swing.JFrame {
             }
         });
 
+        passwordTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        namaTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        emailTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         emailTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 emailTxtKeyReleased(evt);
