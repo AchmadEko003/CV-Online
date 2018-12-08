@@ -5,6 +5,7 @@
  */
 package daos;
 
+import entities.UserProfile;
 import entities.Users;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -74,16 +75,12 @@ public class FunctionDAO {
      */
     public List<Object> getDatas(Object entities, String key) {
         List<Object> rs = new ArrayList<>();
-        System.out.println(entities);
         String className = entities.getClass().getSimpleName();
-        System.out.println(className);
         className = className.substring(className.indexOf(".") + 1);
         String query = "From " + className;
-        System.out.println("Eko");
         if (!key.equals("")) {
             query = getQuery(entities, key, query);
         }
-        System.out.println(query);
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
@@ -124,7 +121,7 @@ public class FunctionDAO {
         Object object = new Object();
         String className = table.getClass().getName();
         className = className.substring(className.indexOf(".") + 1);
-        String query = "FROM " + className + " where " + className.toLowerCase() + "Id =" + id;
+        String query = "FROM " + className + " where Id =" + id;
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
@@ -194,4 +191,33 @@ public class FunctionDAO {
         }
         return false;
     } 
+    
+    public UserProfile getProfileId(Object user) {
+        UserProfile object = null;
+        String query = "from UserProfile where Users_Id= " + user  ;
+        System.out.println(query);
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            object = (UserProfile) session.createQuery(query).uniqueResult();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return object;
+    }
+    
+    public boolean getProfilesId(Object user){
+        boolean hasil = false;
+        UserProfile e = this.getProfileId(user);
+        if(e != null){
+            hasil = true;
+        }
+        return hasil;
+    }
 }

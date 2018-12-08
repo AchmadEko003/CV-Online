@@ -7,11 +7,10 @@ package controllers;
 
 import daos.DAOInterface;
 import daos.GeneralDAO;
-import entities.Role;
+import entities.Keahlian;
 import entities.Sertifikat;
 import entities.UserProfile;
-import entities.Users;
-import interfaces.SertifikatInterface;
+import interfaces.KeahlianInterface;
 import java.util.List;
 import org.hibernate.SessionFactory;
 
@@ -19,16 +18,16 @@ import org.hibernate.SessionFactory;
  *
  * @author Nitani
  */
-public class SertifikatControllers implements SertifikatInterface {
+public class KeahlianControllers implements KeahlianInterface {
 
     private SessionFactory factory;
     private GeneralDAO gdao = new GeneralDAO(factory);
     private DAOInterface daoid = new GeneralDAO(factory);
 
-    public SertifikatControllers() {
+    public KeahlianControllers() {
     }
 
-    public SertifikatControllers(SessionFactory factory) {
+    public KeahlianControllers(SessionFactory factory) {
         this.factory = factory;
         this.gdao = new GeneralDAO(factory);
         this.daoid = new GeneralDAO(factory);
@@ -36,14 +35,14 @@ public class SertifikatControllers implements SertifikatInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return daoid.doDDL(new Keahlian(), keyword);
     }
 
     @Override
-    public boolean insert(String id, String nama, String lembaga, String userProfileId) {
+    public boolean insert(String id, String nama, String deskripsi, String userProfileId) {
         boolean hasil = false;
         try {
-            Sertifikat use = new Sertifikat(Integer.valueOf(id), nama, lembaga, new UserProfile(Integer.valueOf(userProfileId)));
+            Keahlian use = new Keahlian(Integer.valueOf(id), nama, deskripsi, new UserProfile(Integer.valueOf(userProfileId)));
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }

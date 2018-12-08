@@ -8,6 +8,9 @@
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="internalFrameOpened" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -60,25 +63,10 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="role1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="universitasTxt" min="-2" pref="171" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="role2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jurusanTxt" min="-2" pref="171" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="role3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="umurTxt" min="-2" pref="171" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="role4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="domisiliTxt" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="alamatTxt" min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="role6" min="-2" max="-2" attributes="0"/>
@@ -86,46 +74,37 @@
                           <Component id="telpTxt" min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="role7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="pengalaman" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="role5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="dateofbirth" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="role9" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="userId" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="ipkTxt" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="tambahBtn" min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="role8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="skillTxt" min="-2" pref="171" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="username" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="id" alignment="0" min="-2" pref="58" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="role3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="profileIdTxt" alignment="1" min="-2" pref="171" max="-2" attributes="0"/>
-                                      <Component id="uploadCV" alignment="1" min="-2" pref="171" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="umurTxt" min="-2" pref="60" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="username" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="uploadCV" min="-2" pref="171" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="role" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                                       <Component id="email" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="userIdTxt" alignment="1" min="-2" pref="171" max="-2" attributes="0"/>
-                                              <Component id="uploadKTP" alignment="1" min="-2" pref="171" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="uploadKTP" min="-2" pref="171" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
@@ -136,15 +115,6 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="role5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                          <Component id="dateofbirth" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="tambahBtn" min="-2" pref="171" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -153,11 +123,6 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="profileIdTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="id" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="uploadCV" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -174,21 +139,6 @@
                       <Component id="email" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="role" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="userIdTxt" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="universitasTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="role1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="role2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jurusanTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="role3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="umurTxt" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -196,54 +146,32 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="role4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="domisiliTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="alamatTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="role5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="dateofbirth" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="role6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="telpTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="role7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="pengalaman" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="role9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ipkTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tambahBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="userId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="role8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="skillTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
-                  <Component id="tambahBtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="id">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="ID"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="email">
           <Properties>
             <Property name="text" type="java.lang.String" value="Upload KTP"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="role">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="User"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="username">
@@ -251,16 +179,9 @@
             <Property name="text" type="java.lang.String" value="Upload CV"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="userIdTxt">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userIdTxtActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JTextField" name="uploadCV">
         </Component>
         <Component class="javax.swing.JTextField" name="uploadKTP">
-        </Component>
-        <Component class="javax.swing.JTextField" name="profileIdTxt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -269,21 +190,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="uploadPhoto">
         </Component>
-        <Component class="javax.swing.JTextField" name="universitasTxt">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="universitasTxtActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="role1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Universitas"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="role2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Jurusan"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="role3">
           <Properties>
             <Property name="text" type="java.lang.String" value="Umur"/>
@@ -291,7 +197,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="role4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Domisili"/>
+            <Property name="text" type="java.lang.String" value="Alamat"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="role5">
@@ -304,34 +210,14 @@
             <Property name="text" type="java.lang.String" value="No Telp"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="role7">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Pengalaman"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="role8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Skill"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="role9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="IPK"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jurusanTxt">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jurusanTxtActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JTextField" name="umurTxt">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="umurTxtActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="domisiliTxt">
+        <Component class="javax.swing.JTextField" name="alamatTxt">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="domisiliTxtActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="alamatTxtActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="telpTxt">
@@ -339,22 +225,10 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telpTxtActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="pengalaman">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pengalamanActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="ipkTxt">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ipkTxtActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="skillTxt">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="skillTxtActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="org.jdesktop.swingx.JXDatePicker" name="dateofbirth">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dateofbirthActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="tambahBtn">
           <Properties>
@@ -363,6 +237,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tambahBtnActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="userId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="id"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

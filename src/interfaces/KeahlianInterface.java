@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import entities.UserProfile;
 import java.util.List;
 
 /**
@@ -13,5 +14,5 @@ import java.util.List;
  */
 public interface KeahlianInterface {
     public List<Object> search(String keyword);
-    public boolean insert(String id, String nama, String lembaga, String userProfileId);
+    public boolean insert(String id, String nama, String deskripsi, String userProfileId);
 }

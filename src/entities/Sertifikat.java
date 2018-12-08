@@ -41,9 +41,9 @@ public class Sertifikat implements Serializable {
     private String nama;
     @Column(name = "LEMBAGA")
     private String lembaga;
-    @JoinColumn(name = "USER_PROFILE_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "USER_PROFILE_CON_FK", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfileId;
+    private UserProfile userProfileConFk;
 
     public Sertifikat() {
     }
@@ -58,11 +58,11 @@ public class Sertifikat implements Serializable {
         this.lembaga = lembaga;
     }
 
-    public Sertifikat(Integer id, String nama, String lembaga, UserProfile userProfileId) {
+    public Sertifikat(Integer id, String nama, String lembaga, UserProfile userProfileConFk) {
         this.id = id;
         this.nama = nama;
         this.lembaga = lembaga;
-        this.userProfileId = userProfileId;
+        this.userProfileConFk = userProfileConFk;
     }
 
     public Integer getId() {
@@ -89,12 +89,12 @@ public class Sertifikat implements Serializable {
         this.lembaga = lembaga;
     }
 
-    public UserProfile getUserProfileId() {
-        return userProfileId;
+    public UserProfile getUserProfileConFk() {
+        return userProfileConFk;
     }
 
-    public void setUserProfileId(UserProfile userProfileId) {
-        this.userProfileId = userProfileId;
+    public void setUserProfileConFk(UserProfile userProfileConFk) {
+        this.userProfileConFk = userProfileConFk;
     }
 
     @Override

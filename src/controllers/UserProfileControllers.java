@@ -38,12 +38,18 @@ public class UserProfileControllers implements UserProfileInterface {
         this.daoid = new GeneralDAO(factory);
     }
 
+    @Override
+    public List<Object> search(String keyword) {
+        return daoid.doDDL(new Users(), keyword);
+    }
+
+    @Override
     public boolean inputdata(String id, String umur, String alamat, String tanggalLahir, String noTelepon, String foto, String cv, String ktp, String usersId) {
         boolean hasil = false;
         try {
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
             Date dates = format.parse(tanggalLahir);
-            UserProfile up = new UserProfile(Integer.valueOf(id), Short.valueOf(umur), alamat, dates, Long.valueOf(noTelepon), foto, cv, ktp, new Users(Integer.valueOf(id)));
+            UserProfile up = new UserProfile(Integer.valueOf(id), Short.valueOf(umur), alamat, dates, Long.valueOf(noTelepon), foto, cv, ktp, new Users(Integer.valueOf(usersId)));
             if (daoid.doDML(up, false)) {
                 hasil = true;
             }
@@ -51,10 +57,5 @@ public class UserProfileControllers implements UserProfileInterface {
             e.getMessage();
         }
         return hasil;
-    }
-
-    @Override
-    public List<Object> search(String keyword) {
-        return daoid.doDDL(new Users(), keyword);
     }
 }

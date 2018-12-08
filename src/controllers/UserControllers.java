@@ -34,10 +34,11 @@ public class UserControllers implements UserInterface {
     }
 
     @Override
-    public boolean register(String id, String nama, String email, String password, String roleId) {
+    public boolean register(String id, String nama, String email, String password) {
         boolean hasil = false;
         try {
-            Users use = new Users(Integer.valueOf(id), nama, email, password, new Role(Integer.valueOf(roleId)));
+            Integer a = daoid.doDDL(new Users(), "").size()+1;
+            Users use = new Users(a, nama, email, password, new Role(1));
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }
@@ -60,5 +61,15 @@ public class UserControllers implements UserInterface {
     @Override
     public Integer getUser(Object user) {
         return this.daoid.getUser(user);
+    }
+
+    @Override
+    public Object getById(Object id) {
+        return this.daoid.getById(new UserProfile(), id);
+    }
+
+    @Override
+    public boolean getIdProfile(Object id) {
+        return this.daoid.getIdProfile(id);
     }
 }
