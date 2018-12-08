@@ -49,7 +49,7 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
         namaSertifikat = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         lembaga = new javax.swing.JTextField();
-        tambahBtn = new javax.swing.JToggleButton();
+        simpanBtn = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -59,10 +59,10 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Lembaga");
 
-        tambahBtn.setText("Simpan");
-        tambahBtn.addActionListener(new java.awt.event.ActionListener() {
+        simpanBtn.setText("Simpan");
+        simpanBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahBtnActionPerformed(evt);
+                simpanBtnActionPerformed(evt);
             }
         });
 
@@ -85,7 +85,7 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
-                        .addComponent(tambahBtn)))
+                        .addComponent(simpanBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,7 +101,7 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
                 .addComponent(lembaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tambahBtn)
+                    .addComponent(simpanBtn)
                     .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -109,7 +109,7 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
+    private void simpanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanBtnActionPerformed
         // TODO add your handling code here:
         String idu = String.valueOf(ld.getTotal(new Sertifikat()).size() + 1);
         if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUsersId()))) {
@@ -118,7 +118,7 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ada masih kosong");
         }
 
-    }//GEN-LAST:event_tambahBtnActionPerformed
+    }//GEN-LAST:event_simpanBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -127,6 +127,6 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField lembaga;
     private javax.swing.JTextField namaSertifikat;
-    private javax.swing.JToggleButton tambahBtn;
+    private javax.swing.JToggleButton simpanBtn;
     // End of variables declaration//GEN-END:variables
 }

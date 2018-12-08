@@ -40,6 +40,8 @@ public class MainFrame extends javax.swing.JFrame {
     private UserProfilesView upv = new UserProfilesView();
     private SertifikatViews sv = new SertifikatViews();
     private LoginViews lv = new LoginViews();
+    private KeahlianViews kv = new KeahlianViews();
+    private LowonganKerjaViews lkv = new LowonganKerjaViews();
 
     /**
      * Creates new form MainFrame
@@ -102,6 +104,8 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
         dsktpMain = new javax.swing.JDesktopPane();
         logoutBtn = new javax.swing.JButton();
         userPanel = new javax.swing.JPanel();
@@ -130,6 +134,7 @@ public class MainFrame extends javax.swing.JFrame {
         sertifikatItem = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -161,6 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("User Home");
 
         logoutBtn.setText("Logout");
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +182,7 @@ public class MainFrame extends javax.swing.JFrame {
         dsktpMainLayout.setHorizontalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dsktpMainLayout.createSequentialGroup()
-                .addContainerGap(904, Short.MAX_VALUE)
+                .addContainerGap(915, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
@@ -304,25 +310,27 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(namaUser))
                     .addGroup(userPanelLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(28, 28, 28)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addContainerGap(135, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(namaUser1)
                     .addComponent(namaUser))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addGap(88, 88, 88)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(roleId)
                     .addComponent(userId))
                 .addContainerGap())
         );
+
+        jMenuBar3.setToolTipText("");
 
         jMenu5.setText("User");
 
@@ -358,6 +366,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem6);
 
+        jMenuItem2.setText("Bahasa");
+        jMenu5.add(jMenuItem2);
+
         jMenuBar3.add(jMenu5);
 
         jMenu6.setText("Admin");
@@ -386,7 +397,7 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dsktpMain)
-            .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -394,8 +405,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-//        lkv.show();
-//        dsktpMain.add(lkv);
+        lkv.show();
+        dsktpMain.add(lkv);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void editProfilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfilesActionPerformed
@@ -433,11 +444,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-//        int idP=ld.getUserId(userId.getText());
-//        System.out.println(idP);
-//        KeahlianViews kv = new KeahlianViews(String.valueOf(idP));
-//        kv.show();
-//        dsktpMain.add(kv);
+        kv.show();
+        dsktpMain.add(kv);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
@@ -505,12 +513,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JLabel jurusanUser;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JLabel namaUser;
