@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "PROYEK")
@@ -51,23 +51,16 @@ public class Proyek implements Serializable {
     public Proyek() {
     }
 
-    public Proyek(Integer id) {
-        this.id = id;
-    }
-
-    public Proyek(Integer id, String nama, String status, String deskripsi) {
-        this.id = id;
-        this.nama = nama;
-        this.status = status;
-        this.deskripsi = deskripsi;
-    }
-
     public Proyek(Integer id, String nama, String status, String deskripsi, UserProfile userProfileId) {
         this.id = id;
         this.nama = nama;
         this.status = status;
         this.deskripsi = deskripsi;
         this.userProfileId = userProfileId;
+    }
+
+    public Proyek(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

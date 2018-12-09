@@ -12,6 +12,7 @@ import entities.LowonganPekerjaan;
 import entities.Users;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -42,12 +43,13 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface {
     }
 
     @Override
-    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String userId) {
+    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String tanggalSelesai, String userId) {
         boolean hasil = false;
         try {
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
             Date dates = format.parse(tanggal);
-            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(id), judul, deskripsi, requirements, dates, new Users(Integer.valueOf(userId)));
+            Date dates1 = format.parse(tanggalSelesai);
+            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(id), judul, deskripsi, requirements, dates, dates1, new Users(Integer.valueOf(userId)));
             System.out.println(lp);
             if (daoid.doDML(lp, false)) {
                 hasil = true;
@@ -56,5 +58,12 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface {
             e.getMessage();
         }
         return hasil;
+    }
+
+    @Override
+    public List<Object> getAllData(Object entity, String keyword) {
+        List<Object> data = new ArrayList<>();
+        data = gdao.doDDL(entity, keyword);
+        return data;
     }
 }

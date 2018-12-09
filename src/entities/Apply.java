@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "APPLY")
@@ -47,12 +47,6 @@ public class Apply implements Serializable {
 
     public Apply(Integer id) {
         this.id = id;
-    }
-
-    public Apply(Integer id, LowonganPekerjaan lowonganId, Users userId) {
-        this.id = id;
-        this.lowonganId = lowonganId;
-        this.userId = userId;
     }
 
     public Integer getId() {

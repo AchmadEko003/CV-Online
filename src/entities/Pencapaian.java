@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "PENCAPAIAN")
@@ -48,21 +48,15 @@ public class Pencapaian implements Serializable {
     public Pencapaian() {
     }
 
-    public Pencapaian(Integer id) {
-        this.id = id;
-    }
-
-    public Pencapaian(Integer id, String nama, String deskripsi) {
-        this.id = id;
-        this.nama = nama;
-        this.deskripsi = deskripsi;
-    }
-
     public Pencapaian(Integer id, String nama, String deskripsi, UserProfile userProfileId) {
         this.id = id;
         this.nama = nama;
         this.deskripsi = deskripsi;
         this.userProfileId = userProfileId;
+    }
+
+    public Pencapaian(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

@@ -81,6 +81,11 @@ public class LoginViews extends javax.swing.JFrame {
             }
         });
 
+        passwordTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        namaTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        emailTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         emailTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 emailTxtKeyReleased(evt);
@@ -155,13 +160,13 @@ public class LoginViews extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -206,7 +211,7 @@ public class LoginViews extends javax.swing.JFrame {
 //            String edu = String.valueOf(data.getTotal(new Users()).size() + 1);
             if (ai.register("", name, emails, BCrypt.hashpw(password, BCrypt.gensalt()))) {
                 JOptionPane.showMessageDialog(null, "Berhasil register");
-                m.Send(emails, password);
+//                m.Send(emails, password);
                 btnLogReg.setText("Login");
                 namaTxt.setText("");
                 emailTxt.setText("");

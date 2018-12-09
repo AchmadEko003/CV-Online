@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "ROLE")
@@ -45,10 +45,6 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    public Role(Integer id) {
-        this.id = id;
-    }
-
     public Role(Integer id, String status) {
         this.id = id;
         this.status = status;
@@ -58,6 +54,10 @@ public class Role implements Serializable {
         this.id = id;
         this.status = status;
         this.usersList = usersList;
+    }
+
+    public Role(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

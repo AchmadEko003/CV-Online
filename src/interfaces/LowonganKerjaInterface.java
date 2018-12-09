@@ -12,6 +12,10 @@ import java.util.List;
  * @author Nitani
  */
 public interface LowonganKerjaInterface {
+
     public List<Object> search(String keyword);
-    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String userId);
+
+    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String tanggalSelesai, String userId);
+
+    public List<Object> getAllData(Object entity, String keyword);
 }

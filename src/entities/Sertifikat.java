@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "SERTIFIKAT")
@@ -41,28 +41,22 @@ public class Sertifikat implements Serializable {
     private String nama;
     @Column(name = "LEMBAGA")
     private String lembaga;
-    @JoinColumn(name = "USER_PROFILE_CON_FK", referencedColumnName = "ID")
+    @JoinColumn(name = "USER_PROFILE_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfileConFk;
+    private UserProfile userProfileId;
 
     public Sertifikat() {
     }
 
+    public Sertifikat(Integer id, String nama, String lembaga, UserProfile userProfileId) {
+        this.id = id;
+        this.nama = nama;
+        this.lembaga = lembaga;
+        this.userProfileId = userProfileId;
+    }
+
     public Sertifikat(Integer id) {
         this.id = id;
-    }
-
-    public Sertifikat(Integer id, String nama, String lembaga) {
-        this.id = id;
-        this.nama = nama;
-        this.lembaga = lembaga;
-    }
-
-    public Sertifikat(Integer id, String nama, String lembaga, UserProfile userProfileConFk) {
-        this.id = id;
-        this.nama = nama;
-        this.lembaga = lembaga;
-        this.userProfileConFk = userProfileConFk;
     }
 
     public Integer getId() {
@@ -89,12 +83,12 @@ public class Sertifikat implements Serializable {
         this.lembaga = lembaga;
     }
 
-    public UserProfile getUserProfileConFk() {
-        return userProfileConFk;
+    public UserProfile getUserProfileId() {
+        return userProfileId;
     }
 
-    public void setUserProfileConFk(UserProfile userProfileConFk) {
-        this.userProfileConFk = userProfileConFk;
+    public void setUserProfileId(UserProfile userProfileId) {
+        this.userProfileId = userProfileId;
     }
 
     @Override
