@@ -34,6 +34,10 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public void clearText(){
+        namaPencapaianTxt.setText("");
+        deskripsiTxt.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +53,7 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         deskripsiTxt = new javax.swing.JTextArea();
         tambahBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Pencapaian");
@@ -68,22 +73,30 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(namaPencapaianTxt)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tambahBtn)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1)
+                        .addComponent(namaPencapaianTxt)
+                        .addComponent(jLabel2)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tambahBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,14 +104,16 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(namaPencapaianTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(namaPencapaianTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tambahBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tambahBtn)
+                    .addComponent(jButton1))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,17 +121,37 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pencapaian()).size() + 1), namaPencapaianTxt.getText(), deskripsiTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
-        }
-        
+        String pencapaian = namaPencapaianTxt.getText();
+        String deskripsi = deskripsiTxt.getText();
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di tambah?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!pencapaian.equals("") && !deskripsi.equals("")) {
+                if (pi.insert(String.valueOf(data.getTotal(new Pencapaian()).size() + 1), namaPencapaianTxt.getText(), deskripsiTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "form tidak boleh kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } 
+        clearText();
     }//GEN-LAST:event_tambahBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        clearText();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea deskripsiTxt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

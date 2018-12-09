@@ -6,10 +6,12 @@
 package views;
 
 import controllers.LowonganKerjaControllers;
+import controllers.UserControllers;
 import interfaces.LowonganKerjaInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
+import interfaces.UserInterface;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -17,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
+import tools.getDataLogin;
+import tools.getLoginData;
 
 /**
  *
@@ -27,14 +31,18 @@ public class UserViews extends javax.swing.JInternalFrame {
     private JButton buttons;
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private DAOInterface daoi = new GeneralDAO(sessionFactory);
-    private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
+    private getLoginData data = new getLoginData(sessionFactory);
+    private getDataLogin dataLogin = new getDataLogin();
+    private UserInterface ui = new UserControllers(sessionFactory);
 
     /**
      * Creates new form UserViews
      */
     public UserViews() {
         initComponents();
-        bindingTable(lki.search(""));
+        bindingTable(ui.search(""));
+        lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
+        btnApply.setEnabled(false);
     }
 
     /**
@@ -49,17 +57,22 @@ public class UserViews extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        perusahaanTxt = new javax.swing.JTextField();
         judulLowonganTxt = new javax.swing.JTextField();
-        requirementsTxt = new javax.swing.JTextField();
-        lowonganIdTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        deskripsiTxt = new javax.swing.JTextField();
-        id = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
-        role = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnApply = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDeskripsi = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtRequirements = new javax.swing.JTextArea();
+        dateMulai = new org.jdesktop.swingx.JXDatePicker();
+        dateSelesai = new org.jdesktop.swingx.JXDatePicker();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblUsersId = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Cari Lowongan");
@@ -90,150 +103,194 @@ public class UserViews extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(getIdTable);
 
-        perusahaanTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perusahaanTxtActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Deskripsi Pekerjaan");
-
-        id.setText("ID");
 
         email.setText("Requirements");
 
-        role.setText("Perusahaan");
-
         username.setText("Judul Lowongan");
 
-        jButton1.setText("Apply");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnApply.setText("Apply");
+        btnApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnApplyActionPerformed(evt);
             }
         });
+
+        txtDeskripsi.setColumns(20);
+        txtDeskripsi.setRows(5);
+        jScrollPane2.setViewportView(txtDeskripsi);
+
+        txtRequirements.setColumns(20);
+        txtRequirements.setRows(5);
+        jScrollPane3.setViewportView(txtRequirements);
+
+        jLabel3.setText("Tanggal Mulai lowongan");
+
+        jLabel4.setText("Tanggal Selesai lowongan");
+
+        lblUsersId.setText("usersId");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(username))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(lblUsersId)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(username)
-                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lowonganIdTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(judulLowonganTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(role)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(15, 15, 15)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(39, 39, 39))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel3))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
+                            .addComponent(judulLowonganTxt)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(dateMulai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                                        .addComponent(dateSelesai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnApply, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lowonganIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(id))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(role)
-                    .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(98, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(email))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(27, 27, 27)
+                .addComponent(btnApply)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(lblUsersId)
+                .addContainerGap())
         );
+
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Search");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1011, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void perusahaanTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perusahaanTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_perusahaanTxtActionPerformed
-
     private void getIdTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getIdTableMouseClicked
         // TODO add your handling code here:
         int i = getIdTable.getSelectedRow();
         TableModel model = getIdTable.getModel();
-        lowonganIdTxt.setText(model.getValueAt(i, 0).toString());
         judulLowonganTxt.setText(model.getValueAt(i, 1).toString());
-        deskripsiTxt.setText(model.getValueAt(i, 2).toString());
-        requirementsTxt.setText(model.getValueAt(i, 3).toString());
-        perusahaanTxt.setText(model.getValueAt(i, 4).toString());
+        txtDeskripsi.setText(model.getValueAt(i, 2).toString());
+        txtRequirements.setText(model.getValueAt(i, 3).toString());
+//        dateMulai.getDate(model.getValueAt(i, 4).toString());
+        btnApply.setEnabled(true);
     }//GEN-LAST:event_getIdTableMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnApplyActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        // TODO add your handling code here:
+        bindingTable(ui.search(txtSearch.getText()));
+        judulLowonganTxt.setEditable(false);
+        txtDeskripsi.setEditable(false);
+        txtRequirements.setEditable(false);
+        dateMulai.setEditable(false);
+        btnApply.setEnabled(true);
+        
+    }//GEN-LAST:event_txtSearchKeyReleased
 
     public void bindingTable(List<Object> lowongan) {
-        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"};
+        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan", "Tanggal Mulai"};
         DefaultTableModel model = new DefaultTableModel(null, header);
         getIdTable.setModel(model);
 
+        int no = 1;
         try {
             for (Object low : lowongan) {
-//                LowonganPekerjaan emp = (LowonganPekerjaan) low;
-//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-//                String isi2 = emp.getJudulLowongan();
-//                String isi3 = emp.getDeskripsiPekerjaan();
-//                String isi4 = emp.getRequirements();
-//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
-//
-//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-//                model.addRow(kolom);
+                LowonganPekerjaan emp = (LowonganPekerjaan) low;
+                String isi1 = String.valueOf(no);
+                String isi2 = emp.getJudul();
+                String isi3 = emp.getDeskripsi();
+                String isi4 = emp.getRequirements();
+                String isi5 = String.valueOf(emp.getTanggal());
+
+                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+                model.addRow(kolom);
+                no++;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
@@ -241,19 +298,24 @@ public class UserViews extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField deskripsiTxt;
+    private javax.swing.JButton btnApply;
+    private org.jdesktop.swingx.JXDatePicker dateMulai;
+    private org.jdesktop.swingx.JXDatePicker dateSelesai;
     private javax.swing.JLabel email;
     private javax.swing.JTable getIdTable;
-    private javax.swing.JLabel id;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField judulLowonganTxt;
-    private javax.swing.JTextField lowonganIdTxt;
-    private javax.swing.JTextField perusahaanTxt;
-    private javax.swing.JTextField requirementsTxt;
-    private javax.swing.JLabel role;
+    private javax.swing.JLabel lblUsersId;
+    private javax.swing.JTextArea txtDeskripsi;
+    private javax.swing.JTextArea txtRequirements;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

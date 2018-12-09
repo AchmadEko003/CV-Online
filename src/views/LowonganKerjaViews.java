@@ -12,13 +12,20 @@ import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
+import entities.Pengalaman;
 import entities.Users;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
+import tools.getDataLogin;
+import tools.getLoginData;
 
 /**
  *
@@ -28,7 +35,8 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
     private JButton buttons;
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private DAOInterface daoi = new GeneralDAO(sessionFactory);
+    private getLoginData data = new getLoginData(sessionFactory);
+    private getDataLogin dataLogin = new getDataLogin();
     private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
 
     /**
@@ -37,7 +45,43 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     public LowonganKerjaViews() {
         initComponents();
         bindingTable(lki.search(""));
+        lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
+        btnUpdate.setEnabled(false);
     }
+
+    public void clearText() {
+        txtAreaJudul.setText("");
+        txtAreaDeskripsi.setText("");
+        txtAreaRequirement.setText("");
+        
+    }
+    
+    public void bindingTable(List<Object> lowongan) {
+        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "tanggal mulai", "tanggal selesai", "Perusahaan"};
+        DefaultTableModel model = new DefaultTableModel(null, header);
+        tblLoker.setModel(model);
+
+        int no = 1;
+        try {
+            for (Object low : lowongan) {
+                LowonganPekerjaan emp = (LowonganPekerjaan) low;
+                String isi = String.valueOf(no);
+//                String isi1 = String.valueOf(data.getTotal(new LowonganPekerjaan()));
+                String isi2 = emp.getJudul();
+                String isi3 = emp.getDeskripsi();
+                String isi4 = emp.getRequirements();
+                String isi5 = String.valueOf(emp.getTanggal());
+
+                String kolom[] = {isi, isi2, isi3, isi4, isi5};
+                model.addRow(kolom);
+                no++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,20 +94,26 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
         panel1 = new java.awt.Panel();
         jPanel1 = new javax.swing.JPanel();
-        id = new javax.swing.JLabel();
-        email = new javax.swing.JLabel();
-        role = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
-        perusahaanTxt = new javax.swing.JTextField();
-        judulLowonganTxt = new javax.swing.JTextField();
-        requirementsTxt = new javax.swing.JTextField();
-        lowonganIdTxt = new javax.swing.JTextField();
+        txtAreaJudul = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        role = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaDeskripsi = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaRequirement = new javax.swing.JTextArea();
+        email = new javax.swing.JLabel();
+        dateMulai = new org.jdesktop.swingx.JXDatePicker();
+        jLabel2 = new javax.swing.JLabel();
+        dateSelesai = new org.jdesktop.swingx.JXDatePicker();
         tambahBtn = new javax.swing.JButton();
-        deskripsiTxt = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        getIdTable = new javax.swing.JTable();
+        tblLoker = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         searchTxt = new javax.swing.JTextField();
+        lblUsersId = new javax.swing.JLabel();
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -80,26 +130,42 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Lowongan"));
 
-        id.setText("ID");
-
-        email.setText("Requirements");
-
-        role.setText("Perusahaan");
-
         username.setText("Judul Lowongan");
 
-        perusahaanTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perusahaanTxtActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Deskripsi Pekerjaan");
+
+        role.setText("Requirement");
+
+        txtAreaDeskripsi.setColumns(20);
+        txtAreaDeskripsi.setRows(5);
+        jScrollPane2.setViewportView(txtAreaDeskripsi);
+
+        txtAreaRequirement.setColumns(20);
+        txtAreaRequirement.setRows(5);
+        jScrollPane3.setViewportView(txtAreaRequirement);
+
+        email.setText("Tanggal mulai lowongan");
+
+        jLabel2.setText("Tanggal selesei lowongan");
 
         tambahBtn.setText("Tambah");
         tambahBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tambahBtnActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -111,64 +177,70 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(username)
+                        .addGap(43, 43, 43)
+                        .addComponent(txtAreaJudul))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(role)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(username)
-                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lowonganIdTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(role)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(email)
+                            .addComponent(jLabel2))
+                        .addGap(18, 50, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(dateSelesai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dateMulai, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(tambahBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdate))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lowonganIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(id))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(username))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(role)
-                    .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(username)
+                    .addComponent(txtAreaJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(role))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(email)
+                    .addComponent(dateMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(dateSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tambahBtn)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(tambahBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnClear))
         );
 
-        getIdTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblLoker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -187,14 +259,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(getIdTable);
-        if (getIdTable.getColumnModel().getColumnCount() > 0) {
-            getIdTable.getColumnModel().getColumn(0).setResizable(false);
-            getIdTable.getColumnModel().getColumn(1).setResizable(false);
-            getIdTable.getColumnModel().getColumn(2).setResizable(false);
-            getIdTable.getColumnModel().getColumn(3).setResizable(false);
-            getIdTable.getColumnModel().getColumn(4).setResizable(false);
-        }
+        jScrollPane1.setViewportView(tblLoker);
+
+        jLabel3.setText("Search");
 
         searchTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -202,100 +269,140 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             }
         });
 
+        lblUsersId.setText("userId");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUsersId)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUsersId)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void perusahaanTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perusahaanTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_perusahaanTxtActionPerformed
-
-    public void bindingTable(List<Object> lowongan) {
-        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"};
-        DefaultTableModel model = new DefaultTableModel(null, header);
-        getIdTable.setModel(model);
-        
-        try {
-            for (Object low : lowongan) {
-                LowonganPekerjaan emp = (LowonganPekerjaan) low;
-//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-//                String isi2 = emp.getJudulLowongan();
-//                String isi3 = emp.getDeskripsiPekerjaan();
-//                String isi4 = emp.getRequirements();
-//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
-                
-//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-//                model.addRow(kolom);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
-        }
-    }
-    
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        String id = lowonganIdTxt.getText();
-        String judul = judulLowonganTxt.getText();
-        String deskripsi = deskripsiTxt.getText();
-        String requirements = requirementsTxt.getText();
-        String perusahaan = perusahaanTxt.getText();
-//        String userId = idUser.getText();
-        
-//        if(lki.insert(id, judul, deskripsi, requirements, perusahaan)){
-//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-//        }
-//        else{
-//            JOptionPane.showMessageDialog(null, "Gagal menambahkan");
-//        }
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date tglMulai = dateMulai.getDate();
+        Date tglSelesai = dateSelesai.getDate();
+        String tanggalMulai = format.format(tglMulai);
+        String tanggalSelesai = format.format(tglSelesai);
+        String judul = txtAreaJudul.getText();
+        String deskripsi = txtAreaDeskripsi.getText();
+        String requirements = txtAreaRequirement.getText();
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di tambah?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!judul.equals("") && !deskripsi.equals("") && !requirements.equals("") && !tanggalMulai.isEmpty()) {
+                if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan()).size() + 1), judul, deskripsi, requirements,
+                        tanggalMulai, String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Insert berhasil");
+                } else {
+                    JOptionPane.showMessageDialog(null, "insert gagal!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "form tidak boleh kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_tambahBtnActionPerformed
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+        // TODO add your handling code here:
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date tglMulai = dateMulai.getDate();
+        Date tglSelesai = dateSelesai.getDate();
+        String tanggalMulai = format.format(tglMulai);
+        String tanggalSelesai = format.format(tglSelesai);
+        String judul = txtAreaJudul.getText();
+        String deskripsi = txtAreaDeskripsi.getText();
+        String requirements = txtAreaRequirement.getText();
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di ubah?",
+                "Update Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!judul.equals("") && !deskripsi.equals("") && !requirements.equals("") && !tanggalMulai.isEmpty()) {
+                if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan())), judul, deskripsi, requirements,
+                        tanggalMulai, String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Update berhasil");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Update gagal!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "form tidak boleh kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            clearText();
+        }
+    }//GEN-LAST:event_btnUpdateMouseClicked
 
     private void searchTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyReleased
         // TODO add your handling code here:
         bindingTable(lki.search(searchTxt.getText()));
     }//GEN-LAST:event_searchTxtKeyReleased
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here
+        clearText();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField deskripsiTxt;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnUpdate;
+    private org.jdesktop.swingx.JXDatePicker dateMulai;
+    private org.jdesktop.swingx.JXDatePicker dateSelesai;
     private javax.swing.JLabel email;
-    private javax.swing.JTable getIdTable;
-    private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField judulLowonganTxt;
-    private javax.swing.JTextField lowonganIdTxt;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblUsersId;
     private java.awt.Panel panel1;
-    private javax.swing.JTextField perusahaanTxt;
-    private javax.swing.JTextField requirementsTxt;
     private javax.swing.JLabel role;
     private javax.swing.JTextField searchTxt;
     private javax.swing.JButton tambahBtn;
+    private javax.swing.JTable tblLoker;
+    private javax.swing.JTextArea txtAreaDeskripsi;
+    private javax.swing.JTextField txtAreaJudul;
+    private javax.swing.JTextArea txtAreaRequirement;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

@@ -35,6 +35,12 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public void clearText() {
+        namaPengalamanTxt.setText("");
+        perusahaanTxt.setText("");
+        lamaBekerjaCmbBx.setSelectedItem("Pilih lama bekerja");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,6 +57,7 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         lamaBekerjaCmbBx = new javax.swing.JComboBox<>();
         tambahBtn = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
 
         setTitle("Pengalaman");
 
@@ -67,11 +74,23 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
         jLabel3.setText("Lama Bekerja");
 
         lamaBekerjaCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< 1 Tahun", "1 Tahun", "2 Tahun", "3 Tahun", "> 3 Tahun" }));
+        lamaBekerjaCmbBx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lamaBekerjaCmbBxActionPerformed(evt);
+            }
+        });
 
         tambahBtn.setText("Tambah");
         tambahBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tambahBtnActionPerformed(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -83,17 +102,19 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(namaPengalamanTxt)
+                    .addComponent(perusahaanTxt)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(lamaBekerjaCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 144, Short.MAX_VALUE))
-                    .addComponent(perusahaanTxt)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tambahBtn)))
+                        .addGap(0, 280, Short.MAX_VALUE)
+                        .addComponent(tambahBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClear)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,18 +123,20 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(namaPengalamanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(namaPengalamanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(perusahaanTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lamaBekerjaCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tambahBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tambahBtn)
+                    .addComponent(btnClear))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -125,15 +148,42 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(), String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUsersId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
-        }
+        String nama = namaPengalamanTxt.getText();
+        String perusahaan = perusahaanTxt.getText();
+        String lamaBekerja = String.valueOf(lamaBekerjaCmbBx.getSelectedItem());
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di tambah?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!nama.equals("") && !perusahaan.equals("") && !lamaBekerja.isEmpty()) {
+                if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(),
+                        String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "form tidak boleh kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } 
+        clearText();
     }//GEN-LAST:event_tambahBtnActionPerformed
+
+    private void lamaBekerjaCmbBxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lamaBekerjaCmbBxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lamaBekerjaCmbBxActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearText();
+    }//GEN-LAST:event_btnClearActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

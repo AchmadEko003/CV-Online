@@ -48,19 +48,19 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        System.out.println(dataLogin.getUsersId());
-        userId.setText(String.valueOf(dataLogin.getUsersId()));
-        roleId.setText(String.valueOf(dataLogin.getRole()));
-        namaUser.setText(dataLogin.getUsersName());
+//        System.out.println(dataLogin.getUsersId());
+//        userId.setText(String.valueOf(dataLogin.getUsersId()));
+//        roleId.setText(String.valueOf(dataLogin.getRole()));
+//        namaUser.setText(dataLogin.getUsersName());
 
-        if(ai.getIdProfile(dataLogin.getUsersId())){
-            getUsersId();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Isi profile terlebih dahulu");
-            upv.show();
-            dsktpMain.add(upv);
-        }
+//        if(ai.getIdProfile(dataLogin.getUsersId())){
+//            getUsersId();
+//        }
+//        else{
+//            JOptionPane.showMessageDialog(null, "Isi profile terlebih dahulu");
+            sv.show();
+            dsktpMain.add(sv);
+//        }
         
 //        roleId.setText(String.valueOf(dataLogin.getRole()));
 //        if (dataLogin.getRole() == 1) {
@@ -74,17 +74,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-    public void getUsersId() {
-        UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
-        emailUser.setText(users.getUsersId().getEmail());
-        universitasUser.setText("Kosong");
-        jurusanUser.setText("Kosong");
-        umurUser.setText(String.valueOf(users.getUmur()));
-        domisiliUser.setText(users.getAlamat());
-        tanggalLahir.setText(String.valueOf(users.getTanggalLahir()));
-        noTelp.setText(String.valueOf(users.getNoTelepon()));
-
-    }
+//    public void getUsersId() {
+//        UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
+//        emailUser.setText(users.getUsers().getEmail());
+//        universitasUser.setText("Kosong");
+//        jurusanUser.setText("Kosong");
+//        umurUser.setText(String.valueOf(users.getUmur()));
+//        domisiliUser.setText(users.getAlamat());
+//        tanggalLahir.setText(String.valueOf(users.getTanggalLahir()));
+//        noTelp.setText(String.valueOf(users.getNoTelepon()));
+//
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -486,7 +486,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new MainFrame().setVisible(true);
+                new MainFrame().setVisible(true);
             }
         });
     }

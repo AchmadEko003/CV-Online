@@ -5,19 +5,41 @@
  */
 package views;
 
+
+import controllers.PendidikanControllers;
+import entities.RiwayatPendidikan;
+import interfaces.PendidikanInterface;
+import javax.swing.JOptionPane;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+import tools.getDataLogin;
+import tools.getLoginData;
+
 /**
  *
  * @author Nitani
  */
 public class PendidikanViews extends javax.swing.JInternalFrame {
 
+    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    PendidikanInterface pi = new PendidikanControllers(sessionFactory);
+    getLoginData data = new getLoginData(sessionFactory);
+    getDataLogin dataLogin = new getDataLogin();
+    
     /**
      * Creates new form PendidikanViews
      */
     public PendidikanViews() {
         initComponents();
+        lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
     }
 
+    public void clearText(){
+        txtNama.setText("");
+        txtJurusan.setText("");
+        txtOrganisasi.setText("");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +49,147 @@ public class PendidikanViews extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtOrganisasi = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNama = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtJurusan = new javax.swing.JTextField();
+        lblUsersId = new javax.swing.JLabel();
+
+        setTitle("Form tambah pendidikan");
+
+        jLabel4.setText("Organisasi");
+
+        btnSave.setText("Tambah");
+        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveMouseClicked(evt);
+            }
+        });
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Nama");
+
+        jLabel3.setText("Jurusan");
+
+        txtJurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJurusanActionPerformed(evt);
+            }
+        });
+
+        lblUsersId.setText("userId");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(lblUsersId)
+                    .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(txtJurusan)
+                    .addComponent(txtOrganisasi)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClear)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtJurusan, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOrganisasi, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnClear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblUsersId)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        // TODO add your handling code here:
+        String nama = txtNama.getText();
+        String jurusan = txtJurusan.getText();
+        String organisasi = txtOrganisasi.getText();
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di tambahkan ?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+        if (!nama.equals("") && !jurusan.equals("") && !organisasi.equals("")) {
+            if (pi.insert(String.valueOf(data.getTotal(new RiwayatPendidikan()).size()+1), nama, jurusan, organisasi, String.valueOf(dataLogin.getUsersId()))) {
+                JOptionPane.showMessageDialog(null, "Insert berhasil");
+            } else {
+                JOptionPane.showMessageDialog(null, "insert gagal!", "Message Alert",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "form tidak boleh kosong!", "Message Alert",
+                            JOptionPane.WARNING_MESSAGE);
+        }
+        clearText();
+        }
+    }//GEN-LAST:event_btnSaveMouseClicked
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearText();
+        
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void txtJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJurusanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJurusanActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblUsersId;
+    private javax.swing.JTextField txtJurusan;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtOrganisasi;
     // End of variables declaration//GEN-END:variables
 }

@@ -36,6 +36,11 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
         jLabel3.setText(String.valueOf(dl.getUsersId()));
     }
 
+    public void clearText() {
+        namaSertifikat.setText("");
+        txtLembaga.setText("");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,9 +53,10 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         namaSertifikat = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        lembaga = new javax.swing.JTextField();
+        txtLembaga = new javax.swing.JTextField();
         simpanBtn = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
+        btnClear = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Sertifikat");
@@ -59,14 +65,21 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Lembaga");
 
-        simpanBtn.setText("Simpan");
+        simpanBtn.setText("Tambah");
         simpanBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpanBtnActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("usersId");
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,35 +88,44 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(namaSertifikat)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lembaga)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
-                        .addComponent(simpanBtn)))
+                            .addComponent(namaSertifikat)
+                            .addComponent(txtLembaga)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(390, Short.MAX_VALUE)
+                .addComponent(simpanBtn)
+                .addGap(18, 18, 18)
+                .addComponent(btnClear)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(namaSertifikat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(namaSertifikat, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lembaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLembaga, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(simpanBtn)
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnClear))
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3)
+                .addContainerGap())
         );
 
         pack();
@@ -112,21 +134,40 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
     private void simpanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanBtnActionPerformed
         // TODO add your handling code here:
         String idu = String.valueOf(ld.getTotal(new Sertifikat()).size() + 1);
-        if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUsersId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        } else {
-            JOptionPane.showMessageDialog(null, "Ada masih kosong");
-        }
+        String nama = namaSertifikat.getText();
+        String lembaga = txtLembaga.getText();
 
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di Tambah?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!nama.equals("") && !lembaga.equals("")) {
+                if (si.insert(idu, namaSertifikat.getText(), lembaga, String.valueOf(dl.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal!", "Message Alert",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Form tidak boleh Kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_simpanBtnActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearText();
+    }//GEN-LAST:event_btnClearActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField lembaga;
     private javax.swing.JTextField namaSertifikat;
     private javax.swing.JToggleButton simpanBtn;
+    private javax.swing.JTextField txtLembaga;
     // End of variables declaration//GEN-END:variables
 }

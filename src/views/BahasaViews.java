@@ -34,6 +34,10 @@ public class BahasaViews extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public void clearText() {
+        bahasaTxt.setText("");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +50,7 @@ public class BahasaViews extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         bahasaTxt = new javax.swing.JTextField();
         tambahBtn = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setClosable(true);
@@ -60,6 +65,13 @@ public class BahasaViews extends javax.swing.JInternalFrame {
             }
         });
 
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,11 +81,13 @@ public class BahasaViews extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 433, Short.MAX_VALUE))
                     .addComponent(bahasaTxt)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 305, Short.MAX_VALUE)
-                        .addComponent(tambahBtn)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(tambahBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClear)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -82,10 +96,12 @@ public class BahasaViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bahasaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tambahBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bahasaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tambahBtn)
+                    .addComponent(btnClear))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,16 +109,37 @@ public class BahasaViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (bi.insert(String.valueOf(data.getTotal(new Bahasa()).size() + 1), bahasaTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        String nama = bahasaTxt.getText();
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di Tambah?",
+                "Insert Data", dialogButton);
+        if (dialogResult == 0) {
+            if (!nama.equals("")) {
+                if (bi.insert(String.valueOf(data.getTotal(new Bahasa()).size() + 1), bahasaTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal Menambahkan", "Message Alert",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nama Bahasa tidak boleh Kosong!", "Message Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         }
+        clearText();
     }//GEN-LAST:event_tambahBtnActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearText();
+        
+    }//GEN-LAST:event_btnClearActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bahasaTxt;
+    private javax.swing.JButton btnClear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton tambahBtn;
     // End of variables declaration//GEN-END:variables
