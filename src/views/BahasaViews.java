@@ -93,8 +93,9 @@ public class BahasaViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (bi.insert(String.valueOf(data.getTotal(new Bahasa()).size() + 1), bahasaTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
+        if (bi.insert(String.valueOf(data.getTotal(new Bahasa()).size() + 1), bahasaTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
             JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Data masih kosong");
         }

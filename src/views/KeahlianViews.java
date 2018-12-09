@@ -23,9 +23,9 @@ import tools.getLoginData;
 public class KeahlianViews extends javax.swing.JInternalFrame {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    KeahlianInterface ki = new KeahlianControllers(sessionFactory);
-    getLoginData data = new getLoginData(sessionFactory);
-    getDataLogin dataLogin = new getDataLogin();
+    private KeahlianInterface ki = new KeahlianControllers(sessionFactory);
+    private getLoginData data = new getLoginData(sessionFactory);
+    private getDataLogin dataLogin = new getDataLogin();
     /**
      * Creates new form KeahlianViews
      */
@@ -172,8 +172,9 @@ public class KeahlianViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (ki.insert(String.valueOf(data.getTotal(new Keahlian()).size()+1), skillTxt.getText(), DeskripsiTxt.getText(), String.valueOf(dataLogin.getUsersId()))) {
+        if (ki.insert(String.valueOf(data.getTotal(new Keahlian()).size()+1), skillTxt.getText(), DeskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
             JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Data masih kosong");
         }

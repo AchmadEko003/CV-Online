@@ -37,8 +37,8 @@ public class UserControllers implements UserInterface {
     public boolean register(String id, String nama, String email, String password) {
         boolean hasil = false;
         try {
-            Integer a = daoid.doDDL(new Users(), "").size()+1;
-            Users use = new Users(a, nama, email, password, new Role(1));
+//            Integer a = daoid.doDDL(new Users(), "").size()+1;
+            Users use = new Users(Integer.valueOf(id), nama, email, password, new Role(1));
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }

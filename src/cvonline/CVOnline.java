@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
+import tools.getDataLogin;
 import tools.getLoginData;
 
 /**
@@ -38,10 +39,14 @@ public class CVOnline {
         DAOInterface daoi = new GeneralDAO(sessionFactory);
         UserInterface ui = new UserControllers(sessionFactory);
         getLoginData data = new getLoginData(sessionFactory);
+        getDataLogin dataLogin = new getDataLogin();
+        UserInterface inte = new UserControllers(sessionFactory);
         
-        System.out.println(data.getProfileId("1"));        
-        System.out.println(data.emailMatch("ach..com"));
-        System.out.println(ui.getIdProfile(4));
+        dataLogin.setUsersId(1);
+        System.out.println(dataLogin.getUsersId());
+        inte.getIdProfile(dataLogin.getUsersId());
+//        System.out.println(data.getProfileId("1"));     
+//        System.out.println(ui.getIdProfile(4));
 //        System.out.println(data.getTotal());
 //        System.out.println(data.getTotal().size());
 

@@ -17,8 +17,9 @@ import org.hibernate.SessionFactory;
  *
  * @author Nitani
  */
-public class BahasaControllers implements BahasaInterface{
-private SessionFactory factory;
+public class BahasaControllers implements BahasaInterface {
+
+    private SessionFactory factory;
     private GeneralDAO gdao = new GeneralDAO(factory);
     private DAOInterface daoid = new GeneralDAO(factory);
 
@@ -30,6 +31,7 @@ private SessionFactory factory;
         this.gdao = new GeneralDAO(factory);
         this.daoid = new GeneralDAO(factory);
     }
+
     @Override
     public List<Object> search(String keyword) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -48,5 +50,5 @@ private SessionFactory factory;
         }
         return hasil;
     }
-    
+
 }

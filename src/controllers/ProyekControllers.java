@@ -7,10 +7,9 @@ package controllers;
 
 import daos.DAOInterface;
 import daos.GeneralDAO;
-import entities.RiwayatPendidikan;
+import entities.Proyek;
 import entities.UserProfile;
-import interfaces.PendidikanInterface;
-import java.math.BigDecimal;
+import interfaces.ProyekInterface;
 import java.util.List;
 import org.hibernate.SessionFactory;
 
@@ -18,16 +17,16 @@ import org.hibernate.SessionFactory;
  *
  * @author Nitani
  */
-public class PendidikanControllers implements PendidikanInterface {
+public class ProyekControllers implements ProyekInterface {
 
     private SessionFactory factory;
     private GeneralDAO gdao = new GeneralDAO(factory);
     private DAOInterface daoid = new GeneralDAO(factory);
 
-    public PendidikanControllers() {
+    public ProyekControllers() {
     }
 
-    public PendidikanControllers(SessionFactory factory) {
+    public ProyekControllers(SessionFactory factory) {
         this.factory = factory;
         this.gdao = new GeneralDAO(factory);
         this.daoid = new GeneralDAO(factory);
@@ -39,10 +38,10 @@ public class PendidikanControllers implements PendidikanInterface {
     }
 
     @Override
-    public boolean insert(String id, String nama, String jurusan, String organisasi, String ipk, String userProfileId) {
+    public boolean insert(String id, String nama, String status, String deskripsi, String userProfileId) {
         boolean hasil = false;
         try {
-            RiwayatPendidikan use = new RiwayatPendidikan(Integer.valueOf(id), nama, jurusan, organisasi, Double.valueOf(ipk), new UserProfile(Integer.valueOf(userProfileId)));
+            Proyek use = new Proyek(Integer.valueOf(id), nama, status, deskripsi, new UserProfile(Integer.valueOf(userProfileId)));
             if (daoid.doDML(use, false)) {
                 hasil = true;
             }

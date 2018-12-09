@@ -42,12 +42,13 @@ public class LowonganKerjaControllers implements LowonganKerjaInterface {
     }
 
     @Override
-    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String userId) {
+    public boolean insert(String id, String judul, String deskripsi, String requirements, String tanggal, String tanggalSelesai, String perusahaan, String userId) {
         boolean hasil = false;
         try {
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
             Date dates = format.parse(tanggal);
-            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(id), judul, deskripsi, requirements, dates, new Users(Integer.valueOf(userId)));
+            Date dateselesai = format.parse(tanggalSelesai);
+            LowonganPekerjaan lp = new LowonganPekerjaan(Integer.valueOf(id), judul, deskripsi, requirements, dates, dateselesai, perusahaan, new Users(Integer.valueOf(userId)));
             System.out.println(lp);
             if (daoid.doDML(lp, false)) {
                 hasil = true;

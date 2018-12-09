@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface PendidikanInterface {
     public List<Object> search(String keyword);
-    public boolean insert(String id, String nama, String jurusan, String organisasi, String userProfileId);
+    public boolean insert(String id, String nama, String jurusan, String organisasi, String ipk, String userProfileId);
 }

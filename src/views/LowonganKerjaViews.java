@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.KeahlianControllers;
 import controllers.LowonganKerjaControllers;
 import interfaces.LowonganKerjaInterface;
 import controllers.UserControllers;
@@ -13,12 +14,21 @@ import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
 import entities.Users;
+import interfaces.KeahlianInterface;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
+import tools.getDataLogin;
+import tools.getLoginData;
 
 /**
  *
@@ -26,9 +36,9 @@ import tools.HibernateUtil;
  */
 public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
-    private JButton buttons;
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private DAOInterface daoi = new GeneralDAO(sessionFactory);
+    private getLoginData data = new getLoginData(sessionFactory);
+    private getDataLogin dataLogin = new getDataLogin();
     private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
 
     /**
@@ -37,6 +47,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     public LowonganKerjaViews() {
         initComponents();
         bindingTable(lki.search(""));
+        
     }
 
     /**
@@ -50,17 +61,19 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
         panel1 = new java.awt.Panel();
         jPanel1 = new javax.swing.JPanel();
-        id = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
-        role = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
-        perusahaanTxt = new javax.swing.JTextField();
         judulLowonganTxt = new javax.swing.JTextField();
-        requirementsTxt = new javax.swing.JTextField();
-        lowonganIdTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tambahBtn = new javax.swing.JButton();
-        deskripsiTxt = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        reqTxt = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        deskripsiTxt = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        tanggalSelesai = new org.jdesktop.swingx.JXDatePicker();
+        username1 = new javax.swing.JLabel();
+        perusahaanTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
         searchTxt = new javax.swing.JTextField();
@@ -80,19 +93,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Lowongan"));
 
-        id.setText("ID");
-
         email.setText("Requirements");
 
-        role.setText("Perusahaan");
-
-        username.setText("Judul Lowongan");
-
-        perusahaanTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perusahaanTxtActionPerformed(evt);
-            }
-        });
+        username.setText("Lowongan");
 
         jLabel1.setText("Deskripsi Pekerjaan");
 
@@ -103,6 +106,22 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             }
         });
 
+        reqTxt.setColumns(20);
+        reqTxt.setRows(5);
+        jScrollPane2.setViewportView(reqTxt);
+
+        deskripsiTxt.setColumns(20);
+        deskripsiTxt.setRows(5);
+        jScrollPane3.setViewportView(deskripsiTxt);
+
+        jLabel7.setText("Tanggal Selesai");
+
+        username1.setText("Perusahaan");
+
+        perusahaanTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        perusahaanTxt.setText("Mitra Integrasi Informatika");
+        perusahaanTxt.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -110,77 +129,65 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(username)
-                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lowonganIdTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(role)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addComponent(judulLowonganTxt)
+                    .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(perusahaanTxt)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(username)
+                            .addComponent(jLabel1)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(tanggalSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(username1))
+                        .addGap(0, 110, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lowonganIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(id))
+                .addComponent(username)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(username))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(deskripsiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requirementsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(role)
-                    .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(email)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tanggalSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(username1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(perusahaanTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(tambahBtn)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getIdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"
+                "Lowongan", "Deskripsi", "Requirements", "Perusahaan", "Tanggal Mulai", "Tanggal Selesai"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -193,7 +200,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             getIdTable.getColumnModel().getColumn(1).setResizable(false);
             getIdTable.getColumnModel().getColumn(2).setResizable(false);
             getIdTable.getColumnModel().getColumn(3).setResizable(false);
-            getIdTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
         searchTxt.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -212,9 +218,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                     .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,34 +229,31 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void perusahaanTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perusahaanTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_perusahaanTxtActionPerformed
-
     public void bindingTable(List<Object> lowongan) {
-        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"};
+        Object[] header = {"Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan", "Tanggal Mulai", "Tanggal Selesai"};
         DefaultTableModel model = new DefaultTableModel(null, header);
         getIdTable.setModel(model);
-        
+        DateFormat formats = new SimpleDateFormat("d MMM yyyy", Locale.ENGLISH);
         try {
             for (Object low : lowongan) {
                 LowonganPekerjaan emp = (LowonganPekerjaan) low;
-//                String isi1 = String.valueOf(emp.getLowonganPekerjaanId());
-//                String isi2 = emp.getJudulLowongan();
-//                String isi3 = emp.getDeskripsiPekerjaan();
-//                String isi4 = emp.getRequirements();
-//                String isi5 = emp.getPerusahaanId().getNamaPerusahaan();
+                String isi1 = String.valueOf(emp.getJudul());
+                String isi2 = emp.getDeskripsi();
+                String isi3 = emp.getRequirements();
+                String isi4 = emp.getPerusahaan();
+                String isi5 = formats.format(emp.getTanggal())+"";
+                String isi6 = formats.format(emp.getTanggalSelesai())+"";
                 
-//                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
-//                model.addRow(kolom);
+                String kolom[] = {isi1, isi2, isi3, isi4, isi5, isi6};
+                model.addRow(kolom);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
@@ -259,19 +262,17 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        String id = lowonganIdTxt.getText();
-        String judul = judulLowonganTxt.getText();
-        String deskripsi = deskripsiTxt.getText();
-        String requirements = requirementsTxt.getText();
-        String perusahaan = perusahaanTxt.getText();
-//        String userId = idUser.getText();
-        
-//        if(lki.insert(id, judul, deskripsi, requirements, perusahaan)){
-//            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-//        }
-//        else{
-//            JOptionPane.showMessageDialog(null, "Gagal menambahkan");
-//        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateFormat formats = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date hiredate = tanggalSelesai.getDate();
+        String dates = formats.format(hiredate);
+	LocalDate localDate = LocalDate.now();
+        if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan()).size() + 1), judulLowonganTxt.getText(), deskripsiTxt.getText(), reqTxt.getText(), dtf.format(localDate), dates, perusahaanTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        }
     }//GEN-LAST:event_tambahBtnActionPerformed
 
     private void searchTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyReleased
@@ -281,21 +282,23 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField deskripsiTxt;
+    private javax.swing.JTextArea deskripsiTxt;
     private javax.swing.JLabel email;
     private javax.swing.JTable getIdTable;
-    private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField judulLowonganTxt;
-    private javax.swing.JTextField lowonganIdTxt;
     private java.awt.Panel panel1;
     private javax.swing.JTextField perusahaanTxt;
-    private javax.swing.JTextField requirementsTxt;
-    private javax.swing.JLabel role;
+    private javax.swing.JTextArea reqTxt;
     private javax.swing.JTextField searchTxt;
     private javax.swing.JButton tambahBtn;
+    private org.jdesktop.swingx.JXDatePicker tanggalSelesai;
     private javax.swing.JLabel username;
+    private javax.swing.JLabel username1;
     // End of variables declaration//GEN-END:variables
 }

@@ -149,4 +149,43 @@ public class getLoginData {
         }
         return hasil;
     }
+
+    public boolean numberMatchA(String number) {
+        boolean hasil = false;
+        String a = number;
+        String regex = "\\d+\\D+";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(a);
+        if (matcher.matches()) {
+            hasil = true;
+        }
+        return hasil;
+    }
+
+    public boolean numberMatchB(String number) {
+        boolean hasil = false;
+        String a = number;
+        String regex = "\\D+\\d+";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(a);
+        if (matcher.matches()) {
+            hasil = true;
+        }
+        return hasil;
+    }
+
+    public boolean numberMatchC(String number) {
+        boolean hasil = false;
+        String a = number;
+        String regex = "\\D+";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(a);
+        if (matcher.matches()) {
+            hasil = true;
+        }
+        return hasil;
+    }
 }

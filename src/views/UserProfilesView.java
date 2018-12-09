@@ -47,6 +47,7 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         userId.setText(String.valueOf(dataLogin.getUsersId()));
         if (ai.getIdProfile(dataLogin.getUsersId())) {
             tambahBtn.setText("Update");
+            getUsersId();
         } else {
             tambahBtn.setText("Tambah");
         }
@@ -59,6 +60,13 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         umurTxt.setText("");
         alamatTxt.setText("");
         telpTxt.setText("");
+    }
+    
+    public void getUsersId() {
+        UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
+        umurTxt.setText(String.valueOf(users.getUmur()));
+        alamatTxt.setText(users.getAlamat());
+        telpTxt.setText(String.valueOf(users.getNoTelepon()));
     }
 
     /**
@@ -139,6 +147,11 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         telpTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telpTxtActionPerformed(evt);
+            }
+        });
+        telpTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                telpTxtKeyReleased(evt);
             }
         });
 
@@ -276,7 +289,7 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         String telp = telpTxt.getText();
 
         if (tambahBtn.getText() == "Update") {
-            if (upi.inputdata(String.valueOf(data.getTotal(new UserProfile()).size()), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
+            if (upi.inputdata(String.valueOf(dataLogin.getUserProfileId()), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
                 JOptionPane.showMessageDialog(null, "Update Berhasil");
                 tambahBtn.setText("Tambah");
                 clear();
@@ -325,6 +338,17 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         Integer b = 2018 - Integer.valueOf(a);
         umurTxt.setText(String.valueOf(b));
     }//GEN-LAST:event_dateofbirthActionPerformed
+
+    private void telpTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telpTxtKeyReleased
+        // TODO add your handling code here:
+        if (data.numberMatchA(telpTxt.getText())) {
+            telpTxt.setText("");
+        } else if(data.numberMatchB(telpTxt.getText())) {
+            telpTxt.setText("");
+        } else if(data.numberMatchC(telpTxt.getText())){
+            telpTxt.setText("");
+        }
+    }//GEN-LAST:event_telpTxtKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

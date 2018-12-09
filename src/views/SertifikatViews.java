@@ -23,10 +23,10 @@ import tools.getLoginData;
 public class SertifikatViews extends javax.swing.JInternalFrame {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    SertifikatInterface si = new SertifikatControllers(sessionFactory);
-    getLoginData ld = new getLoginData(sessionFactory);
-    getDataLogin dl = new getDataLogin();
-    UserInterface ai = new UserControllers(sessionFactory);
+    private SertifikatInterface si = new SertifikatControllers(sessionFactory);
+    private getLoginData ld = new getLoginData(sessionFactory);
+    private getDataLogin dl = new getDataLogin();
+    private UserInterface ai = new UserControllers(sessionFactory);
 
     /**
      * Creates new form SertifikatViews
@@ -112,12 +112,12 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
     private void simpanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanBtnActionPerformed
         // TODO add your handling code here:
         String idu = String.valueOf(ld.getTotal(new Sertifikat()).size() + 1);
-        if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUsersId()))) {
+        if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUserProfileId()))) {
             JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Ada masih kosong");
         }
-
     }//GEN-LAST:event_simpanBtnActionPerformed
 
 

@@ -5,32 +5,32 @@
  */
 package views;
 
-import controllers.BahasaControllers;
-import controllers.PencapaianControllers;
-import interfaces.BahasaInterface;
-import interfaces.PencapaianInterface;
+import controllers.PengalamanControllers;
+import controllers.ProyekControllers;
+import entities.Proyek;
+import interfaces.PengalamanInterface;
+import interfaces.ProyekInterface;
+import javax.swing.JOptionPane;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 import tools.getDataLogin;
 import tools.getLoginData;
-import entities.Pencapaian;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Nitani
  */
-public class PencapaianViews extends javax.swing.JInternalFrame {
+public class ProyekViews extends javax.swing.JInternalFrame {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private getLoginData data = new getLoginData(sessionFactory);
     private getDataLogin dataLogin = new getDataLogin();
-    private PencapaianInterface pi = new PencapaianControllers(sessionFactory);
+    private ProyekInterface pi = new ProyekControllers(sessionFactory);
 
     /**
-     * Creates new form PencapaianViews
+     * Creates new form ProyekViews
      */
-    public PencapaianViews() {
+    public ProyekViews() {
         initComponents();
     }
 
@@ -44,22 +44,28 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        namaPencapaianTxt = new javax.swing.JTextField();
+        namaProjectTxt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        statusCmbx = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         deskripsiTxt = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         tambahBtn = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Pencapaian");
+        setTitle("Project");
 
-        jLabel1.setText("Nama Pencapaian");
+        jLabel1.setText("Nama Project");
 
-        jLabel2.setText("Deskripsi");
+        jLabel2.setText("Status");
+
+        statusCmbx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Selesai", "Progres" }));
 
         deskripsiTxt.setColumns(20);
         deskripsiTxt.setRows(5);
         jScrollPane1.setViewportView(deskripsiTxt);
+
+        jLabel3.setText("Deskripsi");
 
         tambahBtn.setText("Tambah");
         tambahBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -73,16 +79,16 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(namaPencapaianTxt)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tambahBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(namaProjectTxt)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(statusCmbx, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(tambahBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -91,12 +97,16 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(namaPencapaianTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(namaProjectTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statusCmbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tambahBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -106,7 +116,7 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pencapaian()).size() + 1), namaPencapaianTxt.getText(), deskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+        if (pi.insert(String.valueOf(data.getTotal(new Proyek()).size() + 1), namaProjectTxt.getText(), String.valueOf(statusCmbx.getSelectedItem()), deskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
             JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
             this.dispose();
         } else {
@@ -119,8 +129,10 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea deskripsiTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField namaPencapaianTxt;
+    private javax.swing.JTextField namaProjectTxt;
+    private javax.swing.JComboBox<String> statusCmbx;
     private javax.swing.JButton tambahBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -58,4 +58,9 @@ public class UserProfileControllers implements UserProfileInterface {
         }
         return hasil;
     }
+
+    @Override
+    public Object getById(Object id) {
+        return this.daoid.getById(new UserProfile(), id);
+    }
 }

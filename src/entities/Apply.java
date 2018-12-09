@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Apply.findAll", query = "SELECT a FROM Apply a")
-    , @NamedQuery(name = "Apply.findById", query = "SELECT a FROM Apply a WHERE a.id = :id")})
+    , @NamedQuery(name = "Apply.findById", query = "SELECT a FROM Apply a WHERE a.id = :id")
+    , @NamedQuery(name = "Apply.findByStatus", query = "SELECT a FROM Apply a WHERE a.status = :status")})
 public class Apply implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +36,8 @@ public class Apply implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Column(name = "STATUS")
+    private String status;
     @JoinColumn(name = "LOWONGAN_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private LowonganPekerjaan lowonganId;
@@ -49,8 +52,9 @@ public class Apply implements Serializable {
         this.id = id;
     }
 
-    public Apply(Integer id, LowonganPekerjaan lowonganId, Users userId) {
+    public Apply(Integer id, String status, LowonganPekerjaan lowonganId, Users userId) {
         this.id = id;
+        this.status = status;
         this.lowonganId = lowonganId;
         this.userId = userId;
     }
@@ -61,6 +65,14 @@ public class Apply implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LowonganPekerjaan getLowonganId() {
@@ -103,5 +115,5 @@ public class Apply implements Serializable {
     public String toString() {
         return "entities.Apply[ id=" + id + " ]";
     }
-    
+
 }

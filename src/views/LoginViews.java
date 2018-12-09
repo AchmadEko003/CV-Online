@@ -82,6 +82,11 @@ public class LoginViews extends javax.swing.JFrame {
         });
 
         passwordTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        passwordTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordTxtKeyReleased(evt);
+            }
+        });
 
         namaTxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -159,8 +164,8 @@ public class LoginViews extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,8 +182,10 @@ public class LoginViews extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (ld.emailMatch(emailTxt.getText())) {
             emails.setVisible(false);
+            btnLogReg.setEnabled(true);
         } else {
             emails.setVisible(true);
+            btnLogReg.setEnabled(false);
         }
     }//GEN-LAST:event_emailTxtKeyReleased
 
@@ -209,7 +216,7 @@ public class LoginViews extends javax.swing.JFrame {
             }
         } else {
 //            String edu = String.valueOf(data.getTotal(new Users()).size() + 1);
-            if (ai.register("", name, emails, BCrypt.hashpw(password, BCrypt.gensalt()))) {
+            if (ai.register(String.valueOf(data.getTotal(new Users()).size() + 1), name, emails, BCrypt.hashpw(password, BCrypt.gensalt()))) {
                 JOptionPane.showMessageDialog(null, "Berhasil register");
                 m.Send(emails, password);
                 btnLogReg.setText("Login");
@@ -224,6 +231,10 @@ public class LoginViews extends javax.swing.JFrame {
         }
         //JOptionPane.showMessageDialog(null, result);
     }//GEN-LAST:event_btnLogRegActionPerformed
+
+    private void passwordTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordTxtKeyReleased
 
     /**
      * @param args the command line arguments

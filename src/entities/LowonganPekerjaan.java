@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "LowonganPekerjaan.findByJudul", query = "SELECT l FROM LowonganPekerjaan l WHERE l.judul = :judul")
     , @NamedQuery(name = "LowonganPekerjaan.findByDeskripsi", query = "SELECT l FROM LowonganPekerjaan l WHERE l.deskripsi = :deskripsi")
     , @NamedQuery(name = "LowonganPekerjaan.findByRequirements", query = "SELECT l FROM LowonganPekerjaan l WHERE l.requirements = :requirements")
-    , @NamedQuery(name = "LowonganPekerjaan.findByTanggal", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggal = :tanggal")})
+    , @NamedQuery(name = "LowonganPekerjaan.findByTanggal", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggal = :tanggal")
+    , @NamedQuery(name = "LowonganPekerjaan.findByTanggalSelesai", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggalSelesai = :tanggalSelesai")
+    , @NamedQuery(name = "LowonganPekerjaan.findByPerusahaan", query = "SELECT l FROM LowonganPekerjaan l WHERE l.perusahaan = :perusahaan")})
 public class LowonganPekerjaan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +53,11 @@ public class LowonganPekerjaan implements Serializable {
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;
+    @Column(name = "TANGGAL_SELESAI")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tanggalSelesai;
+    @Column(name = "PERUSAHAAN")
+    private String perusahaan;
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Users userId;
@@ -62,20 +69,14 @@ public class LowonganPekerjaan implements Serializable {
         this.id = id;
     }
 
-    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal) {
+    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal, Date tanggalSelesai, String perusahaan, Users userId) {
         this.id = id;
         this.judul = judul;
         this.deskripsi = deskripsi;
         this.requirements = requirements;
         this.tanggal = tanggal;
-    }
-
-    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal, Users userId) {
-        this.id = id;
-        this.judul = judul;
-        this.deskripsi = deskripsi;
-        this.requirements = requirements;
-        this.tanggal = tanggal;
+        this.tanggalSelesai = tanggalSelesai;
+        this.perusahaan = perusahaan;
         this.userId = userId;
     }
 
@@ -117,6 +118,22 @@ public class LowonganPekerjaan implements Serializable {
 
     public void setTanggal(Date tanggal) {
         this.tanggal = tanggal;
+    }
+
+    public Date getTanggalSelesai() {
+        return tanggalSelesai;
+    }
+
+    public void setTanggalSelesai(Date tanggalSelesai) {
+        this.tanggalSelesai = tanggalSelesai;
+    }
+
+    public String getPerusahaan() {
+        return perusahaan;
+    }
+
+    public void setPerusahaan(String perusahaan) {
+        this.perusahaan = perusahaan;
     }
 
     public Users getUserId() {

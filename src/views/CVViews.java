@@ -9,12 +9,12 @@ package views;
  *
  * @author Nitani
  */
-public class ApplyViews extends javax.swing.JInternalFrame {
+public class CVViews extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ApplyViews
+     * Creates new form CVViews
      */
-    public ApplyViews() {
+    public CVViews() {
         initComponents();
     }
 
@@ -27,15 +27,19 @@ public class ApplyViews extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setClosable(true);
+        setResizable(true);
+        setTitle("Curriculum Vitae");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 812, Short.MAX_VALUE)
+            .addGap(0, 1104, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 638, Short.MAX_VALUE)
         );
 
         pack();

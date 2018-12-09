@@ -13,11 +13,19 @@ import controllers.UserProfileControllers;
 import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.Bahasa;
 import entities.LowonganPekerjaan;
+import entities.Pencapaian;
+import entities.Pengalaman;
+import entities.Proyek;
 import entities.RiwayatPendidikan;
 import entities.UserProfile;
 import entities.Users;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -38,10 +46,17 @@ public class MainFrame extends javax.swing.JFrame {
     private getLoginData ld = new getLoginData();
     private getDataLogin dataLogin = new getDataLogin();
     private UserProfilesView upv = new UserProfilesView();
+    private UserViews uv = new UserViews();
     private SertifikatViews sv = new SertifikatViews();
     private LoginViews lv = new LoginViews();
     private KeahlianViews kv = new KeahlianViews();
     private LowonganKerjaViews lkv = new LowonganKerjaViews();
+    private BahasaViews bahasas =  new BahasaViews();
+    private PencapaianViews pencapaian =  new PencapaianViews();
+    private PengalamanViews pengalaman = new PengalamanViews();
+    private ProyekViews pv = new ProyekViews();
+    private PendidikanViews pendidikanViews = new PendidikanViews();
+    private ManagerViews mv = new ManagerViews();
 
     /**
      * Creates new form MainFrame
@@ -52,7 +67,6 @@ public class MainFrame extends javax.swing.JFrame {
         userId.setText(String.valueOf(dataLogin.getUsersId()));
         roleId.setText(String.valueOf(dataLogin.getRole()));
         namaUser.setText(dataLogin.getUsersName());
-
         if(ai.getIdProfile(dataLogin.getUsersId())){
             getUsersId();
         }
@@ -62,12 +76,12 @@ public class MainFrame extends javax.swing.JFrame {
             dsktpMain.add(upv);
         }
         
-//        roleId.setText(String.valueOf(dataLogin.getRole()));
-//        if (dataLogin.getRole() == 1) {
-//            jMenu6.setVisible(false);
-//        } else if (dataLogin.getRole() == 2) {
-//            jMenu5.setVisible(false);
-//        }
+        roleId.setText(String.valueOf(dataLogin.getRole()));
+        if (dataLogin.getRole() == 1) {
+            jMenu6.setVisible(false);
+        } else if (dataLogin.getRole() == 2) {
+            jMenu5.setVisible(false);
+        }
     }
 
     public void profile() {
@@ -75,13 +89,16 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void getUsersId() {
+        DateFormat formats = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
         UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
+        dataLogin.setUserProfileId(users.getId());
         emailUser.setText(users.getUsersId().getEmail());
         universitasUser.setText("Kosong");
         jurusanUser.setText("Kosong");
         umurUser.setText(String.valueOf(users.getUmur()));
         domisiliUser.setText(users.getAlamat());
-        tanggalLahir.setText(String.valueOf(users.getTanggalLahir()));
+        Date birth = users.getTanggalLahir();
+        tanggalLahir.setText(formats.format(birth));
         noTelp.setText(String.valueOf(users.getNoTelepon()));
 
     }
@@ -108,6 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         dsktpMain = new javax.swing.JDesktopPane();
         logoutBtn = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         userPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -132,11 +150,17 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         editProfiles = new javax.swing.JMenuItem();
         sertifikatItem = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        lowonganItem = new javax.swing.JMenuItem();
+        keahlianItem = new javax.swing.JMenuItem();
+        bahasaItem = new javax.swing.JMenuItem();
+        pencapaianItem = new javax.swing.JMenuItem();
+        pengalamanItem = new javax.swing.JMenuItem();
+        projectItem = new javax.swing.JMenuItem();
+        pendidikanItem = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        managerItem = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -175,26 +199,44 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setText("jTextField1");
+        jTextField1.setName(""); // NOI18N
+
         dsktpMain.setLayer(logoutBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dsktpMainLayout = new javax.swing.GroupLayout(dsktpMain);
         dsktpMain.setLayout(dsktpMainLayout);
         dsktpMainLayout.setHorizontalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dsktpMainLayout.createSequentialGroup()
-                .addContainerGap(915, Short.MAX_VALUE)
-                .addComponent(logoutBtn)
+                .addContainerGap(711, Short.MAX_VALUE)
+                .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutBtn))
                 .addContainerGap())
         );
         dsktpMainLayout.setVerticalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dsktpMainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
 
+        jTextField1.getAccessibleContext().setAccessibleName("");
+
+        userPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Profil"));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel2MouseEntered(evt);
+            }
+        });
 
         jLabel2.setText("Email");
 
@@ -287,6 +329,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         namaUser1.setText("Selamat datang");
 
+        namaUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         namaUser.setText("Nama");
 
         roleId.setText("Role");
@@ -298,38 +341,39 @@ public class MainFrame extends javax.swing.JFrame {
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(roleId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userId)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(userPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(roleId)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userId))
-                    .addGroup(userPanelLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                        .addGap(13, 13, 13)
                         .addComponent(namaUser1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(namaUser))
-                    .addGroup(userPanelLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addContainerGap(140, Short.MAX_VALUE)
+                .addContainerGap(176, Short.MAX_VALUE)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(namaUser1)
                     .addComponent(namaUser))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
+                .addGap(117, 117, 117)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(roleId)
                     .addComponent(userId))
                 .addContainerGap())
         );
 
+        jMenuBar3.setBackground(new java.awt.Color(102, 153, 255));
         jMenuBar3.setToolTipText("");
 
         jMenu5.setText("User");
@@ -350,24 +394,61 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu5.add(sertifikatItem);
 
-        jMenuItem4.setText("Cari Lowongan");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        lowonganItem.setText("Cari Lowongan");
+        lowonganItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                lowonganItemActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem4);
+        jMenu5.add(lowonganItem);
 
-        jMenuItem6.setText("Keahlian");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        keahlianItem.setText("Keahlian");
+        keahlianItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                keahlianItemActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem6);
+        jMenu5.add(keahlianItem);
 
-        jMenuItem2.setText("Bahasa");
-        jMenu5.add(jMenuItem2);
+        bahasaItem.setText("Bahasa");
+        bahasaItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bahasaItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(bahasaItem);
+
+        pencapaianItem.setText("Pencapaian");
+        pencapaianItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pencapaianItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(pencapaianItem);
+
+        pengalamanItem.setText("Pengalaman");
+        pengalamanItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pengalamanItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(pengalamanItem);
+
+        projectItem.setText("Project");
+        projectItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projectItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(projectItem);
+
+        pendidikanItem.setText("Pendidikan");
+        pendidikanItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pendidikanItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(pendidikanItem);
 
         jMenuBar3.add(jMenu5);
 
@@ -383,6 +464,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar3.add(jMenu6);
 
+        jMenu7.setText("Manager");
+
+        managerItem.setText("Manager");
+        managerItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                managerItemActionPerformed(evt);
+            }
+        });
+        jMenu7.add(managerItem);
+
+        jMenuBar3.add(jMenu7);
+
         setJMenuBar(jMenuBar3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -396,8 +489,8 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dsktpMain)
-            .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -430,11 +523,11 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void lowonganItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowonganItemActionPerformed
         // TODO add your handling code here:
-//        uv.show();
-//        dsktpMain.add(uv);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+        uv.show();
+        dsktpMain.add(uv);
+    }//GEN-LAST:event_lowonganItemActionPerformed
 
     private void sertifikatItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sertifikatItemActionPerformed
         // TODO add your handling code here:
@@ -442,11 +535,52 @@ public class MainFrame extends javax.swing.JFrame {
         dsktpMain.add(sv);
     }//GEN-LAST:event_sertifikatItemActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void keahlianItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keahlianItemActionPerformed
         // TODO add your handling code here:
         kv.show();
         dsktpMain.add(kv);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_keahlianItemActionPerformed
+
+    private void pencapaianItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencapaianItemActionPerformed
+        // TODO add your handling code here:
+        pencapaian.show();
+        dsktpMain.add(pencapaian);
+    }//GEN-LAST:event_pencapaianItemActionPerformed
+
+    private void bahasaItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bahasaItemActionPerformed
+        // TODO add your handling code here:
+        bahasas.show();
+        dsktpMain.add(bahasas);
+    }//GEN-LAST:event_bahasaItemActionPerformed
+
+    private void pengalamanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pengalamanItemActionPerformed
+        // TODO add your handling code here:
+        pengalaman.show();
+        dsktpMain.add(pengalaman);
+    }//GEN-LAST:event_pengalamanItemActionPerformed
+
+    private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
+        // TODO add your handling code here:
+        getUsersId();
+    }//GEN-LAST:event_jPanel2MouseEntered
+
+    private void projectItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectItemActionPerformed
+        // TODO add your handling code here:
+        pv.show();
+        dsktpMain.add(pv);
+    }//GEN-LAST:event_projectItemActionPerformed
+
+    private void pendidikanItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendidikanItemActionPerformed
+        // TODO add your handling code here:
+        pendidikanViews.show();
+        dsktpMain.add(pendidikanViews);
+    }//GEN-LAST:event_pendidikanItemActionPerformed
+
+    private void managerItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerItemActionPerformed
+        // TODO add your handling code here:
+        mv.show();
+        dsktpMain.add(mv);
+    }//GEN-LAST:event_managerItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,12 +620,13 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new MainFrame().setVisible(true);
+                new MainFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem bahasaItem;
     private javax.swing.JLabel domisiliUser;
     private javax.swing.JDesktopPane dsktpMain;
     private javax.swing.JMenuItem editProfiles;
@@ -509,24 +644,30 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jurusanUser;
+    private javax.swing.JMenuItem keahlianItem;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JMenuItem lowonganItem;
+    private javax.swing.JMenuItem managerItem;
     private javax.swing.JLabel namaUser;
     private javax.swing.JLabel namaUser1;
     private javax.swing.JLabel noTelp;
+    private javax.swing.JMenuItem pencapaianItem;
+    private javax.swing.JMenuItem pendidikanItem;
+    private javax.swing.JMenuItem pengalamanItem;
+    private javax.swing.JMenuItem projectItem;
     private javax.swing.JLabel roleId;
     private javax.swing.JMenuItem sertifikatItem;
     private javax.swing.JLabel tanggalLahir;

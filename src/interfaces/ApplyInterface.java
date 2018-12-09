@@ -5,17 +5,13 @@
  */
 package interfaces;
 
-import entities.Users;
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author Nitani
  */
-public interface UserProfileInterface {
+public interface ApplyInterface {
     public List<Object> search(String keyword);
-    public boolean inputdata(String id, String umur, String alamat, String tanggalLahir, String noTelepon, String foto, String cv, String ktp, String usersId);
-     public Object getById(Object id);
+    public boolean Apply(String id, String status, String lowonganId, String userId);
 }

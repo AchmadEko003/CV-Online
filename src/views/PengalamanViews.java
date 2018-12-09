@@ -52,6 +52,7 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
         lamaBekerjaCmbBx = new javax.swing.JComboBox<>();
         tambahBtn = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Pengalaman");
 
         jLabel1.setText("Judul");
@@ -125,8 +126,9 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(), String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUsersId()))) {
+        if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(), String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUserProfileId()))) {
             JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Data masih kosong");
         }
