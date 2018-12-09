@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 import tools.getDataLogin;
@@ -47,17 +48,19 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         bindingTable(lki.search(""));
         lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
         btnUpdate.setEnabled(false);
+        bindingTable(lki.getAllData(new LowonganPekerjaan(), ""));
     }
 
     public void clearText() {
         txtAreaJudul.setText("");
         txtAreaDeskripsi.setText("");
         txtAreaRequirement.setText("");
-        
+        btnTambah.setEnabled(true);
+
     }
-    
+
     public void bindingTable(List<Object> lowongan) {
-        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "tanggal mulai", "tanggal selesai", "Perusahaan"};
+        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "tanggal mulai", "tanggal selesai"};
         DefaultTableModel model = new DefaultTableModel(null, header);
         tblLoker.setModel(model);
 
@@ -70,9 +73,10 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 String isi2 = emp.getJudul();
                 String isi3 = emp.getDeskripsi();
                 String isi4 = emp.getRequirements();
-                String isi5 = String.valueOf(emp.getTanggal());
+                String isi5 = String.valueOf(emp.getTanggalMulai());
+                String isi6 = String.valueOf(emp.getTanggalSelesai());
 
-                String kolom[] = {isi, isi2, isi3, isi4, isi5};
+                String kolom[] = {isi, isi2, isi3, isi4, isi5, isi6};
                 model.addRow(kolom);
                 no++;
             }
@@ -80,8 +84,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +108,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         dateMulai = new org.jdesktop.swingx.JXDatePicker();
         jLabel2 = new javax.swing.JLabel();
         dateSelesai = new org.jdesktop.swingx.JXDatePicker();
-        tambahBtn = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -126,7 +128,10 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setTitle("Admin");
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setTitle("Admin input lowongan");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Lowongan"));
 
@@ -148,10 +153,10 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Tanggal selesei lowongan");
 
-        tambahBtn.setText("Tambah");
-        tambahBtn.addActionListener(new java.awt.event.ActionListener() {
+        btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahBtnActionPerformed(evt);
+                btnTambahActionPerformed(evt);
             }
         });
 
@@ -198,7 +203,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                                 .addComponent(dateSelesai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(dateMulai, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(tambahBtn)
+                                .addComponent(btnTambah)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnUpdate))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -235,28 +240,33 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
-                    .addComponent(tambahBtn))
+                    .addComponent(btnTambah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(btnClear))
         );
 
         tblLoker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"
+                "No", "Judul Lowongan", "Deskripsi", "Requirements"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblLoker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLokerMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblLoker);
@@ -309,9 +319,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date tglMulai = dateMulai.getDate();
         Date tglSelesai = dateSelesai.getDate();
         String tanggalMulai = format.format(tglMulai);
@@ -324,10 +334,11 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Data akan di tambah?",
                 "Insert Data", dialogButton);
         if (dialogResult == 0) {
-            if (!judul.equals("") && !deskripsi.equals("") && !requirements.equals("") && !tanggalMulai.isEmpty()) {
+            if (!judul.equals("") && !deskripsi.equals("") && !requirements.equals("") && !tanggalMulai.isEmpty() && !tanggalSelesai.isEmpty()) {
                 if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan()).size() + 1), judul, deskripsi, requirements,
-                        tanggalMulai, String.valueOf(dataLogin.getUsersId()))) {
+                        tanggalMulai, tanggalSelesai, String.valueOf(dataLogin.getUsersId()))) {
                     JOptionPane.showMessageDialog(null, "Insert berhasil");
+                    bindingTable(lki.getAllData(new LowonganPekerjaan(), ""));
                 } else {
                     JOptionPane.showMessageDialog(null, "insert gagal!");
                 }
@@ -336,11 +347,15 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                         JOptionPane.WARNING_MESSAGE);
             }
         }
-    }//GEN-LAST:event_tambahBtnActionPerformed
+    }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
         // TODO add your handling code here:
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String tglM = dateMulai.toString();
+        tglM = tglM.substring(0, 10);
+        String tglS = dateSelesai.toString();
+        tglS = tglS.substring(0, 10);
         Date tglMulai = dateMulai.getDate();
         Date tglSelesai = dateSelesai.getDate();
         String tanggalMulai = format.format(tglMulai);
@@ -355,8 +370,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         if (dialogResult == 0) {
             if (!judul.equals("") && !deskripsi.equals("") && !requirements.equals("") && !tanggalMulai.isEmpty()) {
                 if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan())), judul, deskripsi, requirements,
-                        tanggalMulai, String.valueOf(dataLogin.getUsersId()))) {
+                        tanggalMulai, tanggalSelesai, String.valueOf(dataLogin.getUsersId()))) {
                     JOptionPane.showMessageDialog(null, "Update berhasil");
+                    bindingTable(lki.getAllData(new LowonganPekerjaan(), ""));
                 } else {
                     JOptionPane.showMessageDialog(null, "Update gagal!");
                 }
@@ -378,11 +394,41 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
         clearText();
     }//GEN-LAST:event_btnClearActionPerformed
 
-    
+    private void tblLokerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLokerMouseClicked
+        // TODO add your handling code here:
+        btnUpdate.setEnabled(true);
+        btnTambah.setEnabled(false);
+
+        
+        
+        int i = tblLoker.getSelectedRow();
+        TableModel model = tblLoker.getModel();
+        txtAreaJudul.setText(model.getValueAt(i, 1).toString());
+        txtAreaDeskripsi.setText(model.getValueAt(i, 2).toString());
+        txtAreaRequirement.setText(model.getValueAt(i, 3).toString());
+//        try {
+//            String getTglMulai = tblLoker.getValueAt(i, 4).toString();
+//            Date tglMulai = new SimpleDateFormat("MM/dd/yyyy").parse(getTglMulai);   
+//        
+//            dateMulai.setDate(tglMulai);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            String getTglSelesai = tblLoker.getValueAt(i, 5).toString();
+//            Date tglSelesai = new SimpleDateFormat("MM/dd/yyyy").parse(getTglSelesai);
+//            dateSelesai.setDate(tglSelesai);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+    }//GEN-LAST:event_tblLokerMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUpdate;
     private org.jdesktop.swingx.JXDatePicker dateMulai;
     private org.jdesktop.swingx.JXDatePicker dateSelesai;
@@ -398,7 +444,6 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     private java.awt.Panel panel1;
     private javax.swing.JLabel role;
     private javax.swing.JTextField searchTxt;
-    private javax.swing.JButton tambahBtn;
     private javax.swing.JTable tblLoker;
     private javax.swing.JTextArea txtAreaDeskripsi;
     private javax.swing.JTextField txtAreaJudul;

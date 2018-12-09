@@ -57,7 +57,6 @@ public class UserViews extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        judulLowonganTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
@@ -66,30 +65,30 @@ public class UserViews extends javax.swing.JInternalFrame {
         txtDeskripsi = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRequirements = new javax.swing.JTextArea();
-        dateMulai = new org.jdesktop.swingx.JXDatePicker();
-        dateSelesai = new org.jdesktop.swingx.JXDatePicker();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         lblUsersId = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtJudul = new javax.swing.JTextArea();
         txtSearch = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
         setTitle("Cari Lowongan");
 
         getIdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan"
+                "No", "Judul Lowongan", "Deskripsi", "Requirements"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,64 +123,47 @@ public class UserViews extends javax.swing.JInternalFrame {
         txtRequirements.setRows(5);
         jScrollPane3.setViewportView(txtRequirements);
 
-        jLabel3.setText("Tanggal Mulai lowongan");
-
-        jLabel4.setText("Tanggal Selesai lowongan");
-
         lblUsersId.setText("usersId");
+
+        txtJudul.setColumns(20);
+        txtJudul.setRows(5);
+        jScrollPane4.setViewportView(txtJudul);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(username))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(lblUsersId)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnApply, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(39, 39, 39))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel3))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(24, 24, 24)
+                                .addComponent(lblUsersId))
+                            .addComponent(username))
+                        .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addComponent(judulLowonganTxt)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(dateMulai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                                        .addComponent(dateSelesai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnApply, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane4)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(judulLowonganTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -189,17 +171,9 @@ public class UserViews extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(email))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dateMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dateSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(27, 27, 27)
+                .addGap(33, 33, 33)
                 .addComponent(btnApply)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(lblUsersId)
                 .addContainerGap())
         );
@@ -250,7 +224,7 @@ public class UserViews extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int i = getIdTable.getSelectedRow();
         TableModel model = getIdTable.getModel();
-        judulLowonganTxt.setText(model.getValueAt(i, 1).toString());
+        txtJudul.setText(model.getValueAt(i, 1).toString());
         txtDeskripsi.setText(model.getValueAt(i, 2).toString());
         txtRequirements.setText(model.getValueAt(i, 3).toString());
 //        dateMulai.getDate(model.getValueAt(i, 4).toString());
@@ -265,16 +239,15 @@ public class UserViews extends javax.swing.JInternalFrame {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
         bindingTable(ui.search(txtSearch.getText()));
-        judulLowonganTxt.setEditable(false);
+        txtJudul.setEditable(false);
         txtDeskripsi.setEditable(false);
         txtRequirements.setEditable(false);
-        dateMulai.setEditable(false);
         btnApply.setEnabled(true);
         
     }//GEN-LAST:event_txtSearchKeyReleased
 
     public void bindingTable(List<Object> lowongan) {
-        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan", "Tanggal Mulai"};
+        Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Tanggal Mulai", "Tanggal Selesai",};
         DefaultTableModel model = new DefaultTableModel(null, header);
         getIdTable.setModel(model);
 
@@ -286,9 +259,10 @@ public class UserViews extends javax.swing.JInternalFrame {
                 String isi2 = emp.getJudul();
                 String isi3 = emp.getDeskripsi();
                 String isi4 = emp.getRequirements();
-                String isi5 = String.valueOf(emp.getTanggal());
+                String isi5 = String.valueOf(emp.getTanggalMulai());
+                String isi6 = String.valueOf(emp.getTanggalSelesai());
 
-                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+                String kolom[] = {isi1, isi2, isi3, isi4, isi5, isi6};
                 model.addRow(kolom);
                 no++;
             }
@@ -299,21 +273,18 @@ public class UserViews extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApply;
-    private org.jdesktop.swingx.JXDatePicker dateMulai;
-    private org.jdesktop.swingx.JXDatePicker dateSelesai;
     private javax.swing.JLabel email;
     private javax.swing.JTable getIdTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField judulLowonganTxt;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblUsersId;
     private javax.swing.JTextArea txtDeskripsi;
+    private javax.swing.JTextArea txtJudul;
     private javax.swing.JTextArea txtRequirements;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JLabel username;

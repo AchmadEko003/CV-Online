@@ -211,7 +211,7 @@ public class LoginViews extends javax.swing.JFrame {
 //            String edu = String.valueOf(data.getTotal(new Users()).size() + 1);
             if (ai.register("", name, emails, BCrypt.hashpw(password, BCrypt.gensalt()))) {
                 JOptionPane.showMessageDialog(null, "Berhasil register");
-                m.Send(emails, password);
+//                m.Send(emails, password);
                 btnLogReg.setText("Login");
                 namaTxt.setText("");
                 emailTxt.setText("");

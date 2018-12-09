@@ -42,6 +42,11 @@ public class MainFrame extends javax.swing.JFrame {
     private LoginViews lv = new LoginViews();
     private KeahlianViews kv = new KeahlianViews();
     private LowonganKerjaViews lkv = new LowonganKerjaViews();
+    private PencapaianViews pv = new PencapaianViews();
+    private PendidikanViews pendidikanViews = new PendidikanViews();
+    private PengalamanViews pengViews = new PengalamanViews();
+    private BahasaViews bv = new BahasaViews();
+    private UserViews uv = new UserViews();
 
     /**
      * Creates new form MainFrame
@@ -74,17 +79,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-//    public void getUsersId() {
-//        UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
-//        emailUser.setText(users.getUsers().getEmail());
-//        universitasUser.setText("Kosong");
-//        jurusanUser.setText("Kosong");
-//        umurUser.setText(String.valueOf(users.getUmur()));
-//        domisiliUser.setText(users.getAlamat());
-//        tanggalLahir.setText(String.valueOf(users.getTanggalLahir()));
-//        noTelp.setText(String.valueOf(users.getNoTelepon()));
-//
-//    }
+    public void getUsersId() {
+        UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
+        emailUser.setText(users.getUsersId().getEmail());
+        universitasUser.setText("Kosong");
+        jurusanUser.setText("Kosong");
+        umurUser.setText(String.valueOf(users.getUmur()));
+        domisiliUser.setText(users.getAlamat());
+        tanggalLahir.setText(String.valueOf(users.getTanggalLahir()));
+        noTelp.setText(String.valueOf(users.getNoTelepon()));
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,8 +140,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        menuReport = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -367,7 +375,28 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu5.add(jMenuItem6);
 
         jMenuItem2.setText("Bahasa");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem2);
+
+        jMenuItem7.setText("Pendidikan");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem7);
+
+        jMenuItem8.setText("Pengalaman");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem8);
 
         jMenuBar3.add(jMenu5);
 
@@ -380,6 +409,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu6.add(jMenuItem1);
+
+        menuReport.setText("Report");
+        menuReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReportActionPerformed(evt);
+            }
+        });
+        jMenu6.add(menuReport);
 
         jMenuBar3.add(jMenu6);
 
@@ -432,8 +469,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-//        uv.show();
-//        dsktpMain.add(uv);
+        uv.show();
+        dsktpMain.add(uv);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void sertifikatItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sertifikatItemActionPerformed
@@ -447,6 +484,33 @@ public class MainFrame extends javax.swing.JFrame {
         kv.show();
         dsktpMain.add(kv);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        bv.show();
+        dsktpMain.add(bv);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        pendidikanViews.show();
+        dsktpMain.add(pendidikanViews);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        pengViews.show();
+        dsktpMain.add(pengViews);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void menuReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportActionPerformed
+        // TODO add your handling code here:
+        String a = "report1";
+        ReportView reportView = new ReportView(a);
+        reportView.show();
+        dsktpMain.add(reportView);
+        
+    }//GEN-LAST:event_menuReportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,12 +582,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JLabel jurusanUser;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JMenuItem menuReport;
     private javax.swing.JLabel namaUser;
     private javax.swing.JLabel namaUser1;
     private javax.swing.JLabel noTelp;

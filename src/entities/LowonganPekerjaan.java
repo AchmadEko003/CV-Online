@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,14 +17,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "LOWONGAN_PEKERJAAN")
@@ -34,8 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "LowonganPekerjaan.findByJudul", query = "SELECT l FROM LowonganPekerjaan l WHERE l.judul = :judul")
     , @NamedQuery(name = "LowonganPekerjaan.findByDeskripsi", query = "SELECT l FROM LowonganPekerjaan l WHERE l.deskripsi = :deskripsi")
     , @NamedQuery(name = "LowonganPekerjaan.findByRequirements", query = "SELECT l FROM LowonganPekerjaan l WHERE l.requirements = :requirements")
-    , @NamedQuery(name = "LowonganPekerjaan.findByTanggal", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggal = :tanggal")})
+    , @NamedQuery(name = "LowonganPekerjaan.findByTanggalMulai", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggalMulai = :tanggalMulai")
+    , @NamedQuery(name = "LowonganPekerjaan.findByTanggalSelesai", query = "SELECT l FROM LowonganPekerjaan l WHERE l.tanggalSelesai = :tanggalSelesai")})
 public class LowonganPekerjaan implements Serializable {
+
+    @OneToMany(mappedBy = "lowonganId", fetch = FetchType.LAZY)
+    private List<Apply> applyList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,9 +55,12 @@ public class LowonganPekerjaan implements Serializable {
     private String deskripsi;
     @Column(name = "REQUIREMENTS")
     private String requirements;
-    @Column(name = "TANGGAL")
+    @Column(name = "TANGGAL_MULAI")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tanggal;
+    private Date tanggalMulai;
+    @Column(name = "TANGGAL_SELESAI")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tanggalSelesai;
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Users userId;
@@ -58,25 +68,19 @@ public class LowonganPekerjaan implements Serializable {
     public LowonganPekerjaan() {
     }
 
+    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggalMulai, Date tanggalSelesai, Users userId) {
+
+        this.id = id;
+        this.judul = judul;
+        this.deskripsi = deskripsi;
+        this.requirements = requirements;
+        this.tanggalMulai = tanggalMulai;
+        this.tanggalSelesai = tanggalSelesai;
+        this.userId = userId;
+    }
+
     public LowonganPekerjaan(Integer id) {
         this.id = id;
-    }
-
-    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal) {
-        this.id = id;
-        this.judul = judul;
-        this.deskripsi = deskripsi;
-        this.requirements = requirements;
-        this.tanggal = tanggal;
-    }
-
-    public LowonganPekerjaan(Integer id, String judul, String deskripsi, String requirements, Date tanggal, Users userId) {
-        this.id = id;
-        this.judul = judul;
-        this.deskripsi = deskripsi;
-        this.requirements = requirements;
-        this.tanggal = tanggal;
-        this.userId = userId;
     }
 
     public Integer getId() {
@@ -111,12 +115,20 @@ public class LowonganPekerjaan implements Serializable {
         this.requirements = requirements;
     }
 
-    public Date getTanggal() {
-        return tanggal;
+    public Date getTanggalMulai() {
+        return tanggalMulai;
     }
 
-    public void setTanggal(Date tanggal) {
-        this.tanggal = tanggal;
+    public void setTanggalMulai(Date tanggalMulai) {
+        this.tanggalMulai = tanggalMulai;
+    }
+
+    public Date getTanggalSelesai() {
+        return tanggalSelesai;
+    }
+
+    public void setTanggalSelesai(Date tanggalSelesai) {
+        this.tanggalSelesai = tanggalSelesai;
     }
 
     public Users getUserId() {
@@ -150,6 +162,15 @@ public class LowonganPekerjaan implements Serializable {
     @Override
     public String toString() {
         return "entities.LowonganPekerjaan[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Apply> getApplyList() {
+        return applyList;
+    }
+
+    public void setApplyList(List<Apply> applyList) {
+        this.applyList = applyList;
     }
     
 }

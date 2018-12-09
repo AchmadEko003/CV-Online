@@ -65,6 +65,8 @@ public class KeahlianViews extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
         setTitle("Skill");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Keahlian"));

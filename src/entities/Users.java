@@ -8,7 +8,6 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "USERS")
@@ -37,12 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<LowonganPekerjaan> lowonganPekerjaanList;
-
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private List<Apply> applyList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -52,19 +45,20 @@ public class Users implements Serializable {
     private String nama;
     @Column(name = "EMAIL")
     private String email;
+    @Basic(optional = false)
     @Column(name = "PASSWORD")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<Apply> applyList;
+    @OneToMany(mappedBy = "usersId", fetch = FetchType.LAZY)
     private List<UserProfile> userProfileList;
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<LowonganPekerjaan> lowonganPekerjaanList;
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Role roleId;
 
     public Users() {
-    }
-
-    public Users(Integer id) {
-        this.id = id;
     }
 
     public Users(Integer id, String nama, String email, String password, Role roleId) {
@@ -75,23 +69,13 @@ public class Users implements Serializable {
         this.roleId = roleId;
     }
 
-    public Users(Integer id, String nama, String email, String password, List<UserProfile> userProfileList, Role roleId) {
+    public Users(Integer id) {
         this.id = id;
-        this.nama = nama;
-        this.email = email;
-        this.password = password;
-        this.userProfileList = userProfileList;
-        this.roleId = roleId;
     }
 
-    public Users(List<Apply> applyList, Integer id, String nama, String email, String password, List<UserProfile> userProfileList, Role roleId) {
-        this.applyList = applyList;
+    public Users(Integer id, String password) {
         this.id = id;
-        this.nama = nama;
-        this.email = email;
         this.password = password;
-        this.userProfileList = userProfileList;
-        this.roleId = roleId;
     }
 
     public Integer getId() {
@@ -127,12 +111,30 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
+    public List<Apply> getApplyList() {
+        return applyList;
+    }
+
+    public void setApplyList(List<Apply> applyList) {
+        this.applyList = applyList;
+    }
+
+    @XmlTransient
     public List<UserProfile> getUserProfileList() {
         return userProfileList;
     }
 
     public void setUserProfileList(List<UserProfile> userProfileList) {
         this.userProfileList = userProfileList;
+    }
+
+    @XmlTransient
+    public List<LowonganPekerjaan> getLowonganPekerjaanList() {
+        return lowonganPekerjaanList;
+    }
+
+    public void setLowonganPekerjaanList(List<LowonganPekerjaan> lowonganPekerjaanList) {
+        this.lowonganPekerjaanList = lowonganPekerjaanList;
     }
 
     public Role getRoleId() {
@@ -166,24 +168,6 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "entities.Users[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Apply> getApplyList() {
-        return applyList;
-    }
-
-    public void setApplyList(List<Apply> applyList) {
-        this.applyList = applyList;
-    }
-
-    @XmlTransient
-    public List<LowonganPekerjaan> getLowonganPekerjaanList() {
-        return lowonganPekerjaanList;
-    }
-
-    public void setLowonganPekerjaanList(List<LowonganPekerjaan> lowonganPekerjaanList) {
-        this.lowonganPekerjaanList = lowonganPekerjaanList;
     }
     
 }

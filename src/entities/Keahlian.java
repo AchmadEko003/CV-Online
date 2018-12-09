@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nitani
+ * @author Igaz
  */
 @Entity
 @Table(name = "KEAHLIAN")
@@ -50,12 +50,6 @@ public class Keahlian implements Serializable {
 
     public Keahlian(Integer id) {
         this.id = id;
-    }
-
-    public Keahlian(Integer id, String nama, String deskripsi) {
-        this.id = id;
-        this.nama = nama;
-        this.deskripsi = deskripsi;
     }
 
     public Keahlian(Integer id, String nama, String deskripsi, UserProfile userProfileId) {

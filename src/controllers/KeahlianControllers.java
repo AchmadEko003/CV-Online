@@ -8,7 +8,6 @@ package controllers;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.Keahlian;
-import entities.Sertifikat;
 import entities.UserProfile;
 import interfaces.KeahlianInterface;
 import java.util.List;
