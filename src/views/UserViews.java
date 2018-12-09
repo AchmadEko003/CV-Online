@@ -11,6 +11,7 @@ import interfaces.LowonganKerjaInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.LowonganPekerjaan;
+import entities.Users;
 import interfaces.UserInterface;
 import java.util.List;
 import javax.swing.JButton;
@@ -41,8 +42,12 @@ public class UserViews extends javax.swing.JInternalFrame {
     public UserViews() {
         initComponents();
         bindingTable(ui.search(""));
-        lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
+//        lblUsersId.setText(String.valueOf(dataLogin.getUsersId()));
         btnApply.setEnabled(false);
+        txtJudul.setEditable(false);
+        txtDeskripsi.setEditable(false);
+        txtRequirements.setEditable(false);
+        bindingTable(ui.getAllData(new LowonganPekerjaan(), ""));
     }
 
     /**
@@ -239,10 +244,7 @@ public class UserViews extends javax.swing.JInternalFrame {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
         bindingTable(ui.search(txtSearch.getText()));
-        txtJudul.setEditable(false);
-        txtDeskripsi.setEditable(false);
-        txtRequirements.setEditable(false);
-        btnApply.setEnabled(true);
+        
         
     }//GEN-LAST:event_txtSearchKeyReleased
 

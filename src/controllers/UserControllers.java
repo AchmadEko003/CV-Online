@@ -8,9 +8,11 @@ package controllers;
 import interfaces.UserInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.LowonganPekerjaan;
 import entities.Role;
 import entities.UserProfile;
 import entities.Users;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SessionFactory;
 
@@ -50,7 +52,7 @@ public class UserControllers implements UserInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        return this.daoid.doDDL(new Users(), keyword);
+        return this.daoid.doDDL(new LowonganPekerjaan(), keyword);
     }
     
     @Override
@@ -71,5 +73,12 @@ public class UserControllers implements UserInterface {
     @Override
     public boolean getIdProfile(Object id) {
         return this.daoid.getIdProfile(id);
+    }
+
+    @Override
+    public List<Object> getAllData(Object entity, String keyword) {
+        List<Object> data = new ArrayList<>();
+        data = gdao.doDDL(entity, keyword);
+        return data;
     }
 }

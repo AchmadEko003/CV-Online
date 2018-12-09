@@ -20,4 +20,5 @@ public interface UserInterface {
     public Integer getUser(Object user);
     public Object getById(Object id);
     public boolean getIdProfile(Object id);
+    public List<Object> getAllData(Object entity, String keyword);
 }
