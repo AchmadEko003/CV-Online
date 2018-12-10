@@ -6,6 +6,7 @@
 package tools;
 
 import entities.Keahlian;
+import entities.LowonganPekerjaan;
 import entities.Role;
 import entities.Users;
 import entities.UserProfile;
@@ -187,5 +188,27 @@ public class getLoginData {
             hasil = true;
         }
         return hasil;
+    }
+    
+    public List<Object> getDatasId(Object entities, Integer key) {
+        List<Object> rs = new ArrayList<>();
+        String className = entities.getClass().getSimpleName();
+        className = className.substring(className.indexOf(".") + 1);
+        String query = "From " + className + " where ID=" + key;
+        System.out.println(query);
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            rs = session.createQuery(query).list();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return rs;
     }
 }

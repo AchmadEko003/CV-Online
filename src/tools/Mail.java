@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class Mail {
 
-    public boolean Send(String email, String passwords) {
+    public boolean Send(String email) {
         boolean hasil = false;
         try {
 
@@ -33,13 +33,13 @@ public class Mail {
             session.setDebug(true);
 
             MimeMessage pesan = new MimeMessage(session);
-            pesan.setFrom(email); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
-            pesan.setRecipient(Message.RecipientType.TO, new InternetAddress("achmadeko003@gmail.com"));//isi dengan tujuan email
+            pesan.setFrom("achmadeko009@gmail.com"); //isi dengan gmail kalian sendiri, biasanya sama nanti dengan username
+            pesan.setRecipient(Message.RecipientType.TO, new InternetAddress(email));//isi dengan tujuan email
             pesan.setSubject("Pemberitahuan berhasil register");
             pesan.setText("Anda telah berhasil melakukan registrasi CV Online.");
 
-            String username = email; //ganti dengan gmail kalian sendiri
-            String password = passwords; //ganti dengan password kalian sendiri
+            String username = "achmadeko009@gmail.com"; //ganti dengan gmail kalian sendiri
+            String password = "Makoto_Yuki009"; //ganti dengan password kalian sendiri
             Transport.send(pesan, username, password);
         } catch (MessagingException ex) {
             ex.printStackTrace();

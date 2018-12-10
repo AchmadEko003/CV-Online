@@ -34,7 +34,7 @@ public class BahasaControllers implements BahasaInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return daoid.doDatasId(new Bahasa(), keyword);
     }
 
     @Override

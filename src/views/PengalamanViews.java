@@ -126,11 +126,18 @@ public class PengalamanViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(), String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (pi.insert(String.valueOf(data.getTotal(new Pengalaman()).size() + 1), namaPengalamanTxt.getText(), perusahaanTxt.getText(), String.valueOf(lamaBekerjaCmbBx.getSelectedItem()), String.valueOf(dataLogin.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                namaPengalamanTxt.setText("");
+                perusahaanTxt.setText("");
+                lamaBekerjaCmbBx.setSelectedIndex(0);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahBtnActionPerformed
 

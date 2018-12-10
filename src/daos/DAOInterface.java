@@ -15,6 +15,7 @@ import java.util.List;
 public interface DAOInterface {
     public boolean doDML(Object object, boolean isDelete);//iud
     public List<Object> doDDL(Object table, String keyword);//sga
+    public List<Object> doDatasId(Object table, String keyword);//sga
     public Object getById(Object table, Object id);
     public boolean insImg(int paramIndex,InputStream stream,long length);
     public boolean login(Object user, String password);

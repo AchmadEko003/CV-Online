@@ -111,12 +111,18 @@ public class SertifikatViews extends javax.swing.JInternalFrame {
 
     private void simpanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanBtnActionPerformed
         // TODO add your handling code here:
-        String idu = String.valueOf(ld.getTotal(new Sertifikat()).size() + 1);
-        if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Ada masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            String idu = String.valueOf(ld.getTotal(new Sertifikat()).size() + 1);
+            if (si.insert(idu, namaSertifikat.getText(), lembaga.getText(), String.valueOf(dl.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                namaSertifikat.setText("");
+                lembaga.setText("");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ada masih kosong");
+            }
         }
     }//GEN-LAST:event_simpanBtnActionPerformed
 

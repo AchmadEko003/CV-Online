@@ -8,6 +8,7 @@ package controllers;
 import interfaces.UserProfileInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
+import entities.LowonganPekerjaan;
 import entities.UserProfile;
 import entities.Users;
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class UserProfileControllers implements UserProfileInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        return daoid.doDDL(new Users(), keyword);
+        return daoid.doDDL(new LowonganPekerjaan(), keyword);
     }
 
     @Override

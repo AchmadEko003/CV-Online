@@ -26,6 +26,7 @@ public class KeahlianViews extends javax.swing.JInternalFrame {
     private KeahlianInterface ki = new KeahlianControllers(sessionFactory);
     private getLoginData data = new getLoginData(sessionFactory);
     private getDataLogin dataLogin = new getDataLogin();
+
     /**
      * Creates new form KeahlianViews
      */
@@ -67,7 +68,7 @@ public class KeahlianViews extends javax.swing.JInternalFrame {
         skillTxt.setRows(5);
         jScrollPane1.setViewportView(skillTxt);
 
-        comboSkill.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "C#", "JAVA", "PHP", "PHYTON", "C++", "C", "RUBY" }));
+        comboSkill.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "C#", "JAVA", "PHP", "PHYTON", "C++", "C", "RUBY" }));
         comboSkill.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comboSkillMouseClicked(evt);
@@ -172,11 +173,18 @@ public class KeahlianViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (ki.insert(String.valueOf(data.getTotal(new Keahlian()).size()+1), skillTxt.getText(), DeskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (ki.insert(String.valueOf(data.getTotal(new Keahlian()).size() + 1), skillTxt.getText(), DeskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                comboSkill.setSelectedIndex(0);
+                skillTxt.setText("");
+                DeskripsiTxt.setText("");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahBtnActionPerformed
 

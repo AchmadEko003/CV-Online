@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="89ffb996-6c04-4a83-bf6c-b6c95434df9a">
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     LOWONGAN_PEKERJAAN."JUDUL" AS LOWONGAN_PEKERJAAN_JUDUL,
+     LOWONGAN_PEKERJAAN."DESKRIPSI" AS LOWONGAN_PEKERJAAN_DESKRIPSI,
+     LOWONGAN_PEKERJAAN."REQUIREMENTS" AS LOWONGAN_PEKERJAAN_REQUIREMENT,
+     LOWONGAN_PEKERJAAN."TANGGAL" AS LOWONGAN_PEKERJAAN_TANGGAL,
+     LOWONGAN_PEKERJAAN."PERUSAHAAN" AS LOWONGAN_PEKERJAAN_PERUSAHAAN,
+     USERS."NAMA" AS USERS_NAMA,
+     USERS."EMAIL" AS USERS_EMAIL,
+     USER_PROFILE."UMUR" AS USER_PROFILE_UMUR,
+     USER_PROFILE."ALAMAT" AS USER_PROFILE_ALAMAT,
+     LOWONGAN_PEKERJAAN."TANGGAL_SELESAI" AS LOWONGAN_PEKERJAAN_TANGGAL_SEL,
+     USER_PROFILE."NO_TELEPON" AS USER_PROFILE_NO_TELEPON
+FROM
+     "CVWAH"."USERS" USERS INNER JOIN "CVWAH"."LOWONGAN_PEKERJAAN" LOWONGAN_PEKERJAAN ON USERS."ID" = LOWONGAN_PEKERJAAN."USER_ID"
+     INNER JOIN "CVWAH"."USER_PROFILE" USER_PROFILE ON USERS."ID" = USER_PROFILE."USERS_ID"]]>
+	</queryString>
+	<field name="LOWONGAN_PEKERJAAN_JUDUL" class="java.lang.String"/>
+	<field name="LOWONGAN_PEKERJAAN_DESKRIPSI" class="java.lang.String"/>
+	<field name="LOWONGAN_PEKERJAAN_REQUIREMENT" class="java.lang.String"/>
+	<field name="LOWONGAN_PEKERJAAN_TANGGAL" class="java.sql.Timestamp"/>
+	<field name="LOWONGAN_PEKERJAAN_PERUSAHAAN" class="java.lang.String"/>
+	<field name="USERS_NAMA" class="java.lang.String"/>
+	<field name="USERS_EMAIL" class="java.lang.String"/>
+	<field name="USER_PROFILE_UMUR" class="java.math.BigDecimal"/>
+	<field name="USER_PROFILE_ALAMAT" class="java.lang.String"/>
+	<field name="LOWONGAN_PEKERJAAN_TANGGAL_SEL" class="java.sql.Timestamp"/>
+	<field name="USER_PROFILE_NO_TELEPON" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="638f25ef-e518-456b-a85b-8431aff47181"/>
+				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="270" y="0" width="263" height="62" uuid="8248dd5b-a62d-461c-9a77-145b7aef8df7"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="b7c7a49b-e511-46e0-bf89-4623d5e5b390"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee SubTitle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="94" width="383" height="42" uuid="191f1ba4-9817-4082-99c2-68aa18c17d36"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="633" y="-73" width="219" height="209" uuid="b2c78de7-ecbd-4087-b206-1362cf5acd60"/>
+				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="6c0c35b4-7bac-4366-9f9a-1dfd8d5a31a6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="72" height="15" forecolor="#736343" uuid="c32e54b3-6952-4608-bdce-a31c8c597494"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_JUDUL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="72" y="0" width="72" height="15" forecolor="#736343" uuid="fb5cb5ca-32eb-4d8b-8b19-50670dcd963f"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_DESKRIPSI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="144" y="0" width="72" height="15" forecolor="#736343" uuid="3670d08b-ba2d-4e84-8e81-683f6dd1ed0b"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_REQUIREMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="216" y="0" width="72" height="15" forecolor="#736343" uuid="e85c7ea5-bac8-40cf-9205-72b90716b8e8"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_TANGGAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="0" width="72" height="15" forecolor="#736343" uuid="367c464e-ada3-41fa-9994-a58f2dac5b24"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_PERUSAHAAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="360" y="0" width="72" height="15" forecolor="#736343" uuid="20cad6c0-c9a2-448e-8891-f13676a40165"/>
+				<text><![CDATA[USERS_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="432" y="0" width="72" height="15" forecolor="#736343" uuid="76fe57e2-c5f6-480a-a39a-115b17ab5e5c"/>
+				<text><![CDATA[USERS_EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="504" y="0" width="72" height="15" forecolor="#736343" uuid="592e4e7b-bbb8-4c98-9a8c-54fe5dbd4947"/>
+				<text><![CDATA[USER_PROFILE_UMUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="576" y="0" width="72" height="15" forecolor="#736343" uuid="98e1ee23-d034-4b18-8188-2cef5cc5cada"/>
+				<text><![CDATA[USER_PROFILE_ALAMAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="648" y="0" width="72" height="15" forecolor="#736343" uuid="aba94b3a-3348-4f31-9f93-786b87a509cb"/>
+				<text><![CDATA[LOWONGAN_PEKERJAAN_TANGGAL_SEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="720" y="0" width="72" height="15" forecolor="#736343" uuid="6e3c29a2-e89d-493a-962f-884d1fde6f61"/>
+				<text><![CDATA[USER_PROFILE_NO_TELEPON]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="d741a01b-8b49-4408-ae9f-c33b73bff3ea"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="72" height="15" uuid="0d58361d-0ae8-4bec-a57c-fd6ef1245eea"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_JUDUL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="72" y="0" width="72" height="15" uuid="3e88376a-1387-48eb-a629-9b7e3600268c"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_DESKRIPSI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="144" y="0" width="72" height="15" uuid="c5064275-477d-431c-97a6-97153c0b01c0"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_REQUIREMENT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="216" y="0" width="72" height="15" uuid="8a55ab9d-86d9-41c6-a46e-369fc2e32a92"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_TANGGAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="288" y="0" width="72" height="15" uuid="51803130-ca92-49ef-9e3a-118effb20055"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_PERUSAHAAN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="360" y="0" width="72" height="15" uuid="07ec8ef2-98c2-47d5-833b-34f7e2494c5b"/>
+					<textFieldExpression><![CDATA[$F{USERS_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="432" y="0" width="72" height="15" uuid="0faa1586-a8dc-464b-bd4a-7c9665115616"/>
+					<textFieldExpression><![CDATA[$F{USERS_EMAIL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="504" y="0" width="72" height="15" uuid="8c5ed3f6-a77d-4afc-a044-f9b63f0cbacf"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_UMUR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="576" y="0" width="72" height="15" uuid="c39df692-5203-4f46-b887-1d1b0efe6a5f"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_ALAMAT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="648" y="0" width="72" height="15" uuid="cf895776-5bd4-4c7b-8b2f-8f171151b985"/>
+					<textFieldExpression><![CDATA[$F{LOWONGAN_PEKERJAAN_TANGGAL_SEL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="720" y="0" width="72" height="15" uuid="3f5e8f70-c08f-4331-bd95-f464206d77ce"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_NO_TELEPON}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="cbffddc8-8a08-42b1-80fc-6652472b7e04"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="c17f368f-83c1-40e9-90db-1a48bca29e5f"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="c7c1f054-8c9a-4489-a3c9-b5e7f4eb3375"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="aafe087e-b2fd-4142-b32e-8e9a137c0ad1"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="34b0187f-d0da-48c7-85fa-b12ef34f22eb"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

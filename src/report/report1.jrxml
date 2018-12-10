@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8ca091ef-25ba-45da-92e8-96a3d59dbbd7">
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     KEAHLIAN."NAMA" AS KEAHLIAN_NAMA,
+     KEAHLIAN."DESKRIPSI" AS KEAHLIAN_DESKRIPSI,
+     USERS."NAMA" AS USERS_NAMA,
+     USERS."EMAIL" AS USERS_EMAIL,
+     USER_PROFILE."UMUR" AS USER_PROFILE_UMUR,
+     USER_PROFILE."ALAMAT" AS USER_PROFILE_ALAMAT
+FROM
+     "CVWAH"."USERS" USERS INNER JOIN "CVWAH"."USER_PROFILE" USER_PROFILE ON USERS."ID" = USER_PROFILE."USERS_ID"
+     INNER JOIN "CVWAH"."KEAHLIAN" KEAHLIAN ON USER_PROFILE."ID" = KEAHLIAN."USER_PROFILE_ID"]]>
+	</queryString>
+	<field name="KEAHLIAN_NAMA" class="java.lang.String"/>
+	<field name="KEAHLIAN_DESKRIPSI" class="java.lang.String"/>
+	<field name="USERS_NAMA" class="java.lang.String"/>
+	<field name="USERS_EMAIL" class="java.lang.String"/>
+	<field name="USER_PROFILE_UMUR" class="java.math.BigDecimal"/>
+	<field name="USER_PROFILE_ALAMAT" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="ceafccf0-23de-496e-bd65-0f6fc34e74f8"/>
+				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="270" y="0" width="263" height="62" uuid="7483391f-a56e-4ef4-b37c-36735b882c9c"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="2000df13-7361-40a9-9f8c-855975d29949"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee SubTitle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="94" width="383" height="42" uuid="0e8da129-6620-455e-8ec0-96f3013376cf"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="633" y="-73" width="219" height="209" uuid="f5d6fc6b-27cb-410f-be68-e5977f671065"/>
+				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="4a1ebc71-9d3d-4417-91c2-d1baa23bc022"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="133" height="15" forecolor="#736343" uuid="8284a0fe-eb13-462d-be26-7363090dd2fc"/>
+				<text><![CDATA[KEAHLIAN_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="133" y="0" width="133" height="15" forecolor="#736343" uuid="230b141b-a305-4e33-a8ec-32141f351d50"/>
+				<text><![CDATA[KEAHLIAN_DESKRIPSI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="266" y="0" width="133" height="15" forecolor="#736343" uuid="8f4e69db-6fde-470a-b83e-3f6c7744b602"/>
+				<text><![CDATA[USERS_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="399" y="0" width="133" height="15" forecolor="#736343" uuid="c166c3fb-493b-4f16-94ad-d8137087adea"/>
+				<text><![CDATA[USERS_EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="532" y="0" width="133" height="15" forecolor="#736343" uuid="ba1c9cdd-8a5e-4b71-9010-0dd0f9282c03"/>
+				<text><![CDATA[USER_PROFILE_UMUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="665" y="0" width="133" height="15" forecolor="#736343" uuid="e156389f-ce35-4034-9771-c4e66aaf29e8"/>
+				<text><![CDATA[USER_PROFILE_ALAMAT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="b83e0065-76f9-417e-8779-094bfa5c862a"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="133" height="15" uuid="13bdef84-555e-48ae-8f30-9e5c54f06214"/>
+					<textFieldExpression><![CDATA[$F{KEAHLIAN_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="133" y="0" width="133" height="15" uuid="ed899e5e-1e6a-4cf4-8bd9-3b7f3ee7df80"/>
+					<textFieldExpression><![CDATA[$F{KEAHLIAN_DESKRIPSI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="266" y="0" width="133" height="15" uuid="bb511c0a-704f-4624-b6f4-3ea438a8b09a"/>
+					<textFieldExpression><![CDATA[$F{USERS_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="399" y="0" width="133" height="15" uuid="212c84c0-350f-4da2-8073-8e8ddbf4b3fd"/>
+					<textFieldExpression><![CDATA[$F{USERS_EMAIL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="532" y="0" width="133" height="15" uuid="8d9c05d8-8a02-412b-9f56-9f3c226fbcb3"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_UMUR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="665" y="0" width="133" height="15" uuid="2a263cfa-3783-49fe-8649-275b62cc725d"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_ALAMAT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="2cb9f8b3-ce23-4ca4-9ef3-5544a0f0ad86"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="115ca5ba-8d64-4107-8b4a-e13cfefdf35e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="3c6e74b2-95af-459a-a710-090acf0b437e"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="3e416032-0686-4854-bf26-cc1f61d70332"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="7b89fab0-2901-4ff0-ba3f-864111c6fc27"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

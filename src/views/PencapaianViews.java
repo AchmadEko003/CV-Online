@@ -106,11 +106,17 @@ public class PencapaianViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new Pencapaian()).size() + 1), namaPencapaianTxt.getText(), deskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (pi.insert(String.valueOf(data.getTotal(new Pencapaian()).size() + 1), namaPencapaianTxt.getText(), deskripsiTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                namaPencapaianTxt.setText("");
+                deskripsiTxt.setText("");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahBtnActionPerformed
 

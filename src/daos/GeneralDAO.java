@@ -24,30 +24,33 @@ public class GeneralDAO implements DAOInterface {
 
     /**
      * method for insert, update, or delete
+     *
      * @param object
      * @param isDelete
-     * @return 
+     * @return
      */
     @Override
     public boolean doDML(Object object, boolean isDelete) {
         return this.fdao.insertOrUpdateOrDelete(object, isDelete);
     }
+
     /**
-     * 
+     *
      * @param data
      * @param table
      * @param obj
      * @param searchBy
-     * @return 
+     * @return
      */
     @Override
     public List<Object> doDDL(Object table, String keyword) {
         return this.fdao.getDatas(table, keyword);
     }
+
     /**
-     * 
+     *
      * @param id
-     * @return 
+     * @return
      */
     @Override
     public Object getById(Object table, Object id) {
@@ -72,5 +75,10 @@ public class GeneralDAO implements DAOInterface {
     @Override
     public boolean getIdProfile(Object id) {
         return this.fdao.getProfilesId(id);
+    }
+
+    @Override
+    public List<Object> doDatasId(Object table, String keyword) {
+        return this.fdao.getDatasId(table, keyword);
     }
 }

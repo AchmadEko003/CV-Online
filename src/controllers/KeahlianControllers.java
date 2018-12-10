@@ -35,7 +35,7 @@ public class KeahlianControllers implements KeahlianInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        return daoid.doDDL(new Keahlian(), keyword);
+        return daoid.doDatasId(new Keahlian(), keyword);
     }
 
     @Override

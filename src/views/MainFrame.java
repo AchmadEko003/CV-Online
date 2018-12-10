@@ -21,12 +21,16 @@ import entities.Proyek;
 import entities.RiwayatPendidikan;
 import entities.UserProfile;
 import entities.Users;
+import java.awt.Image;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.SessionFactory;
@@ -57,29 +61,45 @@ public class MainFrame extends javax.swing.JFrame {
     private ProyekViews pv = new ProyekViews();
     private PendidikanViews pendidikanViews = new PendidikanViews();
     private ManagerViews mv = new ManagerViews();
+    private CVViews cv = new CVViews();
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        System.out.println(dataLogin.getUsersId());
-        userId.setText(String.valueOf(dataLogin.getUsersId()));
-        roleId.setText(String.valueOf(dataLogin.getRole()));
         namaUser.setText(dataLogin.getUsersName());
         if(ai.getIdProfile(dataLogin.getUsersId())){
             getUsersId();
+            sertifikatItem.setVisible(true);
+            keahlianItem.setVisible(true);
+            bahasaItem.setVisible(true);
+            pencapaianItem.setVisible(true);
+            pendidikanItem.setVisible(true);
+            pengalamanItem.setVisible(true);
+            projectItem.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(null, "Isi profile terlebih dahulu");
             upv.show();
             dsktpMain.add(upv);
+            sertifikatItem.setVisible(false);
+            keahlianItem.setVisible(false);
+            bahasaItem.setVisible(false);
+            pencapaianItem.setVisible(false);
+            pendidikanItem.setVisible(false);
+            pengalamanItem.setVisible(false);
+            projectItem.setVisible(false);
         }
         
-        roleId.setText(String.valueOf(dataLogin.getRole()));
         if (dataLogin.getRole() == 1) {
             jMenu6.setVisible(false);
+            jMenu7.setVisible(false);
         } else if (dataLogin.getRole() == 2) {
+            jMenu5.setVisible(false);
+            jMenu7.setVisible(false);
+        } else if (dataLogin.getRole() == 3) {
+            jMenu6.setVisible(false);
             jMenu5.setVisible(false);
         }
     }
@@ -93,8 +113,6 @@ public class MainFrame extends javax.swing.JFrame {
         UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
         dataLogin.setUserProfileId(users.getId());
         emailUser.setText(users.getUsersId().getEmail());
-        universitasUser.setText("Kosong");
-        jurusanUser.setText("Kosong");
         umurUser.setText(String.valueOf(users.getUmur()));
         domisiliUser.setText(users.getAlamat());
         Date birth = users.getTanggalLahir();
@@ -123,29 +141,27 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         dsktpMain = new javax.swing.JDesktopPane();
         logoutBtn = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         userPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         emailUser = new javax.swing.JLabel();
-        universitasUser = new javax.swing.JLabel();
-        jurusanUser = new javax.swing.JLabel();
         umurUser = new javax.swing.JLabel();
         domisiliUser = new javax.swing.JLabel();
         tanggalLahir = new javax.swing.JLabel();
         noTelp = new javax.swing.JLabel();
         namaUser1 = new javax.swing.JLabel();
         namaUser = new javax.swing.JLabel();
-        roleId = new javax.swing.JLabel();
-        userId = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        gambar3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         editProfiles = new javax.swing.JMenuItem();
@@ -157,10 +173,17 @@ public class MainFrame extends javax.swing.JFrame {
         pengalamanItem = new javax.swing.JMenuItem();
         projectItem = new javax.swing.JMenuItem();
         pendidikanItem = new javax.swing.JMenuItem();
+        cvItem = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         managerItem = new javax.swing.JMenuItem();
+        cvUser = new javax.swing.JMenuItem();
+        menuKeahlian = new javax.swing.JMenuItem();
+        menuPendidiakn = new javax.swing.JMenuItem();
+        reportKeahlian = new javax.swing.JMenuItem();
+        rprtBhs = new javax.swing.JMenuItem();
+        rprtApply = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -189,6 +212,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuItem5.setText("jMenuItem5");
 
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem4.setText("jMenuItem4");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("User Home");
 
@@ -199,34 +226,24 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
-        jTextField1.setName(""); // NOI18N
-
         dsktpMain.setLayer(logoutBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dsktpMain.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dsktpMainLayout = new javax.swing.GroupLayout(dsktpMain);
         dsktpMain.setLayout(dsktpMainLayout);
         dsktpMainLayout.setHorizontalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dsktpMainLayout.createSequentialGroup()
-                .addContainerGap(711, Short.MAX_VALUE)
-                .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutBtn))
+            .addGroup(dsktpMainLayout.createSequentialGroup()
+                .addContainerGap(797, Short.MAX_VALUE)
+                .addComponent(logoutBtn)
                 .addContainerGap())
         );
         dsktpMainLayout.setVerticalGroup(
             dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dsktpMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
-
-        jTextField1.getAccessibleContext().setAccessibleName("");
 
         userPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -240,10 +257,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Email");
 
-        jLabel3.setText("Universitas");
-
-        jLabel4.setText("Jurusan");
-
         jLabel5.setText("Umur");
 
         jLabel6.setText("Alamat");
@@ -253,10 +266,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel8.setText("No Telepon");
 
         emailUser.setText("Kosong");
-
-        universitasUser.setText("Kosong");
-
-        jurusanUser.setText("Kosong");
 
         umurUser.setText("Kosong");
 
@@ -277,18 +286,14 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(noTelp)
                     .addComponent(tanggalLahir)
                     .addComponent(domisiliUser)
                     .addComponent(umurUser)
-                    .addComponent(emailUser)
-                    .addComponent(universitasUser)
-                    .addComponent(jurusanUser))
+                    .addComponent(emailUser))
                 .addGap(44, 44, 44))
         );
         jPanel2Layout.setVerticalGroup(
@@ -296,13 +301,11 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(emailUser))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
@@ -311,12 +314,6 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(emailUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(universitasUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jurusanUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(umurUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(domisiliUser)
@@ -324,7 +321,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(tanggalLahir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(noTelp)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         namaUser1.setText("Selamat datang");
@@ -332,51 +329,77 @@ public class MainFrame extends javax.swing.JFrame {
         namaUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         namaUser.setText("Nama");
 
-        roleId.setText("Role");
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        userId.setText("Id");
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(gambar3, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(gambar3, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton1.setText("Upload");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(roleId)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userId)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(userPanelLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                        .addGap(48, 48, 48)
                         .addComponent(namaUser1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(namaUser))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                        .addComponent(namaUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPanelLayout.createSequentialGroup()
-                .addContainerGap(176, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(namaUser1)
-                    .addComponent(namaUser))
+                    .addComponent(namaUser)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117)
-                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(roleId)
-                    .addComponent(userId))
-                .addContainerGap())
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         jMenuBar3.setBackground(new java.awt.Color(102, 153, 255));
         jMenuBar3.setToolTipText("");
 
         jMenu5.setText("User");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
 
         editProfiles.setText("Edit Profil");
         editProfiles.addActionListener(new java.awt.event.ActionListener() {
@@ -450,6 +473,14 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu5.add(pendidikanItem);
 
+        cvItem.setText("CV");
+        cvItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cvItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(cvItem);
+
         jMenuBar3.add(jMenu5);
 
         jMenu6.setText("Admin");
@@ -473,6 +504,54 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu7.add(managerItem);
+
+        cvUser.setText("CV User");
+        cvUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cvUserActionPerformed(evt);
+            }
+        });
+        jMenu7.add(cvUser);
+
+        menuKeahlian.setText("Report Lowongan Kerja");
+        menuKeahlian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKeahlianActionPerformed(evt);
+            }
+        });
+        jMenu7.add(menuKeahlian);
+
+        menuPendidiakn.setText("Report Pendidikan");
+        menuPendidiakn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPendidiaknActionPerformed(evt);
+            }
+        });
+        jMenu7.add(menuPendidiakn);
+
+        reportKeahlian.setText("Report Pencapaian & Pengalaman");
+        reportKeahlian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportKeahlianActionPerformed(evt);
+            }
+        });
+        jMenu7.add(reportKeahlian);
+
+        rprtBhs.setText("Report Bahasa & Sertifikat");
+        rprtBhs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rprtBhsActionPerformed(evt);
+            }
+        });
+        jMenu7.add(rprtBhs);
+
+        rprtApply.setText("Report Apply");
+        rprtApply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rprtApplyActionPerformed(evt);
+            }
+        });
+        jMenu7.add(rprtApply);
 
         jMenuBar3.add(jMenu7);
 
@@ -582,6 +661,83 @@ public class MainFrame extends javax.swing.JFrame {
         dsktpMain.add(mv);
     }//GEN-LAST:event_managerItemActionPerformed
 
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+        if(ai.getIdProfile(dataLogin.getUsersId())){
+            getUsersId();
+            sertifikatItem.setVisible(true);
+            keahlianItem.setVisible(true);
+            bahasaItem.setVisible(true);
+            pencapaianItem.setVisible(true);
+            pendidikanItem.setVisible(true);
+            pengalamanItem.setVisible(true);
+            projectItem.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void cvItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cvItemActionPerformed
+        // TODO add your handling code here:
+        cv.show();
+        dsktpMain.add(cv);
+    }//GEN-LAST:event_cvItemActionPerformed
+
+    private void menuKeahlianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKeahlianActionPerformed
+        // TODO add your handling code here:
+        ReportForm rf = new ReportForm("report5");
+        rf.show();
+        dsktpMain.add(rf);
+    }//GEN-LAST:event_menuKeahlianActionPerformed
+
+    private void cvUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cvUserActionPerformed
+        // TODO add your handling code here:
+        cv.show();
+        dsktpMain.add(cv);
+    }//GEN-LAST:event_cvUserActionPerformed
+
+    private void menuPendidiaknActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPendidiaknActionPerformed
+        // TODO add your handling code here:
+        ReportForm rf = new ReportForm("report4");
+        rf.show();
+        dsktpMain.add(rf);
+        
+    }//GEN-LAST:event_menuPendidiaknActionPerformed
+
+    private void reportKeahlianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportKeahlianActionPerformed
+        // TODO add your handling code here:
+        ReportForm rf = new ReportForm("report3");
+        rf.show();
+        dsktpMain.add(rf);
+        
+    }//GEN-LAST:event_reportKeahlianActionPerformed
+
+    private void rprtBhsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rprtBhsActionPerformed
+        // TODO add your handling code here:
+        ReportForm rf = new ReportForm("report2");
+        rf.show();
+        dsktpMain.add(rf);
+        
+    }//GEN-LAST:event_rprtBhsActionPerformed
+
+    private void rprtApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rprtApplyActionPerformed
+        // TODO add your handling code here:
+        ReportForm rf = new ReportForm("report6");
+        rf.show();
+        dsktpMain.add(rf);
+        
+    }//GEN-LAST:event_rprtApplyActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        ImageIcon icon = new ImageIcon(filename);
+        gambar3.setIcon(icon);
+        Image image = icon.getImage().getScaledInstance(gambar3.getWidth(), gambar3.getHeight(), Image.SCALE_SMOOTH);
+        gambar3.setIcon(new ImageIcon(image));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -627,13 +783,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem bahasaItem;
+    private javax.swing.JMenuItem cvItem;
+    private javax.swing.JMenuItem cvUser;
     private javax.swing.JLabel domisiliUser;
     private javax.swing.JDesktopPane dsktpMain;
     private javax.swing.JMenuItem editProfiles;
     private javax.swing.JLabel emailUser;
+    private javax.swing.JLabel gambar;
+    private javax.swing.JLabel gambar1;
+    private javax.swing.JLabel gambar2;
+    private javax.swing.JLabel gambar3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -649,18 +810,24 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel jurusanUser;
     private javax.swing.JMenuItem keahlianItem;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JMenuItem lowonganItem;
     private javax.swing.JMenuItem managerItem;
+    private javax.swing.JMenuItem menuKeahlian;
+    private javax.swing.JMenuItem menuPendidiakn;
     private javax.swing.JLabel namaUser;
     private javax.swing.JLabel namaUser1;
     private javax.swing.JLabel noTelp;
@@ -668,12 +835,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem pendidikanItem;
     private javax.swing.JMenuItem pengalamanItem;
     private javax.swing.JMenuItem projectItem;
-    private javax.swing.JLabel roleId;
+    private javax.swing.JMenuItem reportKeahlian;
+    private javax.swing.JMenuItem rprtApply;
+    private javax.swing.JMenuItem rprtBhs;
     private javax.swing.JMenuItem sertifikatItem;
     private javax.swing.JLabel tanggalLahir;
     private javax.swing.JLabel umurUser;
-    private javax.swing.JLabel universitasUser;
-    private javax.swing.JLabel userId;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 }

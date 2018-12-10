@@ -30,10 +30,10 @@
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="programStudi" alignment="0" max="32767" attributes="0"/>
+                  <Component id="programStudi" alignment="0" pref="329" max="32767" attributes="0"/>
                   <Component id="pendidikanTxt" alignment="0" max="32767" attributes="0"/>
                   <Component id="organisasiTxt" alignment="0" max="32767" attributes="0"/>
-                  <Component id="ipkTxt" alignment="0" pref="329" max="32767" attributes="0"/>
+                  <Component id="ipkTxt" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>

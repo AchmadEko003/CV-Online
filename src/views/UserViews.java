@@ -9,6 +9,7 @@ import controllers.ApplyControllers;
 import controllers.LowonganKerjaControllers;
 import controllers.SertifikatControllers;
 import controllers.UserControllers;
+import controllers.UserProfileControllers;
 import interfaces.LowonganKerjaInterface;
 import daos.DAOInterface;
 import daos.GeneralDAO;
@@ -17,6 +18,9 @@ import entities.LowonganPekerjaan;
 import interfaces.ApplyInterface;
 import interfaces.SertifikatInterface;
 import interfaces.UserInterface;
+import interfaces.UserProfileInterface;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -42,6 +46,9 @@ public class UserViews extends javax.swing.JInternalFrame {
     private getDataLogin dl = new getDataLogin();
     private ApplyInterface ai = new ApplyControllers(sessionFactory);
     private LowonganKerjaInterface lki = new LowonganKerjaControllers(sessionFactory);
+    private UserInterface ui = new UserControllers(sessionFactory);
+    private UserProfileInterface uip = new UserProfileControllers(sessionFactory);
+    private UserProfilesView upv = new UserProfilesView();
 
     /**
      * Creates new form UserViews
@@ -78,6 +85,8 @@ public class UserViews extends javax.swing.JInternalFrame {
         tanggalSelesaiTxt = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
+        searchTxt = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Cari Lowongan");
@@ -210,6 +219,14 @@ public class UserViews extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(getIdTable);
 
+        searchTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTxtKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Search");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -218,17 +235,28 @@ public class UserViews extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,11 +266,16 @@ public class UserViews extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int i = getIdTable.getSelectedRow();
         TableModel model = getIdTable.getModel();
-        if (ai.Apply(String.valueOf(ld.getTotal(new Apply()).size()+1), "Apply", model.getValueAt(i, 0).toString(),String.valueOf(dl.getUsersId()))){
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin apply lowongan ini?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (ai.Apply(String.valueOf(ld.getTotal(new Apply()).size() + 1), "Apply", model.getValueAt(i, 0).toString(), String.valueOf(dl.getUsersId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                tambahTxt.setEnabled(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahTxtActionPerformed
 
@@ -258,6 +291,11 @@ public class UserViews extends javax.swing.JInternalFrame {
         tanggalSelesaiTxt.setText(model.getValueAt(i, 6).toString());
     }//GEN-LAST:event_getIdTableMouseClicked
 
+    private void searchTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyReleased
+        // TODO add your handling code here:
+        bindingTable(uip.search(searchTxt.getText()));
+    }//GEN-LAST:event_searchTxtKeyReleased
+
     public void bindingTable(List<Object> apply) {
         Object[] header = {"No", "Judul Lowongan", "Deskripsi", "Requirements", "Perusahaan", "Tanggal Mulai", "Tanggal Selesai"};
         DefaultTableModel model = new DefaultTableModel(null, header);
@@ -271,9 +309,9 @@ public class UserViews extends javax.swing.JInternalFrame {
                 String isi3 = emp.getDeskripsi();
                 String isi4 = emp.getRequirements();
                 String isi5 = emp.getPerusahaan();
-                String isi6 = formats.format(emp.getTanggal())+"";
-                String isi7 = formats.format(emp.getTanggalSelesai())+"";
-                
+                String isi6 = formats.format(emp.getTanggal()) + "";
+                String isi7 = formats.format(emp.getTanggalSelesai()) + "";
+
                 String kolom[] = {isi1, isi2, isi3, isi4, isi5, isi6, isi7};
                 model.addRow(kolom);
             }
@@ -287,6 +325,7 @@ public class UserViews extends javax.swing.JInternalFrame {
     private javax.swing.JLabel email;
     private javax.swing.JTable getIdTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -297,6 +336,7 @@ public class UserViews extends javax.swing.JInternalFrame {
     private javax.swing.JLabel role;
     private javax.swing.JLabel role1;
     private javax.swing.JLabel role2;
+    private javax.swing.JTextField searchTxt;
     private javax.swing.JButton tambahTxt;
     private javax.swing.JLabel tanggalMulaiTxt;
     private javax.swing.JLabel tanggalSelesaiTxt;

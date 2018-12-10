@@ -220,4 +220,26 @@ public class FunctionDAO {
         }
         return hasil;
     }
+    
+    public List<Object> getDatasId(Object entities, String key) {
+        List<Object> rs = new ArrayList<>();
+        String className = entities.getClass().getSimpleName();
+        className = className.substring(className.indexOf(".") + 1);
+        String query = "From " + className + " where USER_PROFILE_ID=" + key;
+        System.out.println(query);
+        try {
+            session = factory.openSession();
+            transaction = session.beginTransaction();
+            rs = session.createQuery(query).list();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return rs;
+    }
 }

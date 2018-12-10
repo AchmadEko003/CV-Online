@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ea29dc6-83b2-4d33-aa3a-9d90bd03aa03">
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     KEAHLIAN."NAMA" AS KEAHLIAN_NAMA,
+     KEAHLIAN."DESKRIPSI" AS KEAHLIAN_DESKRIPSI,
+     RIWAYAT_PENDIDIKAN."NAMA" AS RIWAYAT_PENDIDIKAN_NAMA,
+     RIWAYAT_PENDIDIKAN."JURUSAN" AS RIWAYAT_PENDIDIKAN_JURUSAN,
+     RIWAYAT_PENDIDIKAN."ORGANISASI" AS RIWAYAT_PENDIDIKAN_ORGANISASI,
+     USERS."NAMA" AS USERS_NAMA,
+     USERS."EMAIL" AS USERS_EMAIL,
+     USER_PROFILE."UMUR" AS USER_PROFILE_UMUR,
+     USER_PROFILE."ALAMAT" AS USER_PROFILE_ALAMAT,
+     RIWAYAT_PENDIDIKAN."IPK" AS RIWAYAT_PENDIDIKAN_IPK
+FROM
+     "CVWAH"."USERS" USERS INNER JOIN "CVWAH"."USER_PROFILE" USER_PROFILE ON USERS."ID" = USER_PROFILE."USERS_ID"
+     INNER JOIN "CVWAH"."KEAHLIAN" KEAHLIAN ON USER_PROFILE."ID" = KEAHLIAN."USER_PROFILE_ID"
+     INNER JOIN "CVWAH"."RIWAYAT_PENDIDIKAN" RIWAYAT_PENDIDIKAN ON USER_PROFILE."ID" = RIWAYAT_PENDIDIKAN."USER_PROFILE_ID"]]>
+	</queryString>
+	<field name="KEAHLIAN_NAMA" class="java.lang.String"/>
+	<field name="KEAHLIAN_DESKRIPSI" class="java.lang.String"/>
+	<field name="RIWAYAT_PENDIDIKAN_NAMA" class="java.lang.String"/>
+	<field name="RIWAYAT_PENDIDIKAN_JURUSAN" class="java.lang.String"/>
+	<field name="RIWAYAT_PENDIDIKAN_ORGANISASI" class="java.lang.String"/>
+	<field name="USERS_NAMA" class="java.lang.String"/>
+	<field name="USERS_EMAIL" class="java.lang.String"/>
+	<field name="USER_PROFILE_UMUR" class="java.math.BigDecimal"/>
+	<field name="USER_PROFILE_ALAMAT" class="java.lang.String"/>
+	<field name="RIWAYAT_PENDIDIKAN_IPK" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="9cc77f51-aae5-49bf-af5e-d085e86dded8"/>
+				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="270" y="0" width="263" height="62" uuid="40018431-9fd1-425d-92e9-0300323f84ab"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="3e10a149-b43b-4860-a94f-da231b36ca45"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee SubTitle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="94" width="383" height="42" uuid="535a9dab-8040-4507-9d72-92c985ef9251"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="633" y="-73" width="219" height="209" uuid="87a6d237-f46e-4869-b228-d061ae871156"/>
+				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="bccfb038-b97d-4a32-92ea-ce4b5cd9979d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="80" height="15" forecolor="#736343" uuid="3c199a26-e027-4432-b42e-b51c37962efd"/>
+				<text><![CDATA[KEAHLIAN_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="80" y="0" width="80" height="15" forecolor="#736343" uuid="1fc1d745-e3ea-4115-a896-f1c3ef6c0b02"/>
+				<text><![CDATA[KEAHLIAN_DESKRIPSI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="160" y="0" width="80" height="15" forecolor="#736343" uuid="0570b695-4e6d-4589-85da-66bbefc64558"/>
+				<text><![CDATA[RIWAYAT_PENDIDIKAN_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="240" y="0" width="80" height="15" forecolor="#736343" uuid="066160d8-eb6b-4824-aaa3-2493ce0e2530"/>
+				<text><![CDATA[RIWAYAT_PENDIDIKAN_JURUSAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="320" y="0" width="80" height="15" forecolor="#736343" uuid="0a3dbdec-4233-4ab5-a4cb-fc44c91aec6e"/>
+				<text><![CDATA[RIWAYAT_PENDIDIKAN_ORGANISASI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="400" y="0" width="80" height="15" forecolor="#736343" uuid="ad4cc22c-32fc-433a-b550-e6dff978caff"/>
+				<text><![CDATA[USERS_NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="480" y="0" width="80" height="15" forecolor="#736343" uuid="86ebb1ac-34e9-4409-9252-63107476068d"/>
+				<text><![CDATA[USERS_EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="560" y="0" width="80" height="15" forecolor="#736343" uuid="f7621d6f-2b75-44ae-bf4c-2a2046730a46"/>
+				<text><![CDATA[USER_PROFILE_UMUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="640" y="0" width="80" height="15" forecolor="#736343" uuid="0dae7a25-84de-43e6-b4f2-72c02ee6e551"/>
+				<text><![CDATA[USER_PROFILE_ALAMAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="720" y="0" width="80" height="15" forecolor="#736343" uuid="0d72c83b-871f-4b13-98a9-0616d373634e"/>
+				<text><![CDATA[RIWAYAT_PENDIDIKAN_IPK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="8a7f25ad-fb2e-47c3-a948-59332e2e4011"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="80" height="15" uuid="712594cc-c441-4f1e-91ce-ad4c9dcdbea0"/>
+					<textFieldExpression><![CDATA[$F{KEAHLIAN_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="80" y="0" width="80" height="15" uuid="70382d42-73d9-44e0-9f0d-b1941db6bd13"/>
+					<textFieldExpression><![CDATA[$F{KEAHLIAN_DESKRIPSI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="160" y="0" width="80" height="15" uuid="6a60fcc2-800d-4f3b-854b-f6cdf9e6fe37"/>
+					<textFieldExpression><![CDATA[$F{RIWAYAT_PENDIDIKAN_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="240" y="0" width="80" height="15" uuid="4ea61521-1b74-40f1-bff5-9cf5a0b1615b"/>
+					<textFieldExpression><![CDATA[$F{RIWAYAT_PENDIDIKAN_JURUSAN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="320" y="0" width="80" height="15" uuid="941bc1cf-0e36-4369-90ca-6ecc950d1a63"/>
+					<textFieldExpression><![CDATA[$F{RIWAYAT_PENDIDIKAN_ORGANISASI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="400" y="0" width="80" height="15" uuid="55278331-958e-479e-a3f1-111e0de321a4"/>
+					<textFieldExpression><![CDATA[$F{USERS_NAMA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="480" y="0" width="80" height="15" uuid="73e003cd-7b64-4051-a81a-8238e198f36c"/>
+					<textFieldExpression><![CDATA[$F{USERS_EMAIL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="560" y="0" width="80" height="15" uuid="3de8aa3d-35c0-4398-bb3a-eb5b61ba8cb6"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_UMUR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="640" y="0" width="80" height="15" uuid="b950bd4f-0e62-4a87-9a8d-445d0e8e0f67"/>
+					<textFieldExpression><![CDATA[$F{USER_PROFILE_ALAMAT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="720" y="0" width="80" height="15" uuid="4b317c46-ef2c-499b-97b6-499a13853699"/>
+					<textFieldExpression><![CDATA[$F{RIWAYAT_PENDIDIKAN_IPK}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="232c51dc-7fbb-4b2c-b57e-61fe8c950d68"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="6fc4ae5d-097c-4bfc-865c-e5285031f3e5"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="193f69e6-45f5-4f36-be7c-76581127df65"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="3e3e632d-a4b1-4885-b467-e5a64581901e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="e48d9c98-b9cd-4f6e-b6b9-56af5cf018cb"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

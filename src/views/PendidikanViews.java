@@ -80,10 +80,10 @@ public class PendidikanViews extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(programStudi)
+                    .addComponent(programStudi, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addComponent(pendidikanTxt)
                     .addComponent(organisasiTxt)
-                    .addComponent(ipkTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
+                    .addComponent(ipkTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,11 +119,19 @@ public class PendidikanViews extends javax.swing.JInternalFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
-        if (pi.insert(String.valueOf(data.getTotal(new RiwayatPendidikan()).size() + 1), pendidikanTxt.getText(), programStudi.getText(), organisasiTxt.getText(), ipkTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (pi.insert(String.valueOf(data.getTotal(new RiwayatPendidikan()).size() + 1), pendidikanTxt.getText(), programStudi.getText(), organisasiTxt.getText(), ipkTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                pendidikanTxt.setText("");
+                programStudi.setText("");
+                organisasiTxt.setText("");
+                ipkTxt.setText("");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahBtnActionPerformed
 

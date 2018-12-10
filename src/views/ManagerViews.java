@@ -10,6 +10,7 @@ import controllers.LowonganKerjaControllers;
 import controllers.SertifikatControllers;
 import entities.Apply;
 import entities.LowonganPekerjaan;
+import entities.Users;
 import interfaces.ApplyInterface;
 import interfaces.LowonganKerjaInterface;
 import interfaces.SertifikatInterface;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 import tools.getDataLogin;
@@ -35,7 +37,7 @@ public class ManagerViews extends javax.swing.JInternalFrame {
     private getLoginData ld = new getLoginData(sessionFactory);
     private getDataLogin dl = new getDataLogin();
     private ApplyInterface ai = new ApplyControllers(sessionFactory);
-    
+    private CVViews cv = new CVViews();
 
     /**
      * Creates new form ApplyViews
@@ -56,6 +58,7 @@ public class ManagerViews extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         getIdTable = new javax.swing.JTable();
+        lihatBtn = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -87,21 +90,34 @@ public class ManagerViews extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(getIdTable);
 
+        lihatBtn.setText("Lihat");
+        lihatBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lihatBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lihatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lihatBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,13 +130,7 @@ public class ManagerViews extends javax.swing.JInternalFrame {
         try {
             for (Object low : apply) {
                 Apply app = (Apply) low;
-                String isi1 = String.valueOf(app.getId());
-                String isi2 = app.getUserId().getNama();
-                String isi3 = app.getLowonganId().getJudul();
-                String isi4 = app.getLowonganId().getUserId().getNama();
-                String isi5 = app.getStatus();
-
-                String kolom[] = {isi1, isi2, isi3, isi4, isi5};
+                String kolom[] = {String.valueOf(app.getId()), String.valueOf(app.getUserId().getNama()), app.getLowonganId().getJudul(), app.getLowonganId().getUserId().getNama(), app.getStatus()};
                 model.addRow(kolom);
             }
         } catch (Exception e) {
@@ -131,9 +141,18 @@ public class ManagerViews extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_getIdTableMouseClicked
 
+    private void lihatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihatBtnActionPerformed
+        // TODO add your handling code here:
+        int i = getIdTable.getSelectedRow();
+        TableModel model = getIdTable.getModel();
+        int a = ld.getUserId(model.getValueAt(i, 1).toString());
+        dl.setCvId(a);
+    }//GEN-LAST:event_lihatBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable getIdTable;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lihatBtn;
     // End of variables declaration//GEN-END:variables
 }

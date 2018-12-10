@@ -36,7 +36,7 @@ public class SertifikatControllers implements SertifikatInterface {
 
     @Override
     public List<Object> search(String keyword) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return daoid.doDatasId(new Sertifikat(), keyword);
     }
 
     @Override

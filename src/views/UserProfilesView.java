@@ -14,11 +14,14 @@ import daos.DAOInterface;
 import daos.GeneralDAO;
 import entities.UserProfile;
 import interfaces.UserInterface;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
@@ -44,7 +47,6 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
      */
     public UserProfilesView() {
         initComponents();
-        userId.setText(String.valueOf(dataLogin.getUsersId()));
         if (ai.getIdProfile(dataLogin.getUsersId())) {
             tambahBtn.setText("Update");
             getUsersId();
@@ -61,7 +63,7 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         alamatTxt.setText("");
         telpTxt.setText("");
     }
-    
+
     public void getUsersId() {
         UserProfile users = (UserProfile) ai.getById(dataLogin.getUsersId());
         umurTxt.setText(String.valueOf(users.getUmur()));
@@ -94,7 +96,6 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         telpTxt = new javax.swing.JTextField();
         dateofbirth = new org.jdesktop.swingx.JXDatePicker();
         tambahBtn = new javax.swing.JButton();
-        userId = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Profil Pengguna");
@@ -168,55 +169,46 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             }
         });
 
-        userId.setText("id");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(alamatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(role6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(telpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tambahBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(role5)
                         .addGap(49, 49, 49)
                         .addComponent(dateofbirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(userId)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(username)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tambahBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(uploadCV, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(role3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(111, 111, 111))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(username)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(uploadCV, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(uploadKTP, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(uploadPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGap(15, 15, 15)
+                                .addComponent(uploadKTP, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(uploadPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(role3)
+                            .addComponent(role4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(alamatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(role6)
+                        .addGap(83, 83, 83)
+                        .addComponent(telpTxt)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,8 +229,8 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(role3)
                     .addComponent(umurTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(role4)
                     .addComponent(alamatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -250,10 +242,8 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
                     .addComponent(role6)
                     .addComponent(telpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tambahBtn)
-                    .addComponent(userId))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tambahBtn)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,8 +252,8 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,26 +277,33 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         Date birth = dateofbirth.getDate();
         String dates = formats.format(birth);
         String telp = telpTxt.getText();
-
+        int dialogButton = JOptionPane.YES_NO_OPTION;
         if (tambahBtn.getText() == "Update") {
-            if (upi.inputdata(String.valueOf(dataLogin.getUserProfileId()), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
-                JOptionPane.showMessageDialog(null, "Update Berhasil");
-                tambahBtn.setText("Tambah");
-                clear();
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Gagal");
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin mengubah data?", "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                if (upi.inputdata(String.valueOf(dataLogin.getUserProfileId()), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Update Berhasil");
+                    tambahBtn.setText("Tambah");
+                    clear();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal");
+                }
             }
         } else {
-            if (upi.inputdata(String.valueOf(data.getTotal(new UserProfile()).size() + 1), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
-                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-                tambahBtn.setText("Update");
-                clear();
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Gagal");
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                if (upi.inputdata(String.valueOf(data.getTotal(new UserProfile()).size() + 1), umur, domisili, dates, telp, cv, photo, ktp, String.valueOf(dataLogin.getUsersId()))) {
+                    JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                    tambahBtn.setText("Update");
+                    clear();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gagal");
+                }
             }
         }
+
     }//GEN-LAST:event_tambahBtnActionPerformed
 
     private void telpTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telpTxtActionPerformed
@@ -343,9 +340,9 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (data.numberMatchA(telpTxt.getText())) {
             telpTxt.setText("");
-        } else if(data.numberMatchB(telpTxt.getText())) {
+        } else if (data.numberMatchB(telpTxt.getText())) {
             telpTxt.setText("");
-        } else if(data.numberMatchC(telpTxt.getText())){
+        } else if (data.numberMatchC(telpTxt.getText())) {
             telpTxt.setText("");
         }
     }//GEN-LAST:event_telpTxtKeyReleased
@@ -367,7 +364,6 @@ public class UserProfilesView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField uploadCV;
     private javax.swing.JTextField uploadKTP;
     private javax.swing.JTextField uploadPhoto;
-    private javax.swing.JLabel userId;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

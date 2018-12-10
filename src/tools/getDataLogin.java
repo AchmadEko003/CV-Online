@@ -14,6 +14,8 @@ public class getDataLogin {
     static private Integer usersId;
     static private Integer role;
     static private Integer userProfileId;
+    static private Integer lokerId;
+    static private Integer cvId;
 
     public static String getUsersName() {
         return usersName;
@@ -47,5 +49,19 @@ public class getDataLogin {
         getDataLogin.userProfileId = userProfileId;
     }
 
-    
+    public static Integer getLokerId() {
+        return lokerId;
+    }
+
+    public static void setLokerId(Integer lokerId) {
+        getDataLogin.lokerId = lokerId;
+    }    
+
+    public static Integer getCvId() {
+        return cvId;
+    }
+
+    public static void setCvId(Integer cvId) {
+        getDataLogin.cvId = cvId;
+    }
 }

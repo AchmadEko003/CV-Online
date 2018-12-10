@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
     public LowonganKerjaViews() {
         initComponents();
         bindingTable(lki.search(""));
-        
+
     }
 
     /**
@@ -89,6 +90,7 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        setClosable(true);
         setTitle("Admin");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Input Lowongan"));
@@ -249,9 +251,9 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
                 String isi2 = emp.getDeskripsi();
                 String isi3 = emp.getRequirements();
                 String isi4 = emp.getPerusahaan();
-                String isi5 = formats.format(emp.getTanggal())+"";
-                String isi6 = formats.format(emp.getTanggalSelesai())+"";
-                
+                String isi5 = formats.format(emp.getTanggal()) + "";
+                String isi6 = formats.format(emp.getTanggalSelesai()) + "";
+
                 String kolom[] = {isi1, isi2, isi3, isi4, isi5, isi6};
                 model.addRow(kolom);
             }
@@ -259,19 +261,24 @@ public class LowonganKerjaViews extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ops! " + e.getMessage());
         }
     }
-    
+
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         // TODO add your handling code here:
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateFormat formats = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date hiredate = tanggalSelesai.getDate();
         String dates = formats.format(hiredate);
-	LocalDate localDate = LocalDate.now();
-        if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan()).size() + 1), judulLowonganTxt.getText(), deskripsiTxt.getText(), reqTxt.getText(), dtf.format(localDate), dates, perusahaanTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
-            JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data masih kosong");
+        LocalDate localDate = LocalDate.now();
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Ingin menambah data?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            if (lki.insert(String.valueOf(data.getTotal(new LowonganPekerjaan()).size() + 1), judulLowonganTxt.getText(), deskripsiTxt.getText(), reqTxt.getText(), dtf.format(localDate), dates, perusahaanTxt.getText(), String.valueOf(dataLogin.getUserProfileId()))) {
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan");
+                this.dispose();
+                bindingTable(lki.search(""));
+            } else {
+                JOptionPane.showMessageDialog(null, "Data masih kosong");
+            }
         }
     }//GEN-LAST:event_tambahBtnActionPerformed
 
